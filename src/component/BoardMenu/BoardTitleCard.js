@@ -11,9 +11,9 @@ export default function BoardTitleCard() {
 
   return (
     <>
-      <Button color="gray" onClick={() => props.setOpenModal("form-elements")}>
+      <Button class="bg-gray-200 dark:bg-gray-900" onClick={() => props.setOpenModal("form-elements")}>
         <HiAdjustments className="mr-3 h-4 w-4" />
-        <p>Invite</p>
+        <p>Board</p>
       </Button>
       <Modal
         show={props.openModal === "form-elements"}

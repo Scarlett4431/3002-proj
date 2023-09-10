@@ -3,7 +3,7 @@ import BoardBar from "./component/BoardMenu/BoardBar";
 
 export default function App() {
   return (
-    <div>
+    <div >
       <NavbarMenu/>
       <BoardBar/>
     </div>

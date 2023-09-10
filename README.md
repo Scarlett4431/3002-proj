@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # 3002-proj
 3002 project
 =======
@@ -73,3 +74,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 >>>>>>> ba7f397c3e89dbc47995435a463ab784d9fb6516
+=======
+# 3002-proj
+3002-proj
+>>>>>>> 7eb2279ee1a542c50916732d9a0b564b427d9230
