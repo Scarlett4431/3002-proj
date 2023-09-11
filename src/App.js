@@ -1,6 +1,6 @@
 import NavbarMenu from "./component/MenuBar/NavbarMenu";
 import BoardBar from "./component/BoardMenu/BoardBar";
-import Board from "./component/BoardCollection/Board"
+import BoardCollection from "./component/BoardCollection/BoardCollection"
 
 export default function App() {
   return (
@@ -8,7 +8,7 @@ export default function App() {
       <NavbarMenu/>
       <BoardBar/>
       <div className="flex justify-center items-center h-screen">
-        <Board />
+        <BoardCollection />
       </div>
     </div>
     

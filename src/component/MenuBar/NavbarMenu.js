@@ -12,7 +12,7 @@ export default function NavbarMenu() {
       </Navbar.Brand>
       <Navbar.Collapse>
         <span class="self-center whitespace-nowrap text-3xl font-semibold dark:text-white">
-          Lets Do It!
+          I cant think of a name
         </span>
       </Navbar.Collapse>
       <div className="flex md:order-2">
