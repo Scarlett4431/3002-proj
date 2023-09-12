@@ -1,28 +1,26 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
+import { XCircleIcon } from "@heroicons/react/24/solid";
 
-function Card({id, content}) {
+function Card({ id, content }) {
   return (
     <Draggable key={id} draggableId={id}>
       {(provided, snapshot) => {
         return (
           <div
             ref={provided.innerRef}
+            className="bg-white rounded-md space-y-2 drop-shadow-md"
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            style={{
-              userSelect: "none",
-              padding: 16,
-              margin: "0 0 8px 0",
-              minHeight: "50px",
-              backgroundColor: snapshot.isDragging ? "#263B4A" : "#456C86",
-              color: "white",
-              ...provided.draggableProps.style,
-            }}
           >
-            {content}
+            <div className="flex justify-between items-center p-5">
+              <p>{content}</p>
+              <button className="text-red-500 hover:text-red-600">
+                <XCircleIcon className="ml-5 h-8 w-8" />
+              </button>
+            </div>
           </div>
-        )
+        );
       }}
     </Draggable>
   );

@@ -70,27 +70,25 @@ const onDragEnd = (result, columns, setColumns) => {
 function Board() {
   const [columns, setColumns] = useState(columnsFromBackend);
   return (
-    <div style={{ display: "flex", justifyContent: "center", height: "100%" }}>
+    <div className="ml-12 mr-12">
       <DragDropContext
         onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
       >
-        {Object.entries(columns).map(([columnId, column], index) => {
-          return (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-              key={columnId}
-            >
-              <h2>{column.name}</h2>
-              <div style={{ margin: 8 }}>
-                <List items={column.items} id={columnId}></List>
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-5 mx-auto">
+          {Object.entries(columns).map(([columnId, column], index) => {
+            return (
+              <div key={columnId}>
+                <div>
+                  <List
+                    name={column.name}
+                    items={column.items}
+                    id={columnId}
+                  ></List>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </DragDropContext>
     </div>
   );

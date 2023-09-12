@@ -12,6 +12,7 @@ export default function App() {
         <BoardCollection />
       </div> */}
       <Board/>
+
     </div>
     
   )

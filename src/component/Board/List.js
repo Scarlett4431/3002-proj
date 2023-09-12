@@ -1,8 +1,9 @@
 import React from "react";
 import { Droppable } from "react-beautiful-dnd";
 import Card from "./Card";
+import { PlusCircleIcon } from "@heroicons/react/24/solid";
 
-function List({ items, id }) {
+function List({ items, id, name }) {
   return (
     <Droppable
       droppableId={id}
@@ -13,20 +14,24 @@ function List({ items, id }) {
       {(provided, snapshot) => {
         return (
           <div
-            // className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-7xl mx-auto"
+            className={`p-2 rounded-2xl shadow-sm ${
+              snapshot.isDraggingOver ? "bg-green-200" : "bg-white/50"
+            }`}
             {...provided.droppableProps}
             ref={provided.innerRef}
-            style={{
-              background: snapshot.isDraggingOver ? "lightblue" : "lightgrey",
-              padding: 4,
-              width: 250,
-              minHeight: 500,
-            }}
           >
+            <h2 className="flex justify-between font-bold text-xl p-2">
+              {name}
+            </h2>
             {items.map((item, index) => {
               return <Card id={item.id} content={item.content} />;
             })}
             {provided.placeholder}
+            <div className="flex items-end justify-end">
+              <button className="text-green-500 hover:text-green-600">
+                <PlusCircleIcon className="h-10 w-10" />
+              </button>
+            </div>
           </div>
         );
       }}
