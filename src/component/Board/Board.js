@@ -4,31 +4,54 @@ import List from "./List";
 import uuid from "react-uuid";
 
 const itemsFromBackend = [
-  { id: uuid(), content: "First task" },
-  { id: uuid(), content: "Second task" },
-  { id: uuid(), content: "Third task" },
-  { id: uuid(), content: "Fourth task" },
-  { id: uuid(), content: "Fifth task" },
+  { id: uuid(), text: "First task" },
+  { id: uuid(), text: "Second task" },
+  { id: uuid(), text: "Third task" },
+  { id: uuid(), text: "Fourth task" },
+  { id: uuid(), text: "Fifth task" },
 ];
 
 const columnsFromBackend = {
   [uuid()]: {
-    name: "Requested",
+    title: "Requested",
     items: itemsFromBackend,
   },
   [uuid()]: {
-    name: "To do",
+    title: "To do",
     items: [],
   },
   [uuid()]: {
-    name: "In Progress",
+    title: "In Progress",
     items: [],
   },
   [uuid()]: {
-    name: "Done",
+    title: "Done",
     items: [],
   },
 };
+
+// const columnsFromBackend = [
+//   {
+//     id: uuid(),
+//     title: "Requested",
+//     items: itemsFromBackend,
+//   },
+//   {
+//     id: uuid(),
+//     title: "To do",
+//     items: [],
+//   },
+//   {
+//     id: uuid(),
+//     title: "In Progress",
+//     items: [],
+//   },
+//   {
+//     id: uuid(),
+//     title: "Done",
+//     items: [],
+//   },
+// ];
 
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
@@ -80,9 +103,9 @@ function Board() {
               <div key={columnId}>
                 <div>
                   <List
-                    name={column.name}
-                    items={column.items}
-                    id={columnId}
+                    title={column.title}
+                    cards={column.items}
+                    columnId={columnId}
                   ></List>
                 </div>
               </div>

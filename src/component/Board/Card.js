@@ -2,7 +2,7 @@ import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 
-function Card({ id, content }) {
+function Card({ id, text, columnId}) {
   return (
     <Draggable key={id} draggableId={id}>
       {(provided, snapshot) => {
@@ -14,7 +14,7 @@ function Card({ id, content }) {
             {...provided.dragHandleProps}
           >
             <div className="flex justify-between items-center p-5">
-              <p>{content}</p>
+              <p>{text}</p>
               <button className="text-red-500 hover:text-red-600">
                 <XCircleIcon className="ml-5 h-8 w-8" />
               </button>

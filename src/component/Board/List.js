@@ -3,11 +3,11 @@ import { Droppable } from "react-beautiful-dnd";
 import Card from "./Card";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 
-function List({ items, id, name }) {
+function List({ cards, columnId, title }) {
   return (
     <Droppable
-      droppableId={id}
-      key={id}
+      droppableId={columnId}
+      key={columnId}
       // direction="horizontal"
       // type="column"
     >
@@ -21,10 +21,10 @@ function List({ items, id, name }) {
             ref={provided.innerRef}
           >
             <h2 className="flex justify-between font-bold text-xl p-2">
-              {name}
+              {title}
             </h2>
-            {items.map((item, index) => {
-              return <Card id={item.id} content={item.content} />;
+            {cards.map((item, index) => {
+              return <Card id={item.id} text={item.text} columnId={columnId}/>;
             })}
             {provided.placeholder}
             <div className="flex items-end justify-end">
