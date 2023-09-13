@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import List from "./List";
 import uuid from "react-uuid";
+import BoardBar from "../BoardMenu/BoardBar";
+import NewList from "./NewList";
 
 const itemsFromBackend = [
   { id: uuid(), text: "First task" },
@@ -29,29 +31,6 @@ const columnsFromBackend = {
     items: [],
   },
 };
-
-// const columnsFromBackend = [
-//   {
-//     id: uuid(),
-//     title: "Requested",
-//     items: itemsFromBackend,
-//   },
-//   {
-//     id: uuid(),
-//     title: "To do",
-//     items: [],
-//   },
-//   {
-//     id: uuid(),
-//     title: "In Progress",
-//     items: [],
-//   },
-//   {
-//     id: uuid(),
-//     title: "Done",
-//     items: [],
-//   },
-// ];
 
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
@@ -93,26 +72,28 @@ const onDragEnd = (result, columns, setColumns) => {
 function Board() {
   const [columns, setColumns] = useState(columnsFromBackend);
   return (
-    <div className="ml-12 mr-12">
-      <DragDropContext
-        onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
-      >
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-5 mx-auto">
-          {Object.entries(columns).map(([columnId, column], index) => {
-            return (
-              <div key={columnId}>
-                <div>
+    <div>
+      <BoardBar />
+      <div className="ml-12 mr-12">
+        <DragDropContext
+          onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+        >
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-5 mx-auto">
+            {Object.entries(columns).map(([columnId, column], index) => {
+              return (
+                <div key={columnId}>
                   <List
                     title={column.title}
                     cards={column.items}
                     columnId={columnId}
                   ></List>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-      </DragDropContext>
+              );
+            })}
+            <NewList />
+          </div>
+        </DragDropContext>
+      </div>
     </div>
   );
 }

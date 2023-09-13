@@ -1,20 +1,29 @@
 "use client";
 
-import { Button, Label, Modal, TextInput } from "flowbite-react";
+import { PlusCircleIcon } from "@heroicons/react/24/solid";
+import { Button, Modal, TextInput } from "flowbite-react";
 import { useState } from "react";
-import { HiAdjustments } from "react-icons/hi";
+import NewCard from "./NewCard";
 
-export default function BoardTitleCard() {
+export default function NewList() {
   const [openModal, setOpenModal] = useState();
   const [email, setEmail] = useState("");
   const props = { openModal, setOpenModal, email, setEmail };
-// class="bg-gray-200 dark:bg-gray-900"
   return (
     <>
-      <Button size="xl" gradientDuoTone="greenToBlue" onClick={() => props.setOpenModal("form-elements")}>
-        <HiAdjustments className="mr-3 h-4 w-4" />
-        <p>Board</p>
-      </Button>
+      <div className={"p-2 rounded-2xl shadow-sm"}>
+        <h2 className="text-blue-700 flex justify-between font-bold text-xl p-2s">
+          Add a List
+        </h2>
+        <div className="flex items-end justify-end">
+          <button
+            className="text-blue-500 hover:text-blue-600 mt-3"
+            onClick={() => props.setOpenModal("form-elements")}
+          >
+            <PlusCircleIcon className="h-10 w-10" />
+          </button>
+        </div>
+      </div>
       <Modal
         show={props.openModal === "form-elements"}
         size="md"
@@ -25,12 +34,9 @@ export default function BoardTitleCard() {
         <Modal.Body>
           <div className="space-y-6">
             <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-              Rename Board
+              Add a List
             </h3>
             <div>
-              <div className="mb-2 block">
-                <Label htmlFor="board-name" value="New Name" />
-              </div>
               <TextInput id="board-name" placeholder="" required />
             </div>
             <div className="w-full">

@@ -8,10 +8,10 @@ export default function InviteCard() {
   const [openModal, setOpenModal] = useState();
   const [email, setEmail] = useState("");
   const props = { openModal, setOpenModal, email, setEmail };
-
+//class="bg-gray-200 dark:bg-gray-900" 
   return (
     <>
-      <Button class="bg-gray-200 dark:bg-gray-900" onClick={() => props.setOpenModal("form-elements")}>
+      <Button size="xl" gradientDuoTone="greenToBlue" onClick={() => props.setOpenModal("form-elements")}>
         <HiUserCircle className="mr-3 h-4 w-4" />
         <p>Invite</p>
       </Button>
@@ -38,7 +38,7 @@ export default function InviteCard() {
               />
             </div>
             <div className="w-full">
-              <Button>Add</Button>
+              <Button gradientDuoTone="greenToBlue">Add</Button>
             </div>
           </div>
         </Modal.Body>

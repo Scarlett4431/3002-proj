@@ -1,7 +1,7 @@
 import React from "react";
 import { Droppable } from "react-beautiful-dnd";
 import Card from "./Card";
-import { PlusCircleIcon } from "@heroicons/react/24/solid";
+import NewCard from "./NewCard";
 
 function List({ cards, columnId, title }) {
   return (
@@ -28,9 +28,7 @@ function List({ cards, columnId, title }) {
             })}
             {provided.placeholder}
             <div className="flex items-end justify-end">
-              <button className="text-green-500 hover:text-green-600">
-                <PlusCircleIcon className="h-10 w-10" />
-              </button>
+            <NewCard/>
             </div>
           </div>
         );
