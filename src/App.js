@@ -3,6 +3,7 @@ import BoardBar from "./component/BoardMenu/BoardBar";
 import BoardCollection from "./component/BoardCollection/BoardCollection";
 import Board from "./component/Board/Board";
 import SignIn from "./component/SignIn";
+import SignUp from "./component/SignUp";
 
 export default function App() {
   return (
@@ -12,7 +13,7 @@ export default function App() {
         <BoardCollection />
       </div> */}
       {/* <Board/> */}
-      <SignIn />
+      <SignUp />
 
     </div>
     

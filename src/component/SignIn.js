@@ -5,48 +5,24 @@ import Container from '@mui/material/Container';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
-import { makeStyles } from '@mui/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { HiOutlineLockClosed } from 'react-icons/hi';
 
 import React, { useState } from 'react';
 
 // needs to add support for page redirection
 
-const useStyles = makeStyles(theme => ({
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        background: 'rgba(255, 255, 255, 0.8)',
-        padding: '2rem',
-        borderRadius: '1rem',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: 'red',/*theme.palette.secondary.main*/
-    },
-    form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(1),
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-        backgroundColor: '#026aa7'
-    },
-}));
-
 export default function SignIn(props) {
-    const classes = useStyles();
 
     const [state, setState] = useState({
         email: '',
         password: '',
         toFrontpage: false,
+        doRememberMe: false,
     });
 
+    // get the content of the textbox
     const onChange = (e) => {
         setState({
             ...state,
@@ -58,16 +34,24 @@ export default function SignIn(props) {
         setState({ toFrontpage: true });
     };
 
+    // get the status of the remember me chechbox
+    const setRememberMe = (e) => {
+        setState({
+            ...state,
+            doRememberMe: e.target.checked
+        });
+    }
+
     const signIn = (
         <Container component="main" maxWidth="xs">
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
+            <div>
+                <Avatar>
+                    <HiOutlineLockClosed  />
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-                <form onSubmit={handleSignIn} className={classes.form} noValidate>
+                <form onSubmit={handleSignIn} noValidate>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -93,24 +77,30 @@ export default function SignIn(props) {
                         onChange={onChange}
                     />
                     <FormControlLabel
-                        control={<Checkbox checked={true} value="remember" color="primary" />}
+                        control={
+                            <Checkbox
+                                value="remember"
+                                color="primary"
+                                onChange={setRememberMe}
+                            />
+                        }
                         label="Remember me"
                     />
                     <Button
                         type="submit"
-                        fullWidth
+                        fullWidths
                         variant="contained"
                         color="primary"
-                        className={classes.submit}
                     >
                         Sign In
                     </Button>
                     <Grid container>
-                        <Grid item xs>
+                        {/* Forget Password function, save for future development */}
+                        {/* <Grid item xs>
                             <Link href="#" variant="body2">
                                 Forgot password?
                             </Link>
-                        </Grid>
+                        </Grid> */}
                         <Grid item>
                             <Link href="#" variant="body2">
                                 {"Don't have an account? Sign Up"}
