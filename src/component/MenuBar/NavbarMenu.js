@@ -4,6 +4,8 @@ import { Navbar } from "flowbite-react";
 import UserDropdown from "./UserDropdown";
 import SearchBox from "./SearchBox";
 import { HiHome } from "react-icons/hi";
+import { Link } from 'react-router-dom';
+
 export default function NavbaMenu() {
   return (
     <Navbar fluid rounded>
