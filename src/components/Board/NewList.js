@@ -3,6 +3,7 @@
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { Button, Modal, TextInput } from "flowbite-react";
 import { useState } from "react";
+import { BsCardList } from "react-icons/bs";
 
 export default function NewList() {
   const [openModal, setOpenModal] = useState();
@@ -36,16 +37,15 @@ export default function NewList() {
       >
         <Modal.Header />
         <Modal.Body>
-          <div className="space-y-6">
-            <h3 className="text-xl font-medium text-gray-900 dark:text-white">
+          <div className="flex flex-col items-center">
+            <BsCardList className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+            <h3 className="mb-3 text-lg font-normal text-gray-500 dark:text-gray-400">
               Add a List
             </h3>
-            <div>
-              <TextInput id="board-name" placeholder="" required />
-            </div>
-            <div className="w-full">
-              <Button gradientDuoTone="greenToBlue">Add</Button>
-            </div>
+            <TextInput className="w-full" id="friend-email" required />
+            <Button className="mt-5" gradientDuoTone="greenToBlue">
+              Add
+            </Button>
           </div>
         </Modal.Body>
       </Modal>
