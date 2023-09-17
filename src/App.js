@@ -2,15 +2,18 @@ import NavbarMenu from "./component/MenuBar/NavbarMenu";
 import BoardBar from "./component/BoardMenu/BoardBar";
 import BoardCollection from "./component/BoardCollection/BoardCollection";
 import Board from "./component/Board/Board";
+import SignIn from "./component/SignIn";
+import SignUp from "./component/SignUp";
 
 export default function App() {
   return (
     <div >
-      <NavbarMenu/>
+      {/* <NavbarMenu/> */}
       {/* <div className="flex justify-center items-center h-screen">
         <BoardCollection />
       </div> */}
-      <Board/>
+      {/* <Board/> */}
+      <SignUp />
 
     </div>
     
