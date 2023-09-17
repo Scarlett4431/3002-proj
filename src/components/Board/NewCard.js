@@ -9,6 +9,10 @@ export default function NewCard() {
   const [email, setEmail] = useState("");
   const props = { openModal, setOpenModal, email, setEmail };
   //class="bg-gray-200 dark:bg-gray-900"
+  const handleAddCard = () => {
+  //TODO
+}
+
   return (
     <>
       <button className="text-green-500 hover:text-green-600 mt-3" onClick={() => props.setOpenModal("form-elements")}>

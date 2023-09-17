@@ -8,6 +8,11 @@ export default function NewList() {
   const [openModal, setOpenModal] = useState();
   const [email, setEmail] = useState("");
   const props = { openModal, setOpenModal, email, setEmail };
+
+  const handleAddList= () =>{
+    //TODO
+  }
+
   return (
     <>
       <div className={"p-2 rounded-2xl shadow-sm"}>

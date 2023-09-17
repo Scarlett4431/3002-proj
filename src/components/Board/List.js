@@ -3,11 +3,12 @@ import { Droppable } from "react-beautiful-dnd";
 import Card from "./Card";
 import NewCard from "./NewCard";
 
-function List({ cards, columnId, title }) {
+function List({ cards, listID, title, index }) {
   return (
     <Droppable
-      droppableId={columnId}
-      key={columnId}
+      droppableId={listID}
+      key={listID}
+      index={index}
       // direction="horizontal"
       // type="column"
     >
@@ -23,12 +24,21 @@ function List({ cards, columnId, title }) {
             <h2 className="flex justify-between font-bold text-xl p-2">
               {title}
             </h2>
-            {cards.map((item, index) => {
-              return <Card id={item.id} text={item.text} columnId={columnId}/>;
-            })}
+            {cards != null
+              ? cards.map((item, index) => {
+                  return (
+                    <Card
+                      id={item.id}
+                      text={item.text}
+                      listID={listID}
+                      index={index}
+                    />
+                  );
+                })
+              : null}
             {provided.placeholder}
             <div className="flex items-end justify-end">
-            <NewCard/>
+              <NewCard />
             </div>
           </div>
         );
