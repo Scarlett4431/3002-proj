@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 
-function Board() {
+function BoardCollection() {
     const [columns, setColumns] = useState([]);
     const [hoveredIndex, setHoveredIndex] = useState(null);
 
@@ -43,4 +43,4 @@ function Board() {
     );
 }
 
-export default Board;
+export default BoardCollection;

@@ -3,7 +3,6 @@
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { Button, Modal, TextInput } from "flowbite-react";
 import { useState } from "react";
-import NewCard from "./NewCard";
 
 export default function NewList() {
   const [openModal, setOpenModal] = useState();

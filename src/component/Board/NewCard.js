@@ -1,7 +1,7 @@
 "use client";
 
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
-import { Button, Label, Modal, TextInput } from "flowbite-react";
+import { Button, Modal, TextInput } from "flowbite-react";
 import { useState } from "react";
 
 export default function NewCard() {
