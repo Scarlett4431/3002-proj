@@ -1,19 +1,55 @@
 "use client";
 import React, { useState } from 'react';
+import PromptModal from '../Board/DeleteModal'; 
 
 function BoardCollection() {
     const [columns, setColumns] = useState([]);
+    const [columnToDelete, setColumnToDelete] = useState(null);
     const [hoveredIndex, setHoveredIndex] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [promptMessage, setPromptMessage] = useState('');
+    const [operationType, setOperationType] = useState(null); // 'add' or 'delete'
+
 
     const addColumn = () => {
-        const newColumnName = prompt('Add board title *');
-        if (newColumnName) {
-            setColumns(prevColumns => [...prevColumns, newColumnName]);
-        }
+        setOperationType('add');
+        setPromptMessage('Enter board title:');
+        setIsModalOpen(true);
     };
 
     const deleteColumn = (index) => {
-      setColumns(prevColumns => prevColumns.filter((_, colIndex) => colIndex !== index));
+        setColumns(prevColumns => prevColumns.filter((_, colIndex) => colIndex !== index));
+    };
+      
+
+    const handleDeleteClick = (index) => {
+        setOperationType('delete');
+        setColumnToDelete(index);
+        setPromptMessage("Are you sure you want to delete this board?");
+        setIsModalOpen(true);
+    };
+
+    const confirmDelete = () => {
+        deleteColumn(columnToDelete);
+        setIsModalOpen(false);
+        setColumnToDelete(null);
+    };
+
+    const cancelDelete = () => {
+        setIsModalOpen(false);
+        setColumnToDelete(null);
+    };
+
+    const confirmAction = (inputValue) => {
+        if (operationType === 'add') {
+            if (inputValue) {
+                setColumns(prevColumns => [...prevColumns, inputValue]);
+            }
+        } else if (operationType === 'delete') {
+            deleteColumn(columnToDelete);
+        }
+        setIsModalOpen(false);
+        setOperationType(null);
     };
 
     return (
@@ -30,15 +66,32 @@ function BoardCollection() {
                         <button style={{ display: 'block', maxWidth: '150px', whiteSpace: 'normal', overflowWrap: 'break-word' }} className="text-white">{col}</button>
                         {hoveredIndex === index && (
                             <button 
-                                onClick={() => deleteColumn(index)} 
+                                onClick={() => handleDeleteClick(index)} 
                                 className="absolute top-0 right-0 m-1 p-0 bg-red-500 text-white rounded hover:bg-red-600">
-                                X
+                                x
                             </button>
                         )}
                     </div>
                 ))}
             </div>
             <button onClick={addColumn}className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 block mx-auto">CREATE NEW BOARD</button>
+
+            <PromptModal 
+                open={isModalOpen} 
+                message={promptMessage} 
+                onConfirm={confirmDelete} 
+                onCancel={cancelDelete}
+                />
+
+            <PromptModal 
+                open={isModalOpen} 
+                message={promptMessage} 
+                onConfirm={confirmAction} 
+                onCancel={cancelDelete}
+                requiresInput={operationType === 'add'}
+                />
+
+
         </div>
     );
 }

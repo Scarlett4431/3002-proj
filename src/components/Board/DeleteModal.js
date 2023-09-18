@@ -1,47 +1,51 @@
-"use client";
-
 import { Button, Modal } from "flowbite-react";
-import { useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import { XCircleIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
 
-export default function DeleteModal() {
-  const [openModal, setOpenModal] = useState();
-  const props = { openModal, setOpenModal };
+export default function PromptModal({ open, message, onConfirm, onCancel, requiresInput }) {
+  const [inputValue, setInputValue] = useState('');
 
   return (
     <>
-      <button
-        className="text-red-500 hover:text-red-600"
-        onClick={() => props.setOpenModal("pop-up")}
-      >
-        <XCircleIcon className="h-10 w-10" />
-      </button>
       <Modal
-        show={props.openModal === "pop-up"}
+        show={open}
         size="md"
         popup
-        onClose={() => props.setOpenModal(undefined)}
+        onClose={onCancel}
       >
         <Modal.Header />
         <Modal.Body>
           <div className="text-center">
             <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
             <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-              Are you sure you want to delete this list?
+              {message}
             </h3>
-            <div className="flex justify-center gap-4">
+            {requiresInput && 
+              <input 
+                 type="text" 
+                 value={inputValue}
+                 onChange={(e) => setInputValue(e.target.value)}
+                 placeholder="Enter column name..."
+              />
+            }
+            <div className="flex justify-center gap-4 mt-4">
               <Button
-                color="failure"
-                onClick={() => props.setOpenModal(undefined)}
+                color="success"
+                onClick={() => {
+                  onConfirm(inputValue);
+                  setInputValue('');
+                }}
               >
-                Yes, I'm sure
+                Confirm
               </Button>
               <Button
                 color="gray"
-                onClick={() => props.setOpenModal(undefined)}
+                onClick={() => {
+                  onCancel();
+                  setInputValue('');
+                }}
               >
-                No, cancel
+                Cancel
               </Button>
             </div>
           </div>

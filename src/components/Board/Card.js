@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useState } from 'react';
 import { Draggable } from "react-beautiful-dnd";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
+import PromptModal from "./DeleteModal";
+
 
 function Card({ id, text, listID, index }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleDeleteCard = () => {
-    // TODO
+    setIsModalOpen(true);
+  };
+
+  const confirmDelete = () => {
+    // add logic
+    setIsModalOpen(false);
+  };
+
+  const cancelDelete = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -22,7 +35,7 @@ function Card({ id, text, listID, index }) {
               <p>{text}</p>
               <div className="flex items-end justify-end">
                 <button
-                  onClick={handleDeleteCard}
+                  onClick={handleDeleteCard} //shouldnt be handling delete event
                   className="hover:text-grey-900"
                 >
                   <CheckCircleIcon className="h-8 w-8" />
@@ -35,6 +48,12 @@ function Card({ id, text, listID, index }) {
                 </button>
               </div>
             </div>
+            <PromptModal 
+                open={isModalOpen} 
+                message="Are you sure you want to delete this card?" 
+                onConfirm={confirmDelete} 
+                onCancel={cancelDelete}
+            />
           </div>
         );
       }}
