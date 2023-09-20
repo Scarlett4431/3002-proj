@@ -157,7 +157,7 @@ function Board() {
                       title={list.title}
                       cards={list.cards}
                       listID={list.id}
-                      onDelete={deleteColumn}
+                      onDeleteList={deleteColumn}
                       onAddCard={addCard}
                       onDeleteCard={deleteCard}
                     ></List>
