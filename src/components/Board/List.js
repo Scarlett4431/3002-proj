@@ -2,8 +2,12 @@ import React from "react";
 import { Droppable } from "react-beautiful-dnd";
 import Card from "./Card";
 import NewCard from "./NewCard";
+import DeleteModal from "./DeleteModal"
+import { XCircleIcon } from "@heroicons/react/24/solid";
 
 function List({ cards, listID, title, index }) {
+  const handleDeleteList = () => {};
+
   return (
     <Droppable
       droppableId={listID}
@@ -38,6 +42,7 @@ function List({ cards, listID, title, index }) {
               : null}
             {provided.placeholder}
             <div className="flex items-end justify-end">
+              <DeleteModal/>
               <NewCard />
             </div>
           </div>
