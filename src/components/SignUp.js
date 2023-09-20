@@ -7,13 +7,15 @@ import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { HiOutlineLockClosed } from "react-icons/hi";
+
 import React, { useState } from "react";
-import { NavLink, Redirect } from "react-router-dom";
+import { connect, useDispatch } from "react-redux";
+import { NavLink, Navigate } from "react-router-dom";
 
 // const SignUp = ({ auth, history }) => {
 
-export default function SignUp(props) {
-  const redirect = <Redirect to="/" />;
+const SignUp = ({ auth, history }) => {
+  const redirect = <Navigate to="/" />;
 
   const [state, setState] = useState({
     displayName: "",
@@ -103,10 +105,17 @@ export default function SignUp(props) {
       </div>
     </Container>
   );
-  console.log(state.toFrontpage)
   if (state.toFrontpage) {
     return redirect;
   } else {
     return signUp;
   }
 }
+
+function mapStateToProps(state) {
+  return {
+      auth: state.auth
+  };
+}
+
+export default connect(mapStateToProps)(SignUp);

@@ -8,13 +8,18 @@ import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { HiOutlineLockClosed } from "react-icons/hi";
-import { NavLink, Redirect } from "react-router-dom";
+
+import { NavLink, Navigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import React, { useState } from "react";
 
-// needs to add support for page redirection
+import { loginUser } from "../actions";
+
 
 export default function SignIn(props) {
-  const redirect = <Redirect to="/" />;
+  
+  const redirect = <Navigate to="/" />;
+  const dispatch = useDispatch();
 
   const [state, setState] = useState({
     email: "",
@@ -33,10 +38,12 @@ export default function SignIn(props) {
 
   async function handleSignIn(e) {
     e.preventDefault();
+    console.log("Email: ", state.email)
+    dispatch(loginUser(state.email, state.password, props.history));
     setState({ toFrontpage: true });
   }
 
-  // get the status of the remember me chechbox
+  // get the status of the remember-me chechbox
   const setRememberMe = (e) => {
     setState({
       ...state,
@@ -108,9 +115,9 @@ export default function SignIn(props) {
       </div>
     </Container>
   );
-  console.log(state.toFrontpage)
+
   if (state.toFrontpage) {
-    
+    console.log("toFrontpage", state.toFrontpage);
     return redirect;
   } else {
     return signIn;

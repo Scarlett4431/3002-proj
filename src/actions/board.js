@@ -1,4 +1,4 @@
-import { myFirebase } from "../firebase/firebase";
+// import { myFirebase } from "../firebase/firebase";
 
 export const GET_BOARD_REQUEST = "GET_BOARD_REQUEST";
 export const GET_BOARD_SUCCESS = "GET_BOARD_SUCCESS";
@@ -118,44 +118,52 @@ export const sort = (
 };
 
 export const updateBoard = (board) => dispatch => {
-    const user = myFirebase.auth().currentUser;
-    if (!user) {
+    if (false) {
+        console.log("updateBoardError");
         dispatch(updateBoardError());
     } else {
+        console.log("requestUpdateBoard");
         dispatch(requestUpdateBoard());
-        myFirebase.database()
-            .ref('/board/')
-            .child(board.boardId)
-            .set(board).then(() => {
-                dispatch(receiveUpdatedBoard());
-            }).catch((err) => {
-                dispatch(updateBoardError());
-            });
+
+    // const user = myFirebase.auth().currentUser;
+    // if (!user) {
+    //     dispatch(updateBoardError());
+    // } else {
+    //     dispatch(requestUpdateBoard());
+        // myFirebase.database()
+        //     .ref('/board/')
+        //     .child(board.boardId)
+        //     .set(board).then(() => {
+        //         dispatch(receiveUpdatedBoard());
+        //     }).catch((err) => {
+        //         dispatch(updateBoardError());
+        //     });
     }
 };
 
 export const loadBoard = (uid) => dispatch => {
+    console.log("requestBoard");
     dispatch(requestBoard());
 
-    myFirebase.database().ref('/board/' + uid).once('value').then(function (snapshot) {
-        const board = {
-            boardId: snapshot.val().boardId,
-            lists: snapshot.val().lists,
-        }
-        dispatch(receiveBoard(board));
-    }).catch((err) => {
-        dispatch(receiveBoardError(uid));
-    });
+    // myFirebase.database().ref('/board/' + uid).once('value').then(function (snapshot) {
+    //     const board = {
+    //         boardId: snapshot.val().boardId,
+    //         lists: snapshot.val().lists,
+    //     }
+    //     dispatch(receiveBoard(board));
+    // }).catch((err) => {
+    //     dispatch(receiveBoardError(uid));
+    // });
 };
 
 export const listenBoard = (uid) => dispatch => {
-    myFirebase.database().ref('/board/' + uid).on('value', function (snapshot) {
-        if (snapshot.val() != null) {
-            const board = {
-                boardId: snapshot.val().boardId,
-                lists: snapshot.val().lists,
-            }
-            dispatch(receiveBoard(board));
-        }
-    });
+    // myFirebase.database().ref('/board/' + uid).on('value', function (snapshot) {
+    //     if (snapshot.val() != null) {
+    //         const board = {
+    //             boardId: snapshot.val().boardId,
+    //             lists: snapshot.val().lists,
+    //         }
+    //         dispatch(receiveBoard(board));
+    //     }
+    // });
 };

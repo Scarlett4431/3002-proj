@@ -1,24 +1,18 @@
 import React from "react";
-import { Redirect, Route } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({
-  component: Component,
+  element: Element,
   isAuthenticated,
   isLoading,
-  ...rest
-}) => (
-  <Route
-    {...rest}
-    render={(props) =>
-      isLoading ? (
+}) => {
+  return isLoading ? (
         <div />
       ) : isAuthenticated ? (
-        <Component {...props} />
+        <Element />
       ) : (
-        <Redirect to="/signin" />
-      )
-    }
-  />
-);
+        <Navigate to="/signin" />
+      );
+  };
 
 export default ProtectedRoute;
