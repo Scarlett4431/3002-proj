@@ -8,7 +8,6 @@ export default function InviteCard() {
   const [openModal, setOpenModal] = useState();
   const [email, setEmail] = useState("");
   const props = { openModal, setOpenModal, email, setEmail };
-//class="bg-gray-200 dark:bg-gray-900" 
   return (
     <>
       <Button size="xl" gradientDuoTone="greenToBlue" onClick={() => props.setOpenModal("form-elements")}>

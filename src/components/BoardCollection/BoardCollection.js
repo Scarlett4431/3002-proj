@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import PromptModal from '../Board/DeleteModal'; 
+import PromptModal from '../PromptModal'; 
 
 function BoardCollection() {
     const [columns, setColumns] = useState([]);
@@ -74,7 +74,7 @@ function BoardCollection() {
                     </div>
                 ))}
             </div>
-            <button onClick={addColumn}className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 block mx-auto">CREATE NEW BOARD</button>
+            <button onClick={addColumn} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 block mx-auto">CREATE NEW BOARD</button>
 
             <PromptModal 
                 open={isModalOpen} 

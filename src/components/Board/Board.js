@@ -1,8 +1,10 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import List from "./List";
 import BoardBar from "../BoardMenu/BoardBar";
-import NewList from "./NewList";
+import PromptModal from "../PromptModal";
+import { PlusCircleIcon } from "@heroicons/react/24/solid";
+import uuid from "react-uuid";
 
 const board = {
   boardId: "-NdjpaVH4vldXr8jyEmP",
@@ -40,7 +42,80 @@ const board = {
   ],
 };
 
-class Board extends Component {
+function Board() {
+  const [columns, setColumns] = useState(board.lists);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [promptMessage, setPromptMessage] = useState("");
+
+  const deleteColumn = (index) => {
+    setColumns((prevColumns) =>
+      prevColumns.filter((_, colIndex) => colIndex !== index)
+    );
+  };
+
+  const cancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const confirmAction = (inputValue) => {
+    if (inputValue) {
+      console.log(inputValue);
+      console.log(columns);
+      setColumns((prevColumns) => [
+        ...prevColumns,
+        {
+          id: uuid(),
+          title: inputValue,
+        },
+      ]);
+    }
+    setIsModalOpen(false);
+  };
+
+  const deleteCard = (cardID, listID) => {
+    setColumns((lists) => {
+      lists.map((list) => {
+        if (list.id === listID) {
+          const cardsList = [...list.cards];
+          list.cards.forEach(function (card, index) {
+            if (card.id === cardID) {
+              cardsList.splice(index, 1);
+            }
+          });
+          return { ...list, cards: cardsList };
+        } else {
+          return list;
+        }
+      });
+    });
+  };
+
+  const addCard = (inputValue, listIndex) => {
+    if ((inputValue, listIndex)) {
+      const newCard = {
+        text: inputValue,
+        id: uuid(),
+      };
+      setColumns((lists) =>
+        lists.map((list) => {
+          if (list.id === listIndex) {
+            if (list.cards) {
+              return { ...list, cards: [...list.cards, newCard] };
+            } else {
+              return { ...list, cards: [newCard] };
+            }
+          } else {
+            return list;
+          }
+        })
+      );
+    }
+  };
+
+  const addList = () => {
+    setPromptMessage("Enter list title:");
+    setIsModalOpen(true);
+  };
   // constructor(props) {
   //   super(props);
   //   const boardID = this.props.match.params.id;
@@ -52,49 +127,68 @@ class Board extends Component {
   //   this.props.listenBoard(boardID);
   // }
 
-  // onDragEnd = (result) => {
-  //   const { destination, source, draggableId, type } = result;
-  //   if (!destination) {
-  //     return;
-  //   }
-  //   this.props.sort(
-  //     source.droppableId,
-  //     destination.droppableId,
-  //     source.index,
-  //     destination.index,
-  //     draggableId,
-  //     type
-  //   );
-  //   this.props.updateBoard(this.props.board);
-  // };
+  const onDragEnd = (result) => {
+    const { destination, source, draggableId, type } = result;
+    if (!destination) {
+      return;
+    }
+    // sort(
+    //   source.droppableId,
+    //   destination.droppableId,
+    //   source.index,
+    //   destination.index,
+    //   draggableId,
+    //   type
+    // );
+    // updateBoard(this.props.board);
+  };
 
-  render() {
-    const { lists } = board;
-    return (
-      <div>
-        <BoardBar />
-        <div className="ml-12 mr-12">
-          <DragDropContext onDragEnd={this.onDragEnd}>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-5 mx-auto">
-              {lists != null
-                ? lists.map((list, index) => (
-                    <div key={list.id}>
-                      <List
-                        index={index}
-                        title={list.title}
-                        cards={list.cards}
-                        listID={list.id}
-                      ></List>
-                    </div>
-                  ))
-                : null}
-              <NewList />
+  return (
+    <div>
+      <BoardBar />
+      <div className="ml-12 mr-12">
+        <DragDropContext onDragEnd={onDragEnd}>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-5 mx-auto">
+            {columns != null
+              ? columns.map((list, index) => (
+                  <div key={list.id}>
+                    <List
+                      index={index}
+                      title={list.title}
+                      cards={list.cards}
+                      listID={list.id}
+                      onDelete={deleteColumn}
+                      onAddCard={addCard}
+                      onDeleteCard={deleteCard}
+                    ></List>
+                  </div>
+                ))
+              : null}
+            <div className={"p-2 rounded-2xl shadow-sm"}>
+              <h2 className="text-blue-700 flex justify-between font-bold text-xl p-2s">
+                Add a List
+              </h2>
+              <div className="flex items-end justify-end">
+                <button
+                  className="text-blue-500 hover:text-blue-600 mt-3"
+                  onClick={addList}
+                >
+                  <PlusCircleIcon className="h-10 w-10" />
+                </button>
+              </div>
             </div>
-          </DragDropContext>
-        </div>
+          </div>
+          <PromptModal
+            open={isModalOpen}
+            message={promptMessage}
+            onConfirm={confirmAction}
+            onCancel={cancel}
+            requiresInput
+          />
+        </DragDropContext>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Board;

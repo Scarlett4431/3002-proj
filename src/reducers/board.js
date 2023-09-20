@@ -58,26 +58,26 @@ function board(state = initialState, action) {
         lists: newLists,
       };
     case ADD_CARD:
-      const newCard = {
-        text: action.payload.text,
-        id: uuid(),
-      };
-      const newLists_2 = state.lists.map((list) => {
-        if (list.id === action.payload.listID) {
-          if (list.cards) {
-            return {
-              ...list,
-              cards: [...list.cards, newCard],
-            };
-          } else {
-            return list;
-          }
-        }
-      });
-      return {
-        ...state,
-        lists: newLists_2,
-      };
+      // const newCard = {
+      //   text: action.payload.text,
+      //   id: uuid(),
+      // };
+      // const newLists_2 = state.lists.map((list) => {
+      //   if (list.id === action.payload.listID) {
+      //     if (list.cards) {
+      //       return {
+      //         ...list,
+      //         cards: [...list.cards, newCard],
+      //       };
+      //     } else {
+      //       return list;
+      //     }
+      //   }
+      // });
+      // return {
+      //   ...state,
+      //   lists: newLists_2,
+      // };
     case DELETE_CARD:
       const newLists_3 = state.lists.map((list) => {
         if (list.id === action.payload.listID) {
