@@ -12,14 +12,20 @@ import configureStore from "./configureStore";
 // create redux store
 const store = configureStore();
 
-export default function App(props) {
+export default function App() {
 
   return (
     <Provider store={store}>
+      <h1 align='center'>{"isAuth: " + store.getState().auth.isAuthenticated}</h1>
+      <h1 align='center'>{"isLoad: " + store.getState().auth.isLoading}</h1>
       <BrowserRouter>
+        <NavbarMenu
+            isAuthenticated={store.getState().auth.isAuthenticated}
+            isLoading={store.getState().auth.isLoading}
+          />
         <Routes>
           <Route
-              path="/"
+              exact path="/"
               element={
                 <ProtectedRoute 
                   isAuthenticated={store.getState().auth.isAuthenticated}

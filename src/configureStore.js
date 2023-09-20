@@ -15,6 +15,8 @@ export default function configureStore(persistedState) {
         )
     );
 
+    // to check whether the saved account info is correct
+    console.log("Verify Store");
     store.dispatch(verifyAuth());
     return store;
 }

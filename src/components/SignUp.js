@@ -8,14 +8,19 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { HiOutlineLockClosed } from "react-icons/hi";
 
+import { registerUser } from "../actions/";
+
 import React, { useState } from "react";
 import { connect, useDispatch } from "react-redux";
-import { NavLink, Navigate } from "react-router-dom";
+import { NavLink, Navigate, useNavigate } from "react-router-dom";
 
 // const SignUp = ({ auth, history }) => {
 
-const SignUp = ({ auth, history }) => {
+const SignUp = () => {
+
   const redirect = <Navigate to="/" />;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [state, setState] = useState({
     displayName: "",
@@ -35,6 +40,7 @@ const SignUp = ({ auth, history }) => {
   // save for future page redirections
   const handleSignUp = (e) => {
     e.preventDefault();
+    dispatch(registerUser(state.email, state.password, state.displayName, () => {navigate("/");}));
     setState({ toFrontpage: true });
   };
 
@@ -106,6 +112,7 @@ const SignUp = ({ auth, history }) => {
     </Container>
   );
   if (state.toFrontpage) {
+    console.log("Redirect from SignUp to frontpage")
     return redirect;
   } else {
     return signUp;

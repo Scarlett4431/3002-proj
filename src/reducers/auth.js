@@ -33,6 +33,7 @@ function auth(state = initialState, action) {
                 errorMessage: '',
             };
         case LOGIN_SUCCESS:
+            console.log("R:login succuess");
             return {
                 ...state,
                 isLoading: false,

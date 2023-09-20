@@ -84,9 +84,10 @@ const verifySuccess = () => {
     };
 };
 
-export const loginUser = (email, password, history) => async dispatch => {
+export const loginUser = (email, password, callback) => async dispatch => {
 
     // code to check frontend logic
+    console.log("LoginUser")
     dispatch(requestLogin());
     console.log('requestLogin');
     dispatch(receiveLogin({
@@ -94,6 +95,7 @@ export const loginUser = (email, password, history) => async dispatch => {
         email: 'rdl@nb.com',
     }));
     console.log('receiveLogin');
+    callback();
 
     // code with firebase backend
 
@@ -103,7 +105,7 @@ export const loginUser = (email, password, history) => async dispatch => {
     //     .signInWithEmailAndPassword(email, password)
     //     .then(user => {
     //         dispatch(receiveLogin(user));
-    //         history.push("/");
+    //         navigate("/");
     //     })
     //     .catch(error => {
     //         //Do something with the error if you want!
@@ -114,10 +116,13 @@ export const loginUser = (email, password, history) => async dispatch => {
 export const registerUser = (email, password, displayName, callback) => async dispatch => {
 
     // code to check frontend logic
+    console.log(displayName, email, password);
+    console.log("Register User")
     dispatch(requestRegister());
     console.log('requestRegister');
     dispatch(receiveRegister());
     console.log('receiveRegister');
+    callback();
 
     // code with firebase backend
 
@@ -174,15 +179,19 @@ export const logoutUser = () => async dispatch => {
 export const verifyAuth = () => async dispatch => {
 
     // code to check frontend logic
-    dispatch(verifyRequest());
-    console.log('verifyRequest');
-    dispatch(receiveLogin({
-        name: 'Ringo',
-        email: 'rdl@nb.com',
-    }));
-    console.log('receiveLogin');
-    dispatch(verifySuccess());
-    console.log('verifySuccess');
+    // currently always assume saved account info auth fail
+
+    console.log("verifyAuth");
+    dispatch(loginError());
+    // dispatch(verifyRequest());
+    // console.log('verifyRequest');
+    // dispatch(receiveLogin({
+    //     name: 'Ringo',
+    //     email: 'rdl@nb.com',
+    // }));
+    // console.log('receiveLogin');
+    // dispatch(verifySuccess());
+    // console.log('verifySuccess');
 
     // code with firebase backend
     // dispatch(verifyRequest());

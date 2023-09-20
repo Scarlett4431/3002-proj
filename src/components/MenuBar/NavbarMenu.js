@@ -5,7 +5,10 @@ import UserDropdown from "./UserDropdown";
 import SearchBox from "./SearchBox";
 import { HiHome } from "react-icons/hi";
 
-export default function NavbaMenu() {
+export default function NavbaMenu(props) {
+
+  const { isAuthenticated, isLoading } = props;
+
   return (
     <Navbar fluid rounded>
       <Navbar.Brand>
@@ -17,8 +20,8 @@ export default function NavbaMenu() {
         </span>
       </Navbar.Collapse>
       <div className="flex md:order-2">
-        <SearchBox />
-        <UserDropdown />
+        {/* <SearchBox /> */}
+         <UserDropdown isAuthenticated={isAuthenticated} isLoading={isLoading}/>
         <Navbar.Toggle />
       </div>
     </Navbar>

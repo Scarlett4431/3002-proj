@@ -9,16 +9,17 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { HiOutlineLockClosed } from "react-icons/hi";
 
-import { NavLink, Navigate } from "react-router-dom";
+import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import React, { useState } from "react";
 
 import { loginUser } from "../actions";
 
 
-export default function SignIn(props) {
+export default function SignIn() {
   
   const redirect = <Navigate to="/" />;
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [state, setState] = useState({
@@ -30,6 +31,7 @@ export default function SignIn(props) {
 
   // get the content of the textbox
   const onChange = (e) => {
+    e.preventDefault();
     setState({
       ...state,
       [e.target.id]: e.target.value,
@@ -38,8 +40,11 @@ export default function SignIn(props) {
 
   async function handleSignIn(e) {
     e.preventDefault();
-    console.log("Email: ", state.email)
-    dispatch(loginUser(state.email, state.password, props.history));
+    // for debugging, need to delete after test
+    console.log("Email: ", state.email);
+    console.log("Password: ", state.password);
+    dispatch(loginUser(state.email, state.password, () => {navigate("/")}));
+    console.log("PrepareRedirect");
     setState({ toFrontpage: true });
   }
 
@@ -117,7 +122,7 @@ export default function SignIn(props) {
   );
 
   if (state.toFrontpage) {
-    console.log("toFrontpage", state.toFrontpage);
+    console.log("Redirect from SignIn to frontpage");
     return redirect;
   } else {
     return signIn;
