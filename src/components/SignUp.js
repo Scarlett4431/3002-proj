@@ -11,16 +11,15 @@ import { HiOutlineLockClosed } from "react-icons/hi";
 import { registerUser } from "../actions/";
 
 import React, { useState } from "react";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Navigate, useNavigate } from "react-router-dom";
 
-// const SignUp = ({ auth, history }) => {
-
-const SignUp = () => {
+export default function SignUp(){
 
   const redirect = <Navigate to="/" />;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const auth = useSelector((state) => state.auth);
 
   const [state, setState] = useState({
     displayName: "",
@@ -31,6 +30,7 @@ const SignUp = () => {
 
   // get the content of the textbox
   const onChange = (e) => {
+    console.log(state)
     setState({
       ...state,
       [e.target.id]: e.target.value,
@@ -40,7 +40,8 @@ const SignUp = () => {
   // save for future page redirections
   const handleSignUp = (e) => {
     e.preventDefault();
-    dispatch(registerUser(state.email, state.password, state.displayName, () => {navigate("/");}));
+    // dispatch(registerUser(state.email, state.password, state.displayName, () => {navigate("/signin");}));
+    dispatch(registerUser(state.email, state.password, state.displayName, () => {}));
     setState({ toFrontpage: true });
   };
 
@@ -96,7 +97,7 @@ const SignUp = () => {
           </Grid>
           {/* Display error message, saved for future */}
           <div style={{ margin: "10px" }} />
-          {/* <div style={{ marginTop: '10px', color: 'red', textAlign: 'center' }}>{"Error Message"}</div> */}
+          <div style={{ marginTop: '10px', color: 'red', textAlign: 'center' }}>{auth.errorMessage}</div>
           <Button type="submit" fullWidth variant="contained" color="primary">
             Sign Up
           </Button>
@@ -118,11 +119,3 @@ const SignUp = () => {
     return signUp;
   }
 }
-
-function mapStateToProps(state) {
-  return {
-      auth: state.auth
-  };
-}
-
-export default connect(mapStateToProps)(SignUp);

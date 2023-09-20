@@ -120,7 +120,10 @@ export const registerUser = (email, password, displayName, callback) => async di
     console.log("Register User")
     dispatch(requestRegister());
     console.log('requestRegister');
-    dispatch(receiveRegister());
+    dispatch(receiveRegister({
+        name: 'Ringo',
+        email: 'rdl@nb.com',
+    }));
     console.log('receiveRegister');
     callback();
 

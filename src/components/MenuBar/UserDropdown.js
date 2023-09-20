@@ -5,7 +5,11 @@ import { logoutUser } from "../../actions";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 
-function UserDropdown(props) {
+import { useSelector } from "react-redux";
+
+export default function UserDropdown() {
+
+  const auth = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -15,7 +19,7 @@ function UserDropdown(props) {
     navigate('/signin');
   };
 
-  if(props.isAuthenticated && !props.isLoading){
+  if(auth.isAuthenticated && !auth.isLoading){
     return (
       <div>
         <Dropdown
@@ -29,9 +33,9 @@ function UserDropdown(props) {
           }
         >
           <Dropdown.Header>
-            <span className="block text-sm">Bonnie Green</span>
+            <span className="block text-sm">{auth.user.name}</span>
             <span className="block truncate text-sm font-medium">
-              name@flowbite.com
+              {auth.user.email}
             </span>
           </Dropdown.Header>
           {/* <Dropdown.Item>Dashboard</Dropdown.Item>
@@ -43,8 +47,7 @@ function UserDropdown(props) {
       </div>
     );
   }
-  else return <div />;
-
+  else{
+    return <div />;
+  }
 }
-
-export default UserDropdown;

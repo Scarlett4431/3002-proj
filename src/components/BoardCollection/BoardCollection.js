@@ -2,7 +2,13 @@
 import React, { useState } from 'react';
 import PromptModal from '../Board/DeleteModal'; 
 
-function BoardCollection() {
+import { useDispatch, useSelector } from "react-redux"
+import { Navigate, useNavigate } from "react-router-dom";;
+
+export default function BoardCollection() {
+
+    const auth = useSelector((state) => state.auth);
+
     const [columns, setColumns] = useState([]);
     const [columnToDelete, setColumnToDelete] = useState(null);
     const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -52,48 +58,54 @@ function BoardCollection() {
         setOperationType(null);
     };
 
-    return (
-        <div className="p-10 bg-gray-200 min-h-75vh">
-            <h2 className="text-2xl mb-4 text-center">YOUR BOARDS</h2>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                {columns.map((col, index) => (
-                    <div 
-                        key={index} 
-                        className="p-10 border rounded shadow bg-green-500 hover:bg-green-600 relative mx-auto flex items-center justify-center"
-                        onMouseEnter={() => setHoveredIndex(index)}
-                        onMouseLeave={() => setHoveredIndex(null)}
-                    >
-                        <button style={{ display: 'block', maxWidth: '150px', whiteSpace: 'normal', overflowWrap: 'break-word' }} className="text-white">{col}</button>
-                        {hoveredIndex === index && (
-                            <button 
-                                onClick={() => handleDeleteClick(index)} 
-                                className="absolute top-0 right-0 m-1 p-0 bg-red-500 text-white rounded hover:bg-red-600">
-                                x
-                            </button>
-                        )}
-                    </div>
-                ))}
+    if(auth.isLoading){
+        return (<div/ >);
+    }
+    else if(auth.isAuthenticated){
+        return (
+            <div className="p-10 bg-gray-200 min-h-75vh">
+                <h2 className="text-2xl mb-4 text-center">YOUR BOARDS</h2>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                    {columns.map((col, index) => (
+                        <div 
+                            key={index} 
+                            className="p-10 border rounded shadow bg-green-500 hover:bg-green-600 relative mx-auto flex items-center justify-center"
+                            onMouseEnter={() => setHoveredIndex(index)}
+                            onMouseLeave={() => setHoveredIndex(null)}
+                        >
+                            <button style={{ display: 'block', maxWidth: '150px', whiteSpace: 'normal', overflowWrap: 'break-word' }} className="text-white">{col}</button>
+                            {hoveredIndex === index && (
+                                <button 
+                                    onClick={() => handleDeleteClick(index)} 
+                                    className="absolute top-0 right-0 m-1 p-0 bg-red-500 text-white rounded hover:bg-red-600">
+                                    x
+                                </button>
+                            )}
+                        </div>
+                    ))}
+                </div>
+                <button onClick={addColumn}className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 block mx-auto">CREATE NEW BOARD</button>
+
+                <PromptModal 
+                    open={isModalOpen} 
+                    message={promptMessage} 
+                    onConfirm={confirmDelete} 
+                    onCancel={cancelDelete}
+                    />
+
+                <PromptModal 
+                    open={isModalOpen} 
+                    message={promptMessage} 
+                    onConfirm={confirmAction} 
+                    onCancel={cancelDelete}
+                    requiresInput={operationType === 'add'}
+                    />
+
+
             </div>
-            <button onClick={addColumn}className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 block mx-auto">CREATE NEW BOARD</button>
-
-            <PromptModal 
-                open={isModalOpen} 
-                message={promptMessage} 
-                onConfirm={confirmDelete} 
-                onCancel={cancelDelete}
-                />
-
-            <PromptModal 
-                open={isModalOpen} 
-                message={promptMessage} 
-                onConfirm={confirmAction} 
-                onCancel={cancelDelete}
-                requiresInput={operationType === 'add'}
-                />
-
-
-        </div>
-    );
+        );
+    }
+    else{
+        return (<Navigate to='/signin' />);
+    }
 }
-
-export default BoardCollection;
