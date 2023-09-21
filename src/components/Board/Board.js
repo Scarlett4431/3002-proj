@@ -6,39 +6,44 @@ import NewList from "./NewList";
 
 const board = {
   boardId: "-NdjpaVH4vldXr8jyEmP",
-  lists: [
-    {
-      id: "64f9d187d213b75a59bc264rg",
-      title: "Todo",
-    },
-    {
-      id: "64f9d111d213b75a59bc2649",
-      title: "woqu",
-    },
-    {
-      id: "64f9d187d213b75a59bc264a",
-      title: "test",
-    },
-    {
-      cards: [
-        {
-          id: "64f9d06ad213b75a59bc2648",
-          text: "123",
-        },
-        {
-          id: "64f9d06ad213gffg9bc2648",
-          text: "456",
-        },
-        {
-          id: "64f9d06adgfrg75a59bc2648",
-          text: "789",
-        },
-      ],
-      id: "64f9d187d213b75a59bc264agrn",
-      title: "Todo",
-    },
-  ],
+  lists: [],
 };
+
+// const board = {
+//   boardId: "-NdjpaVH4vldXr8jyEmP",
+//   lists: [
+//     {
+//       id: "64f9d187d213b75a59bc264rg",
+//       title: "Todo",
+//     },
+//     {
+//       id: "64f9d111d213b75a59bc2649",
+//       title: "woqu",
+//     },
+//     {
+//       id: "64f9d187d213b75a59bc264a",
+//       title: "test",
+//     },
+//     {
+//       cards: [
+//         {
+//           id: "64f9d06ad213b75a59bc2648",
+//           text: "123",
+//         },
+//         {
+//           id: "64f9d06ad213gffg9bc2648",
+//           text: "456",
+//         },
+//         {
+//           id: "64f9d06adgfrg75a59bc2648",
+//           text: "789",
+//         },
+//       ],
+//       id: "64f9d187d213b75a59bc264agrn",
+//       title: "Todo",
+//     },
+//   ],
+// };
 
 class Board extends Component {
   // constructor(props) {
@@ -72,7 +77,7 @@ class Board extends Component {
     const { lists } = board;
     return (
       <div>
-        <BoardBar />
+        {/* <BoardBar />
         <div className="ml-12 mr-12">
           <DragDropContext onDragEnd={this.onDragEnd}>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-5 mx-auto">
@@ -91,10 +96,10 @@ class Board extends Component {
               <NewList />
             </div>
           </DragDropContext>
-        </div>
+        </div> */}
       </div>
     );
   }
-}
+};
 
 export default Board;
