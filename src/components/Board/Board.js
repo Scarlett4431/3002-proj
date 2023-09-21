@@ -8,6 +8,7 @@ import uuid from "react-uuid";
 
 const board = {
   boardId: "-NdjpaVH4vldXr8jyEmP",
+  title: "123",
   lists: [
     {
       id: "64f9d187d213b75a59bc264rg",
@@ -44,14 +45,12 @@ const board = {
 
 function Board() {
   const [columns, setColumns] = useState(board.lists);
+  const [title, setTitle] = useState(board.title);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [promptMessage, setPromptMessage] = useState("");
 
-  // const deleteColumn = (index) => {
-  //   setColumns((prevColumns) =>
-  //     prevColumns.filter((_, colIndex) => colIndex !== index)
-  //   );
-  // };
+  const handleChangeBoardName = (inputValue) => {
+    setTitle(inputValue);
+  };
 
   const deleteColumn = (listID) => {
     setColumns((lists) => {
@@ -68,10 +67,10 @@ function Board() {
     setIsModalOpen(false);
   };
 
-  const confirmAction = (inputValue) => {
+  const confirmAddLists = (inputValue) => {
     if (inputValue) {
-      setColumns((prevColumns) => [
-        ...prevColumns,
+      setColumns((lists) => [
+        ...lists,
         {
           id: uuid(),
           title: inputValue,
@@ -123,7 +122,6 @@ function Board() {
   };
 
   const addList = () => {
-    setPromptMessage("Enter list title:");
     setIsModalOpen(true);
   };
   // constructor(props) {
@@ -155,7 +153,7 @@ function Board() {
 
   return (
     <div>
-      <BoardBar />
+      <BoardBar title={title} onChangeBoardTitle={handleChangeBoardName}/>
       <div className="ml-12 mr-12">
         <DragDropContext onDragEnd={onDragEnd}>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-5 mx-auto">
@@ -189,9 +187,10 @@ function Board() {
             </div>
           </div>
           <PromptModal
+            placeholder={""}
             open={isModalOpen}
-            message={promptMessage}
-            onConfirm={confirmAction}
+            message={"Enter list title:"}
+            onConfirm={confirmAddLists}
             onCancel={cancel}
             requiresInput
           />

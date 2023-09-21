@@ -6,7 +6,6 @@ import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 
 function List({ cards, listID, title, index, onDeleteList, onAddCard, onDeleteCard}) {
-  const [columns, setColumns] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [promptMessage, setPromptMessage] = useState("");
   const [columnToDelete, setColumnToDelete] = useState(null);
