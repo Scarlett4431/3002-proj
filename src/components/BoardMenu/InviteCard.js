@@ -29,6 +29,8 @@ function InviteCard() {
       </Button>
       <PromptModal
         open={isModalOpen}
+        type={"Invite"}
+        placeholder={"Example@gmail.com"}
         message={promptMessage}
         onConfirm={confirmAction}
         onCancel={cancel}
