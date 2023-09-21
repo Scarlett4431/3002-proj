@@ -153,7 +153,7 @@ function Board() {
 
   return (
     <div>
-      <BoardBar title={title} onChangeBoardTitle={handleChangeBoardName}/>
+      <BoardBar title={title} onChangeBoardTitle={handleChangeBoardName} />
       <div className="ml-12 mr-12">
         <DragDropContext onDragEnd={onDragEnd}>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-5 mx-auto">
