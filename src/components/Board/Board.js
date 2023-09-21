@@ -101,7 +101,7 @@ function Board() {
   };
 
   const addCard = (inputValue, listIndex) => {
-    if ((inputValue, listIndex)) {
+    if (inputValue) {
       const newCard = {
         text: inputValue,
         id: uuid(),
