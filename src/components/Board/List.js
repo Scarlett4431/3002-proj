@@ -19,9 +19,9 @@ function List({ cards, listID, title, index, onDeleteList, onAddCard, onDeleteCa
   };
 
 
-  const handleDeleteClick = (index) => {
+  const handleDeleteClick = (listID) => {
     setOperationType("delete");
-    setColumnToDelete(index);
+    setColumnToDelete(listID);
     setPromptMessage("Are you sure you want to delete this list?");
     setIsModalOpen(true);
   };
@@ -84,7 +84,7 @@ function List({ cards, listID, title, index, onDeleteList, onAddCard, onDeleteCa
                 <PlusCircleIcon className="h-10 w-10" />
               </button>
               <button
-                onClick={() => handleDeleteClick(index)}
+                onClick={() => handleDeleteClick(listID)}
                 className="text-red-500 hover:text-red-600"
               >
                 <XCircleIcon className="h-10 w-810" />

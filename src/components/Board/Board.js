@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import List from "./List";
 import BoardBar from "../BoardMenu/BoardBar";
@@ -47,10 +47,21 @@ function Board() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [promptMessage, setPromptMessage] = useState("");
 
-  const deleteColumn = (index) => {
-    setColumns((prevColumns) =>
-      prevColumns.filter((_, colIndex) => colIndex !== index)
-    );
+  // const deleteColumn = (index) => {
+  //   setColumns((prevColumns) =>
+  //     prevColumns.filter((_, colIndex) => colIndex !== index)
+  //   );
+  // };
+
+  const deleteColumn = (listID) => {
+    setColumns((lists) => {
+      lists.forEach(function (list, index) {
+        if (list.id === listID) {
+          lists.splice(index, 1);
+        }
+      });
+      return [...lists];
+    });
   };
 
   const cancel = () => {
@@ -59,8 +70,6 @@ function Board() {
 
   const confirmAction = (inputValue) => {
     if (inputValue) {
-      console.log(inputValue);
-      console.log(columns);
       setColumns((prevColumns) => [
         ...prevColumns,
         {
@@ -74,7 +83,7 @@ function Board() {
 
   const deleteCard = (cardID, listID) => {
     setColumns((lists) => {
-      lists.map((list) => {
+      lists = lists.map((list) => {
         if (list.id === listID) {
           const cardsList = [...list.cards];
           list.cards.forEach(function (card, index) {
@@ -87,6 +96,7 @@ function Board() {
           return list;
         }
       });
+      return [...lists];
     });
   };
 
