@@ -1,16 +1,17 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import { Button } from "flowbite-react";
 import { HiUserCircle } from "react-icons/hi";
 import PromptModal from "../PromptModal";
+import { addUserToBoard } from "../../actions";
+import { useDispatch } from "react-redux";
 
-function InviteCard() {
+function InviteCard({boardID}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [promptMessage, setPromptMessage] = useState("");
-
+  const dispatch = useDispatch();
   const cancel = () => {
     setIsModalOpen(false);
   };
-
 
   const inviteFriend = () => {
     setPromptMessage("Enter email of the friend");
@@ -19,6 +20,10 @@ function InviteCard() {
 
   const confirmAction = (inputValue) => {
     setIsModalOpen(false);
+    //todo
+    if (inputValue.length > 0 && inputValue.length < 50) {
+      dispatch(addUserToBoard(inputValue, boardID));
+  }
   };
 
   return (

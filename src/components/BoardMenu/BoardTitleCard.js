@@ -1,11 +1,13 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import { Button } from "flowbite-react";
 import { HiAdjustments } from "react-icons/hi";
 import PromptModal from "../PromptModal";
-function BoardTitleCard({title, onChangeBoardTitle}) {
+import { changeBoardTitle, updateBoard } from "../../actions";
+import { useDispatch } from "react-redux";
+function BoardTitleCard({ title }) {
+  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [promptMessage, setPromptMessage] = useState("");
-
   const cancel = () => {
     setIsModalOpen(false);
   };
@@ -16,17 +18,16 @@ function BoardTitleCard({title, onChangeBoardTitle}) {
   };
 
   const confirmAction = (inputValue) => {
-    onChangeBoardTitle(inputValue);
+    if (inputValue.length > 0 && inputValue.length < 30) {
+      dispatch(changeBoardTitle(inputValue));
+      dispatch(updateBoard());
+    }
     setIsModalOpen(false);
   };
 
   return (
     <div>
-      <Button
-        size="xl"
-        gradientDuoTone="greenToBlue"
-        onClick={editBoard}
-      >
+      <Button size="xl" gradientDuoTone="greenToBlue" onClick={editBoard}>
         <HiAdjustments className="mr-3 h-4 w-4" />
         <p>{title}</p>
       </Button>

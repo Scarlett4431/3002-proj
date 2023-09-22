@@ -2,21 +2,23 @@ import React, { useState } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import Card from "./Card";
 import PromptModal from "../PromptModal";
+import { useDispatch} from "react-redux";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { XCircleIcon } from "@heroicons/react/24/solid";
+import { deleteList, updateBoard, addCard } from "../../actions";
 
-function List({ cards, listID, title, index, onDeleteList, onAddCard, onDeleteCard}) {
+function List({ cards, listID, title, index}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [promptMessage, setPromptMessage] = useState("");
   const [columnToDelete, setColumnToDelete] = useState(null);
   const [operationType, setOperationType] = useState(null); // 'add' or 'delete'
-
+  const dispatch = useDispatch();
   const addColumn = () => {
     setOperationType("add");
     setPromptMessage("Enter card title:");
     setIsModalOpen(true);
   };
-
+;
 
   const handleDeleteClick = (listID) => {
     setOperationType("delete");
@@ -33,9 +35,11 @@ function List({ cards, listID, title, index, onDeleteList, onAddCard, onDeleteCa
 
   const confirmAction = (inputValue) => {
     if (operationType === "add") {
-      onAddCard(inputValue, listID);
+      dispatch(addCard(listID, inputValue));
+      dispatch(updateBoard());
     } else if (operationType === "delete") {
-      onDeleteList(columnToDelete);
+      dispatch(deleteList(columnToDelete));
+      dispatch(updateBoard());
     }
     setIsModalOpen(false);
     setOperationType(null);
@@ -69,7 +73,7 @@ function List({ cards, listID, title, index, onDeleteList, onAddCard, onDeleteCa
                       text={item.text}
                       listID={listID}
                       index={index}
-                      onDeleteCard={onDeleteCard}
+                      completed={item.completed}
                     />
                   );
                 })

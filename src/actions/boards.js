@@ -159,9 +159,9 @@ export const addUserToBoard = (email, boardId) => dispatch => {
     // // Todo: dispatch if Add was successful & display error message
 }
 
-export const updateBoardName = (boardName, boardId) => dispatch => {
-    // myFirebase.database().ref('/boards/' + boardId).update({ title: boardName });
-};
+// export const updateBoardName = (boardName, boardId) => dispatch => {
+//     // myFirebase.database().ref('/boards/' + boardId).update({ title: boardName });
+// };
 
 export const listenBoardName = (boardId) => dispatch => {
     // myFirebase.database().ref('/boards/' + boardId).on('value', function (snapshot) {

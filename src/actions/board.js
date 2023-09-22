@@ -10,6 +10,8 @@ export const UPDATE_BOARD_FAIL = "UPDATE_BOARD_FAIL";
 
 export const SET_BOARD_ID = "SET_BOARD_ID";
 
+export const CHANGE_BOARD_TITLE = "CHANGE_BOARD_TITLE"
+
 export const ADD_LIST = "ADD_LIST";
 export const DELETE_LIST = "DELETE_LIST";
 export const GET_LISTS = "GET_LISTS";
@@ -20,6 +22,12 @@ export const DELETE_CARD = "DELETE_CARD";
 
 export const DRAG_HAPPENED = "DRAG_HAPPENED";
 
+export const changeBoardTitle = (title) => {
+    return {
+        type: CHANGE_BOARD_TITLE,
+        payload: { title },
+    };
+};
 
 export const addList = (title) => {
     return {
@@ -144,6 +152,46 @@ export const updateBoard = (board) => dispatch => {
 export const loadBoard = (uid) => dispatch => {
     console.log("requestBoard");
     dispatch(requestBoard());
+    const board = {
+        boardId: "-NdjpaVH4vldXr8jyEmP",
+        title: "123",
+        lists: [
+          {
+            id: "list1",
+            title: "Todo",
+          },
+          {
+            id: "list2",
+            title: "woqu",
+          },
+          {
+            id: "list3",
+            title: "test",
+          },
+          {
+            cards: [
+              {
+                id: "card1",
+                text: "123",
+                completed: true
+              },
+              {
+                id: "card2",
+                text: "456",
+                completed: false
+              },
+              {
+                id: "card3",
+                text: "789",
+                completed: false
+              },
+            ],
+            id: "list4",
+            title: "Todo",
+          },
+        ],
+      };
+    dispatch(receiveBoard(board));
 
     // myFirebase.database().ref('/board/' + uid).once('value').then(function (snapshot) {
     //     const board = {

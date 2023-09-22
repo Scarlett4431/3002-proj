@@ -14,7 +14,8 @@ const store = configureStore();
 export default function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      <Board/>
+      {/* <BrowserRouter>
         <NavbarMenu />
         <Routes>
           <Route exact path="/" element={<BoardCollection />} />
@@ -27,7 +28,7 @@ export default function App() {
             isLoading={store.getState().auth.isLoading}
           />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
     </Provider>
   );
 }
