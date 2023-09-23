@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import Card from "./Card";
 import PromptModal from "../PromptModal";
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { deleteList, updateBoard, addCard } from "../../actions";
 
-function List({ cards, listID, title, index}) {
+function List({ cards, listID, title, index }) {
   const board = useSelector((state) => state.board);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [promptMessage, setPromptMessage] = useState("");
@@ -19,15 +19,12 @@ function List({ cards, listID, title, index}) {
     setPromptMessage("Enter card title:");
     setIsModalOpen(true);
   };
-;
-
   const handleDeleteClick = (listID) => {
     setOperationType("delete");
     setColumnToDelete(listID);
     setPromptMessage("Are you sure you want to delete this list?");
     setIsModalOpen(true);
   };
-
 
   const cancel = () => {
     setIsModalOpen(false);
@@ -70,7 +67,8 @@ function List({ cards, listID, title, index}) {
               ? cards.map((item, index) => {
                   return (
                     <Card
-                      id={item.id}
+                      key={index}
+                      cardID={item.id}
                       text={item.text}
                       listID={listID}
                       index={index}

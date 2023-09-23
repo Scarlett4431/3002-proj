@@ -50,11 +50,10 @@ export const addCard = (listID, text) => {
     };
 };
 
-// need status
-export const updateCard = (listID, text, status) => {
+export const updateCard = (cardID, listID, completed) => {
     return {
         type: UPDATE_CARD,
-        payload: { text, status, listID },
+        payload: { cardID, listID, completed },
     };
 };
 
@@ -174,7 +173,7 @@ export const loadBoard = (uid) => dispatch => {
               {
                 id: "card1",
                 text: "123",
-                completed: true
+                completed: false
               },
               {
                 id: "card2",

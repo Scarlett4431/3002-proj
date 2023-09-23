@@ -9,6 +9,7 @@ import {
   DELETE_CARD,
   DELETE_LIST,
   CHANGE_BOARD_TITLE,
+  UPDATE_CARD
 } from "../actions/";
 import uuid from "react-uuid";
 
@@ -72,6 +73,7 @@ function board(state = initialState, action) {
       console.log("ADD_CARD");
       const newCard = {
         text: action.payload.text,
+        completed: false,
         id: uuid(),
       };
       state.lists = state.lists.map((list) => {
@@ -81,6 +83,25 @@ function board(state = initialState, action) {
           } else {
             return { ...list, cards: [newCard] };
           }
+        } else {
+          return list;
+        }
+      });
+      return { ...state, lists: state.lists };
+    case UPDATE_CARD:
+      const cardID_3 = action.payload.cardID;
+      const listID_3 = action.payload.listID;
+      state.lists = state.lists.map((list) => {
+        if (list.id === listID_3) {
+          const cardsList = [...list.cards];
+          list.cards.forEach(function (card, index) {
+            if (card.id === cardID_3) {
+              card.completed = true;
+              cardsList.push(cardsList.splice(index, 1)[0]);
+              return;
+            }
+          });
+          return { ...list, cards: cardsList };
         } else {
           return list;
         }
