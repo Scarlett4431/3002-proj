@@ -3,14 +3,15 @@ import { Draggable } from "react-beautiful-dnd";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { deleteCard, updateBoard } from "../../actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function Card({ id, text, listID, index, completed }) {
+  const board = useSelector((state) => state.board);
   console.log(completed)
   const dispatch = useDispatch();
   const handleDeleteCard = () => {
     dispatch(deleteCard(id, listID));
-    dispatch(updateBoard());
+    dispatch(updateBoard(board));
   };
   return (
     <Draggable key={id} draggableId={id} index={index}>

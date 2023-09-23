@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import Card from "./Card";
 import PromptModal from "../PromptModal";
-import { useDispatch} from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { deleteList, updateBoard, addCard } from "../../actions";
 
 function List({ cards, listID, title, index}) {
+  const board = useSelector((state) => state.board);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [promptMessage, setPromptMessage] = useState("");
   const [columnToDelete, setColumnToDelete] = useState(null);
@@ -36,10 +37,10 @@ function List({ cards, listID, title, index}) {
   const confirmAction = (inputValue) => {
     if (operationType === "add") {
       dispatch(addCard(listID, inputValue));
-      dispatch(updateBoard());
+      dispatch(updateBoard(board));
     } else if (operationType === "delete") {
       dispatch(deleteList(columnToDelete));
-      dispatch(updateBoard());
+      dispatch(updateBoard(board));
     }
     setIsModalOpen(false);
     setOperationType(null);

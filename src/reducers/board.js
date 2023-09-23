@@ -22,9 +22,10 @@ function board(state = initialState, action) {
   switch (action.type) {
     case CHANGE_BOARD_TITLE:
       console.log("CHANGE_BOARD_TITLE");
+      state.title = action.payload.title;
       return {
         ...state,
-        title: action.payload.title
+        title: state.title,
       };
     case CREATE_BOARD_SUCCESS:
       console.log("CREATE_BOARD_SUCCESS");
@@ -50,9 +51,11 @@ function board(state = initialState, action) {
         id: uuid(),
       };
       if (state.lists) {
-        return { ...state, lists: [...state.lists, newList] };
+        state.lists = [...state.lists, newList];
+        return { ...state, lists:  state.lists };
       } else {
-        return { ...state, lists: [newList] };
+        state.lists = [newList];
+        return { ...state, lists: state.lists };
       }
     case DELETE_LIST:
       const listID = action.payload.listID;
@@ -60,17 +63,18 @@ function board(state = initialState, action) {
       state.lists.forEach(function (list, index) {
         if (list.id === listID) {
           newLists.splice(index, 1);
+          state.lists = newLists;
           return;
         }
       });
-      return { ...state, lists: newLists };
+      return { ...state, lists: state.lists };
     case ADD_CARD:
       console.log("ADD_CARD");
       const newCard = {
         text: action.payload.text,
         id: uuid(),
       };
-      const newLists_2 = state.lists.map((list) => {
+      state.lists = state.lists.map((list) => {
         if (list.id === action.payload.listID) {
           if (list.cards) {
             return { ...list, cards: [...list.cards, newCard] };
@@ -81,12 +85,11 @@ function board(state = initialState, action) {
           return list;
         }
       });
-
-      return { ...state, lists: newLists_2 };
+      return { ...state, lists: state.lists };
     case DELETE_CARD:
       const cardID = action.payload.cardID;
       const listID_2 = action.payload.listID;
-      const newLists_3 = state.lists.map((list) => {
+      state.lists = state.lists.map((list) => {
         if (list.id === listID_2) {
           const cardsList = [...list.cards];
           list.cards.forEach(function (card, index) {
@@ -100,7 +103,7 @@ function board(state = initialState, action) {
           return list;
         }
       });
-      return { ...state, lists: newLists_3 };
+      return { ...state, lists: state.lists };
 
     case DRAG_HAPPENED:
       const {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import List from "./List";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import BoardBar from "../BoardMenu/BoardBar";
 import PromptModal from "../PromptModal";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
@@ -32,9 +32,8 @@ function Board() {
   const confirmAddLists = (inputValue) => {
     if (inputValue) {
       dispatch(addList(inputValue));
-      dispatch(updateBoard());
+      dispatch(updateBoard(board));
     }
-    console.log(board.lists);
     setIsModalOpen(false);
   };
 
@@ -56,7 +55,7 @@ function Board() {
         type
       )
     );
-    dispatch(updateBoard());
+    dispatch(updateBoard(board));
   };
 
   return (

@@ -126,6 +126,7 @@ export const sort = (
 };
 
 export const updateBoard = (board) => dispatch => {
+    console.log(board);
     if (false) {
         console.log("updateBoardError");
         dispatch(updateBoardError());
