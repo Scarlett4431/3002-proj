@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import PromptModal from "../PromptModal";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, Link } from "react-router-dom";
 
 import { addBoard, deleteBoard, loadUserBoards } from "../actions/boards";
 
