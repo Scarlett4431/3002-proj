@@ -5,10 +5,16 @@ import PromptModal from "../PromptModal";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 
-export default function BoardCollection() {
-  const auth = useSelector((state) => state.auth);
+import { addBoard, deleteBoard, loadUserBoards } from "../actions/boards";
 
-  const [columns, setColumns] = useState([]);
+import BoardColumn from './BoardColumn';
+import BoardCollectionHeader from './BoardCollectionHeader';
+
+export default function BoardCollection() {
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const columns = useSelector((state) => state.board.lists); 
+
   const [columnToDelete, setColumnToDelete] = useState(null);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,12 +27,6 @@ export default function BoardCollection() {
     setIsModalOpen(true);
   };
 
-  const deleteColumn = (index) => {
-    setColumns((prevColumns) =>
-      prevColumns.filter((_, colIndex) => colIndex !== index)
-    );
-  };
-
   const handleDeleteClick = (index) => {
     setOperationType("delete");
     setColumnToDelete(index);
@@ -34,63 +34,38 @@ export default function BoardCollection() {
     setIsModalOpen(true);
   };
 
-  const confirmDelete = () => {
-    deleteColumn(columnToDelete);
-    setIsModalOpen(false);
-    setColumnToDelete(null);
-  };
-
-  const cancelDelete = () => {
-    setIsModalOpen(false);
-    setColumnToDelete(null);
-  };
-
   const confirmAction = (inputValue) => {
     if (operationType === "add") {
       if (inputValue) {
-        setColumns((prevColumns) => [...prevColumns, inputValue]);
+        dispatch(addBoard(inputValue));
       }
     } else if (operationType === "delete") {
-      deleteColumn(columnToDelete);
+      dispatch(deleteBoard(columnToDelete));
     }
     setIsModalOpen(false);
     setOperationType(null);
   };
+
+  useEffect(() => {
+    dispatch(loadUserBoards());
+  }, [dispatch]);
+
 
   if (auth.isLoading) {
     return <div />;
   } else if (auth.isAuthenticated) {
     return (
       <div className="p-10 bg-gray-200 min-h-75vh">
-        <h2 className="text-2xl mb-4 text-center">YOUR BOARDS</h2>
+        <BoardCollectionHeader />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {columns.map((col, index) => (
-            <div
-              key={index}
-              className="p-10 border rounded shadow bg-green-500 hover:bg-green-600 relative mx-auto flex items-center justify-center"
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              <button
-                style={{
-                  display: "block",
-                  maxWidth: "150px",
-                  whiteSpace: "normal",
-                  overflowWrap: "break-word",
-                }}
-                className="text-white"
-              >
-                {col}
-              </button>
-              {hoveredIndex === index && (
-                <button
-                  onClick={() => handleDeleteClick(index)}
-                  className="absolute top-0 right-0 m-1 p-0 bg-red-500 text-white rounded hover:bg-red-600"
-                >
-                  x
-                </button>
-              )}
-            </div>
+            <BoardColumn
+              col={col}
+              index={index}
+              onHover={setHoveredIndex}
+              onLeave={() => setHoveredIndex(null)}
+              onDelete={handleDeleteClick}
+            />
           ))}
         </div>
         <button
@@ -103,15 +78,11 @@ export default function BoardCollection() {
         <PromptModal
           open={isModalOpen}
           message={promptMessage}
-          onConfirm={confirmDelete}
-          onCancel={cancelDelete}
-        />
-
-        <PromptModal
-          open={isModalOpen}
-          message={promptMessage}
-          onConfirm={confirmAction}
-          onCancel={cancelDelete}
+          onConfirm={operationType === "delete" ? confirmDelete : (inputValue) => confirmAction(inputValue)}
+          onCancel={() => {
+            setIsModalOpen(false);
+            setOperationType(null);
+          }}
           requiresInput={operationType === "add"}
         />
       </div>
