@@ -33,8 +33,10 @@ function List({ cards, listID, title, index }) {
 
   const confirmAction = (inputValue) => {
     if (operationType === "add") {
-      dispatch(addCard(listID, inputValue));
-      dispatch(updateBoard(board));
+      if (inputValue) {
+        dispatch(addCard(listID, inputValue));
+        dispatch(updateBoard(board));
+      }
     } else if (operationType === "delete") {
       dispatch(deleteList(columnToDelete));
       dispatch(updateBoard(board));
