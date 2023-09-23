@@ -21,6 +21,7 @@ export default function App() {
           <Route exact path="/" element={<BoardCollection />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/board/:id" element={<ProtectedBoard />} />
           <Route
             path="/board/:id"
             component={Board}
@@ -31,4 +32,19 @@ export default function App() {
       </BrowserRouter> */}
     </Provider>
   );
+}
+
+function ProtectedBoard() {
+  const isAuthenticated = store.getState().auth.isAuthenticated;
+  const isLoading = store.getState().auth.isLoading;
+
+  if (isLoading) {
+    return <div>Loading...</div>; 
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/signin" />;
+  }
+
+  return <Board />;
 }
