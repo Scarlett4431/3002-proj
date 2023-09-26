@@ -17,10 +17,10 @@ export default function App() {
       <BrowserRouter>
         <NavbarMenu />
         <Routes>
-          <Route exact path="/" element={<BoardCollection />} />
+          {/* <Route exact path="/" element={<BoardCollection />} /> */}
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/board/:id" element={<ProtectedBoard />} />
+          <Route path="/" element={<ProtectedBoard />} />
         </Routes>
       </BrowserRouter>
     </Provider>

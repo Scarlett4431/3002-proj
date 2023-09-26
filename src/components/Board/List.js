@@ -7,7 +7,7 @@ import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { deleteList, updateBoard, addCard } from "../../actions";
 
-function List({ cards, listID, title, index }) {
+function List({ cards, listID, title, index, searchString }) {
   const board = useSelector((state) => state.board);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [promptMessage, setPromptMessage] = useState("");
@@ -67,6 +67,10 @@ function List({ cards, listID, title, index }) {
             </h2>
             {cards != null
               ? cards.map((item, index) => {
+                if (searchString &&
+                  !item.text
+                    .toLowerCase()
+                    .includes(searchString.toLowerCase())) return null;
                   return (
                     <Card
                       key={index}
@@ -75,6 +79,7 @@ function List({ cards, listID, title, index }) {
                       listID={listID}
                       index={index}
                       completed={item.completed}
+                      searchString = {searchString}
                     />
                   );
                 })

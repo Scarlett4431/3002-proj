@@ -19,6 +19,7 @@ function Board() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchString, setSearchString] = useState("");
 
   useEffect(() => {
     dispatch(loadBoard(id));
@@ -62,6 +63,9 @@ function Board() {
     <div>
       <BoardBar
         title={board.title}
+        boardID = {id}
+        searchString= {searchString}
+        setSearchString = {setSearchString}
       />
       <div className="ml-12 mr-12">
         <DragDropContext onDragEnd={onDragEnd}>
@@ -74,6 +78,7 @@ function Board() {
                       title={list.title}
                       cards={list.cards}
                       listID={list.id}
+                      searchString = {searchString}
                     ></List>
                   </div>
                 ))
