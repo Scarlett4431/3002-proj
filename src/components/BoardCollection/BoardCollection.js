@@ -1,11 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PromptModal from "../PromptModal";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate, Link } from "react-router-dom";
+import { Navigate} from "react-router-dom";
 
-import { addBoard, deleteBoard, loadUserBoards } from "../actions/boards";
+import { createBoard, deleteBoard, loadUserBoards } from "../../actions/boards";
 
 import BoardColumn from './BoardColumn';
 import BoardCollectionHeader from './BoardCollectionHeader';
@@ -37,7 +37,7 @@ export default function BoardCollection() {
   const confirmAction = (inputValue) => {
     if (operationType === "add") {
       if (inputValue) {
-        dispatch(addBoard(inputValue));
+        dispatch(createBoard(inputValue));
       }
     } else if (operationType === "delete") {
       dispatch(deleteBoard(columnToDelete));
@@ -78,7 +78,7 @@ export default function BoardCollection() {
         <PromptModal
           open={isModalOpen}
           message={promptMessage}
-          onConfirm={operationType === "delete" ? confirmDelete : (inputValue) => confirmAction(inputValue)}
+          onConfirm={(inputValue) => confirmAction(inputValue)}
           onCancel={() => {
             setIsModalOpen(false);
             setOperationType(null);

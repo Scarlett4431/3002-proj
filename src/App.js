@@ -14,22 +14,15 @@ const store = configureStore();
 export default function App() {
   return (
     <Provider store={store}>
-      <Board/>
-      {/* <BrowserRouter>
+      <BrowserRouter>
         <NavbarMenu />
         <Routes>
           <Route exact path="/" element={<BoardCollection />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/board/:id" element={<ProtectedBoard />} />
-          <Route
-            path="/board/:id"
-            component={Board}
-            isAuthenticated={store.getState().auth.isAuthenticated}
-            isLoading={store.getState().auth.isLoading}
-          />
         </Routes>
-      </BrowserRouter> */}
+      </BrowserRouter>
     </Provider>
   );
 }
