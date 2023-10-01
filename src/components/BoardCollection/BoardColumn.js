@@ -15,17 +15,17 @@ function DeleteButton({ index, onDelete }) {
     );
   }
 
-  export default function BoardColumn({ col, index, onHover, onLeave, onDelete }) {
+  export default function BoardColumn({ boardId, boardTitle, onHover, onLeave, onDelete }) {
     return (
       <div
         className="p-10 border rounded shadow bg-green-500 hover:bg-green-600 relative mx-auto flex items-center justify-center"
-        onMouseEnter={() => onHover(index)}
+        onMouseEnter={() => onHover(boardTitle)}
         onMouseLeave={onLeave}
       >
-        <Link to={`/board/${index}`} className="text-white block text-center" style={{ maxWidth: "150px", whiteSpace: "normal", overflowWrap: "break-word" }}>
-          {col}
+        <Link to={`/board/${boardId}`} className="text-white block text-center" style={{ maxWidth: "150px", whiteSpace: "normal", overflowWrap: "break-word" }}>
+          {boardTitle}
         </Link>
-        <DeleteButton index={index} onDelete={onDelete} />
+        <DeleteButton index={boardId} onDelete={onDelete} />
       </div>
     );
   }

@@ -1,4 +1,4 @@
-// import { myFirebase } from "../firebase/firebase";
+import { myFirebase } from "../firebase/firebase";
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -84,76 +84,80 @@ const verifySuccess = () => {
     };
 };
 
-export const loginUser = (email, password, callback) => async dispatch => {
+export const loginUser = (email, password, callback, dir) => async dispatch => {
 
-    // code to check frontend logic
-    console.log("LoginUser")
-    dispatch(requestLogin());
-    console.log('requestLogin');
-    dispatch(receiveLogin({
-        name: 'Ringo',
-        email: 'rdl@nb.com',
-    }));
-    console.log('receiveLogin');
-    callback();
+    // // code to check frontend logic
+    // console.log("LoginUser")
+    // dispatch(requestLogin());
+    // console.log('requestLogin');
+    // dispatch(receiveLogin({
+    //     name: 'Ringo',
+    //     email: 'rdl@nb.com',
+    // }));
+    // console.log('receiveLogin');
+    // callback();
 
     // code with firebase backend
 
-    // dispatch(requestLogin());
-    // myFirebase
-    //     .auth()
-    //     .signInWithEmailAndPassword(email, password)
-    //     .then(user => {
-    //         dispatch(receiveLogin(user));
-    //         navigate("/");
-    //     })
-    //     .catch(error => {
-    //         //Do something with the error if you want!
-    //         dispatch(loginError());
-    //     });
+    dispatch(requestLogin());
+    myFirebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(user => {
+            console.log("LoginSuccess");
+            console.log(myFirebase.auth().currentUser);
+            dispatch(receiveLogin(user.user));
+            console.log("Prepare Redirect");
+            callback(dir);
+        })
+        .catch(error => {
+            //Do something with the error if you want!
+            console.log("LoginFail");
+            dispatch(loginError());
+        });
 };
 
-export const registerUser = (email, password, displayName, callback) => async dispatch => {
+export const registerUser = (email, password, displayName, callback, dir) => async dispatch => {
 
-    // code to check frontend logic
-    console.log(displayName, email, password);
-    console.log("Register User")
-    dispatch(requestRegister());
-    console.log('requestRegister');
-    dispatch(receiveRegister({
-        name: 'Ringo',
-        email: 'rdl@nb.com',
-    }));
-    console.log('receiveRegister');
-    callback();
+    // // code to check frontend logic
+    // console.log(displayName, email, password);
+    // console.log("Register User")
+    // dispatch(requestRegister());
+    // console.log('requestRegister');
+    // dispatch(receiveRegister({
+    //     name: 'Ringo',
+    //     email: 'rdl@nb.com',
+    // }));
+    // console.log('receiveRegister');
+    // callback();
 
     // code with firebase backend
 
-    // dispatch(requestRegister());
-    // myFirebase.auth()
-    //     .createUserWithEmailAndPassword(email, password)
-    //     .then(userCredential => {
-    //         userCredential.user.updateProfile({
-    //             displayName: displayName,
-    //         }).then(() => {
-    //             const email = userCredential.user.email.replace(".", ","); // cannot save "." in DB
-    //             const userId = userCredential.user.uid;
-    //             const name = userCredential.user.displayName;
-    //             myFirebase.database().ref('/users/' + userId).set({
-    //                 email: email,
-    //                 name: name
-    //             });
-    //             myFirebase.database().ref('/emailToUid/').child(email).set({
-    //                 userId
-    //             })
-    //             dispatch(receiveRegister());
-    //             callback();
-    //         });
-    //     })
-    //     .catch(error => {
-    //         // Do something with the error if you want!
-    //         dispatch(registerError(error.message));
-    //     });
+    dispatch(requestRegister());
+    myFirebase.auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(userCredential => {
+            userCredential.user.updateProfile({
+                displayName: displayName,
+            }).then(() => {
+                const email = userCredential.user.email.replace(".", ","); // cannot save "." in DB
+                const userId = userCredential.user.uid;
+                const name = userCredential.user.displayName;
+                myFirebase.database().ref('/users/' + userId).set({
+                    email: email,
+                    name: name
+                });
+                myFirebase.database().ref('/emailToUid/').child(email).set({
+                    userId
+                })
+                dispatch(receiveRegister());
+                callback(dir);
+            });
+        })
+        .catch(error => {
+            // Do something with the error if you want!
+            dispatch(registerError(error.message));
+        });
 };
 
 export const logoutUser = () => async dispatch => {
@@ -161,22 +165,21 @@ export const logoutUser = () => async dispatch => {
     // code to check frontend logic
     dispatch(requestLogout());
     console.log('requestLogout');
-    dispatch(receiveLogout());
-    console.log('receiveLogout');
+    // dispatch(receiveLogout());
+    // console.log('receiveLogout');
 
     // code with firebase backend
     
-    // dispatch(requestLogout());
-    // myFirebase
-    //     .auth()
-    //     .signOut()
-    //     .then(() => {
-    //         dispatch(receiveLogout());
-    //     })
-    //     .catch(error => {
-    //         //Do something with the error if you want!
-    //         dispatch(logoutError());
-    //     });
+    myFirebase
+        .auth()
+        .signOut()
+        .then(() => {
+            dispatch(receiveLogout());
+        })
+        .catch(error => {
+            //Do something with the error if you want!
+            dispatch(logoutError());
+        });
 };
 
 export const verifyAuth = () => async dispatch => {
@@ -185,25 +188,29 @@ export const verifyAuth = () => async dispatch => {
     // currently always assume saved account info auth fail
 
     console.log("verifyAuth");
-    dispatch(loginError());
+    // dispatch(loginError());
     // dispatch(verifyRequest());
     // console.log('verifyRequest');
     // dispatch(receiveLogin({
-    //     name: 'Ringo',
-    //     email: 'rdl@nb.com',
-    // }));
-    // console.log('receiveLogin');
-    // dispatch(verifySuccess());
-    // console.log('verifySuccess');
+        //     name: 'Ringo',
+        //     email: 'rdl@nb.com',
+        // }));
+        // console.log('receiveLogin');
+        // dispatch(verifySuccess());
+        // console.log('verifySuccess');
 
     // code with firebase backend
-    // dispatch(verifyRequest());
-    // myFirebase.auth().onAuthStateChanged(user => {
-    //     if (user !== null) {
-    //         dispatch(receiveLogin(user));
-    //         dispatch(verifySuccess());
-    //     } else {
-    //         dispatch(loginError());
-    //     }
-    // });
+    dispatch(verifyRequest());
+    myFirebase.auth().onAuthStateChanged(user => {
+        if (user !== null) {
+        console.log("userNotNull");
+        console.log(user);
+        dispatch(receiveLogin(user));
+        console.log("receiveLogin");
+        dispatch(verifySuccess());
+        console.log("verifySuccess");
+        } else {
+            dispatch(loginError());
+        }
+    });
 };

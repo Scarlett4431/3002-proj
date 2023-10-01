@@ -16,7 +16,6 @@ import { NavLink, Navigate, useNavigate } from "react-router-dom";
 
 export default function SignUp(){
 
-  const redirect = <Navigate to="/" />;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
@@ -25,12 +24,10 @@ export default function SignUp(){
     displayName: "",
     email: "",
     password: "",
-    toFrontpage: false,
   });
 
   // get the content of the textbox
   const onChange = (e) => {
-    console.log(state)
     setState({
       ...state,
       [e.target.id]: e.target.value,
@@ -40,9 +37,7 @@ export default function SignUp(){
   // save for future page redirections
   const handleSignUp = (e) => {
     e.preventDefault();
-    // dispatch(registerUser(state.email, state.password, state.displayName, () => {navigate("/signin");}));
-    dispatch(registerUser(state.email, state.password, state.displayName, () => {}));
-    setState({ toFrontpage: true });
+    dispatch(registerUser(state.email, state.password, state.displayName, navigate, "/"));
   };
 
   const signUp = (
@@ -112,10 +107,6 @@ export default function SignUp(){
       </div>
     </Container>
   );
-  if (state.toFrontpage) {
-    console.log("Redirect from SignUp to frontpage")
-    return redirect;
-  } else {
-    return signUp;
-  }
+
+  return signUp;
 }

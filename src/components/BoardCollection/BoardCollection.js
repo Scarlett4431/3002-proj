@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import PromptModal from "../PromptModal";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate} from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 import { createBoard, deleteBoard, loadUserBoards } from "../../actions/boards";
 
@@ -13,7 +13,7 @@ import BoardCollectionHeader from './BoardCollectionHeader';
 export default function BoardCollection() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  const columns = useSelector((state) => state.board.lists); 
+  const columns = useSelector((state) => state.boards); 
 
   const [columnToDelete, setColumnToDelete] = useState(null);
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -45,11 +45,11 @@ export default function BoardCollection() {
     setIsModalOpen(false);
     setOperationType(null);
   };
-
+  
   useEffect(() => {
+    console.log("Boards calls loadUserBoards");
     dispatch(loadUserBoards());
   }, [dispatch]);
-
 
   if (auth.isLoading) {
     return <div />;
@@ -58,15 +58,15 @@ export default function BoardCollection() {
       <div className="p-10 bg-gray-200 min-h-75vh">
         <BoardCollectionHeader />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {columns.map((col, index) => (
+          {columns.boards.length === 0 ? "empty" : columns.boards.map(({boardId, title}) => (
             <BoardColumn
-              col={col}
-              index={index}
+              boardId={boardId}
+              boardTitle={title}
               onHover={setHoveredIndex}
               onLeave={() => setHoveredIndex(null)}
               onDelete={handleDeleteClick}
             />
-          ))}
+        ))}
         </div>
         <button
           onClick={addColumn}

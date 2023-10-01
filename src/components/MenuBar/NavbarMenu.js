@@ -11,9 +11,11 @@ export default function NavBar(){
 
   return (
     <Navbar fluid rounded>
-      <Navbar.Brand Link to="/" component={NavLink}>
-        <HiHome className="h-6 w-6" />
-      </Navbar.Brand>
+      <NavLink to="/">
+        <Navbar.Brand>
+          <HiHome className="h-6 w-6" />
+        </Navbar.Brand>
+      </NavLink>
       <Navbar.Collapse>
         <span class="self-center whitespace-nowrap text-3xl font-semibold dark:text-white">
           CCC Cooperative Cardboard

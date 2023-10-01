@@ -32,6 +32,8 @@ import {
         };
   
       case GET_BOARDS_SUCCESS:
+        console.log("Save new board state");
+        console.log("length"+action.payload.boards.length);
         return {
           ...state,
           loading: false,

@@ -9,7 +9,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { HiOutlineLockClosed } from "react-icons/hi";
 
-import { NavLink, Navigate, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState } from "react";
 
@@ -18,7 +18,6 @@ import { loginUser } from "../actions";
 
 export default function SignIn(){
   
-  const redirect = <Navigate to="/" />;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
@@ -26,13 +25,11 @@ export default function SignIn(){
   const [state, setState] = useState({
     email: "",
     password: "",
-    toFrontpage: false,
     doRememberMe: false,
   });
 
   // get the content of the textbox
   const onChange = (e) => {
-    console.log(auth);
     setState({
       ...state,
       [e.target.id]: e.target.value,
@@ -44,9 +41,8 @@ export default function SignIn(){
     // for debugging, need to delete after test
     console.log("Email: ", state.email);
     console.log("Password: ", state.password);
-    dispatch(loginUser(state.email, state.password, () => {}));
-    console.log("PrepareRedirect");
-    setState({ toFrontpage: true });
+    dispatch(loginUser(state.email, state.password, navigate, "/"));
+    console.log("Wait happily");
   }
 
   // get the status of the remember-me chechbox
@@ -122,10 +118,5 @@ export default function SignIn(){
     </Container>
   );
 
-  if (state.toFrontpage) {
-    console.log("Redirect from SignIn to frontpage");
-    return redirect;
-  } else {
-    return signIn;
-  }
+  return signIn;
 }
