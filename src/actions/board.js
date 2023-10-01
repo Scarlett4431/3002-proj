@@ -199,6 +199,7 @@ export const loadBoard = (uid) => dispatch => {
             lists: snapshot.val().lists,
         }
         dispatch(receiveBoard(board));
+        console.log(board);
     }).catch((err) => {
         dispatch(receiveBoardError(uid));
     });

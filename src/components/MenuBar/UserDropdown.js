@@ -19,7 +19,7 @@ export default function UserDropdown() {
     navigate('/signin');
   };
 
-  if(auth.isAuthenticated && !auth.isLoading){
+  if(auth.isAuthenticated && !auth.isLoading && (auth.user !== undefined)){
     return (
       <div>
         <Dropdown
@@ -33,7 +33,7 @@ export default function UserDropdown() {
           }
         >
           <Dropdown.Header>
-            <span className="block text-sm">{auth.user.name}</span>
+            <span className="block text-sm">{auth.user.displayName}</span>
             <span className="block truncate text-sm font-medium">
               {auth.user.email}
             </span>

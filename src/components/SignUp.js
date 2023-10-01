@@ -37,7 +37,7 @@ export default function SignUp(){
   // save for future page redirections
   const handleSignUp = (e) => {
     e.preventDefault();
-    dispatch(registerUser(state.email, state.password, state.displayName, navigate, "/"));
+    dispatch(registerUser(state.email, state.password, state.displayName, navigate, "/signin"));
   };
 
   const signUp = (

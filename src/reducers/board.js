@@ -28,22 +28,22 @@ function board(state = initialState, action) {
         ...state,
         title: state.title,
       };
-    // case CREATE_BOARD_SUCCESS:
-    //   console.log("CREATE_BOARD_SUCCESS");
-    //   return {
-    //     ...state,
-    //     payload: action.payload.uid,
-    //     lists: [],
-    //   };
-    // case GET_BOARD_SUCCESS:
-    //   console.log("GET_BOARD_SUCCESS");
-    //   return action.payload.board;
-    // case GET_BOARD_FAIL:
-    //   console.log("GET_BOARD_FAIL");
-    //   return { ...state, lists: [], boardId: action.payload.uid };
-    // case GET_LISTS:
-    //   console.log("GET_LISTS");
-    //   return state;
+    case CREATE_BOARD_SUCCESS:
+      console.log("CREATE_BOARD_SUCCESS");
+      return {
+        ...state,
+        payload: action.payload.uid,
+        lists: [],
+      };
+    case GET_BOARD_SUCCESS:
+      console.log("GET_BOARD_SUCCESS");
+      return action.payload.board;
+    case GET_BOARD_FAIL:
+      console.log("GET_BOARD_FAIL");
+      return { ...state, lists: [], boardId: action.payload.uid };
+    case GET_LISTS:
+      console.log("GET_LISTS");
+      return state;
     case ADD_LIST:
       console.log("Add list");
       const newList = {
