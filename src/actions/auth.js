@@ -140,7 +140,7 @@ export const registerUser = (email, password, displayName, callback, dir) => asy
             userCredential.user.updateProfile({
                 displayName: displayName,
             }).then(() => {
-                const email = userCredential.user.email.replace(".", ","); // cannot save "." in DB
+                const email = userCredential.user.email.replaceAll(".", ","); // cannot save "." in DB
                 const userId = userCredential.user.uid;
                 const name = userCredential.user.displayName;
                 myFirebase.database().ref('/users/' + userId).set({
