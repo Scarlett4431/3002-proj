@@ -14,6 +14,7 @@ export default function BoardPool() {
 
   const dispatch = useDispatch();
   const columns = useSelector((state) => state.boards); 
+  const auth = useSelector((state) => state.auth);
 
   const [columnToDelete, setColumnToDelete] = useState(null);
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -47,9 +48,11 @@ export default function BoardPool() {
   };
   
   useEffect(() => {
-    console.log("Boards calls loadUserBoards");
-    dispatch(loadUserBoards());
-  }, [dispatch]);
+    if (auth.isAuthenticated) {
+        console.log("Boards calls loadUserBoards");
+        dispatch(loadUserBoards());
+    }
+  }, [auth.isAuthenticated]);
 
   return (
     <div class="d-flex justify-content-center">

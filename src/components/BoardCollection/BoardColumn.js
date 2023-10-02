@@ -1,5 +1,7 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { setSelectedBoardTitle } from "../../actions/boards";
 
 function DeleteButton({ index, onDelete }) {
     return (
@@ -17,10 +19,11 @@ function DeleteButton({ index, onDelete }) {
   }
 
   export default function BoardColumn({ boardId, boardTitle, onHover, onLeave, onDelete }) {
-
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     function divOnClick() {
       navigate(`/board/${boardId}`);
+      dispatch(setSelectedBoardTitle(boardTitle));
     }
 
     return (
