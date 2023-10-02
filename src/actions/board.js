@@ -103,7 +103,7 @@ export const addCardToBoard = (board, listID, text) => dispatch => {
         // dispatch(requestUpdateBoard());
         myFirebase.database()
             .ref('/board/' + board.boardId + '/lists/'  + listID + '/cards/')
-            .push({"title": text}).then(() => {
+            .push({"title": text, "completed": false}).then(() => {
                 console.log(board.boardId, listID)
                 console.log("Add card successfully")
                 dispatch(receiveUpdatedBoard());
