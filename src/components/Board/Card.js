@@ -2,7 +2,7 @@ import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
-import { deleteCard, updateBoard, updateCard } from "../../actions";
+import { deleteCard, updateBoard, updateCard, updateCardToBoard, deleteCardFromBoard } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 
 function Card({ cardID, text, listID, index, completed }) {
@@ -11,11 +11,13 @@ function Card({ cardID, text, listID, index, completed }) {
   const dispatch = useDispatch();
   const handleDeleteCard = () => {
     dispatch(deleteCard(cardID, listID));
-    dispatch(updateBoard(board));
+    dispatch(deleteCardFromBoard(board, cardID, listID));
+    // dispatch(updateBoard(board));
   };
   const handleCompleteCard = () => {
     dispatch(updateCard(cardID, listID, completed));
-    dispatch(updateBoard(board));
+    dispatch(updateCardToBoard(board, cardID, listID, completed));
+    // dispatch(updateBoard(board));
   };
   return (
     <Draggable key={cardID} draggableId={cardID} index={index}>

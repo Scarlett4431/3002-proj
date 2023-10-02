@@ -22,6 +22,24 @@ export const DELETE_CARD = "DELETE_CARD";
 
 export const DRAG_HAPPENED = "DRAG_HAPPENED";
 
+export const changeBoardTitleToBoard = (board, title) => dispatch => {
+    const user = myFirebase.auth().currentUser;
+    if (!user) {
+        dispatch(updateBoardError());
+    } else {
+        // dispatch(requestUpdateBoard());
+        myFirebase.database()
+            .ref('/boards/' + board.boardId)
+            .child("title")
+            .set(title).then(() => {
+                console.log(board.boardId, title)
+                console.log("Change board title successfully")
+                dispatch(receiveUpdatedBoard());
+            }).catch((err) => {
+                dispatch(updateBoardError());
+            });
+    }
+};
 export const changeBoardTitle = (title) => {
     return {
         type: CHANGE_BOARD_TITLE,
@@ -29,6 +47,23 @@ export const changeBoardTitle = (title) => {
     };
 };
 
+export const addListToBoard = (board, title) => dispatch => {
+    const user = myFirebase.auth().currentUser;
+    if (!user) {
+        dispatch(updateBoardError());
+    } else {
+        // dispatch(requestUpdateBoard());
+        myFirebase.database()
+            .ref('/board/' + board.boardId + '/lists/')
+            .push({"title": title}).then(() => {
+                console.log(board.boardId, title)
+                console.log("Add list successfully")
+                dispatch(receiveUpdatedBoard());
+            }).catch((err) => {
+                dispatch(updateBoardError());
+            });
+    }
+};
 export const addList = (title) => {
     return {
         type: ADD_LIST,
@@ -36,6 +71,23 @@ export const addList = (title) => {
     };
 };
 
+export const deleteListFromBoard = (board, listID) => dispatch => {
+    const user = myFirebase.auth().currentUser;
+    if (!user) {
+        dispatch(updateBoardError());
+    } else {
+        // dispatch(requestUpdateBoard());
+        myFirebase.database()
+            .ref('/board/' + board.boardId + '/lists/'  + listID)
+            .remove().then(() => {
+                console.log(board.boardId, listID)
+                console.log("Delete list successfully")
+                dispatch(receiveUpdatedBoard());
+            }).catch((err) => {
+                dispatch(updateBoardError());
+            });
+    }
+};
 export const deleteList = (listID) => {
     return {
         type: DELETE_LIST,
@@ -43,6 +95,23 @@ export const deleteList = (listID) => {
     };
 };
 
+export const addCardToBoard = (board, listID, text) => dispatch => {
+    const user = myFirebase.auth().currentUser;
+    if (!user) {
+        dispatch(updateBoardError());
+    } else {
+        // dispatch(requestUpdateBoard());
+        myFirebase.database()
+            .ref('/board/' + board.boardId + '/lists/'  + listID + '/cards/')
+            .push({"title": text, "completed": false}).then(() => {
+                console.log(board.boardId, listID)
+                console.log("Add card successfully")
+                dispatch(receiveUpdatedBoard());
+            }).catch((err) => {
+                dispatch(updateBoardError());
+            });
+    }
+};
 export const addCard = (listID, text) => {
     return {
         type: ADD_CARD,
@@ -50,6 +119,24 @@ export const addCard = (listID, text) => {
     };
 };
 
+export const updateCardToBoard = (board, cardID, listID, completed) => dispatch => {
+    const user = myFirebase.auth().currentUser;
+    if (!user) {
+        dispatch(updateBoardError());
+    } else {
+        // dispatch(requestUpdateBoard());
+        myFirebase.database()
+            .ref('/board/' + board.boardId + '/lists/'  + listID + '/cards/' + cardID)
+            .child("completed")
+            .set(completed).then(() => {
+                console.log(board.boardId, listID, cardID, completed)
+                console.log("Change card state successfully")
+                dispatch(receiveUpdatedBoard());
+            }).catch((err) => {
+                dispatch(updateBoardError());
+            });
+    }
+};
 export const updateCard = (cardID, listID, completed) => {
     return {
         type: UPDATE_CARD,
@@ -57,6 +144,23 @@ export const updateCard = (cardID, listID, completed) => {
     };
 };
 
+export const deleteCardFromBoard = (board, cardID, listID) => dispatch => {
+    const user = myFirebase.auth().currentUser;
+    if (!user) {
+        dispatch(updateBoardError());
+    } else {
+        // dispatch(requestUpdateBoard());
+        myFirebase.database()
+            .ref('/board/' + board.boardId + '/lists/'  + listID + '/cards/' + cardID)
+            .remove().then(() => {
+                console.log(board.boardId, listID, cardID)
+                console.log("Delete card successfully")
+                dispatch(receiveUpdatedBoard());
+            }).catch((err) => {
+                dispatch(updateBoardError());
+            });
+    }
+};
 export const deleteCard = (cardID, listID) => {
     return {
         type: DELETE_CARD,
@@ -196,6 +300,7 @@ export const loadBoard = (uid) => dispatch => {
     myFirebase.database().ref('/board/' + uid).once('value').then(function (snapshot) {
         const board = {
             boardId: snapshot.val().boardId,
+            title: snapshot.val().title,
             lists: snapshot.val().lists,
         }
         dispatch(receiveBoard(board));
