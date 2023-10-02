@@ -5,7 +5,8 @@ import {
     GET_BOARDS_REQUEST,
     GET_BOARDS_SUCCESS,
     GET_BOARDS_FAIL,
-    GET_BOARD_NAME_SUCCESS
+    GET_BOARD_NAME_SUCCESS,
+    DELETE_BOARD_SUCCESS
   } from "../actions/boards";
   
   const initialState = {
@@ -46,6 +47,12 @@ import {
           ...state,
           loading: false,
           error: "An error occurred while processing your request."
+        };
+      
+      case DELETE_BOARD_SUCCESS:
+        return {
+            ...state,
+            boards: state.boards.filter(board => board.boardId !== action.payload)
         };
   
       case GET_BOARD_NAME_SUCCESS:

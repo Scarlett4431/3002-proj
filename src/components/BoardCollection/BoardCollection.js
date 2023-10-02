@@ -47,9 +47,11 @@ export default function BoardCollection() {
   };
   
   useEffect(() => {
-    console.log("Boards calls loadUserBoards");
-    dispatch(loadUserBoards());
-  }, [dispatch]);
+    if (auth.isAuthenticated) {
+        console.log("Boards calls loadUserBoards");
+        dispatch(loadUserBoards());
+    }
+  }, [auth.isAuthenticated]);
 
   if (auth.isLoading) {
     return <div />;

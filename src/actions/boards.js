@@ -9,6 +9,7 @@ export const GET_BOARDS_SUCCESS = "GET_BOARDS_SUCCESS";
 export const GET_BOARDS_FAIL = "GET_BOARDS_FAIL";
 
 export const GET_BOARD_NAME_SUCCESS = "GET_BOARD_NAME_SUCCESS";
+export const DELETE_BOARD_SUCCESS = "DELETE_BOARD_SUCCESS";
 
 // Get Boards
 const requestBoards = () => {
@@ -28,6 +29,12 @@ const receiveBoardsError = () => {
     };
 };
 
+const deleteBoardSuccess = (boardId) => {
+    return {
+        type: DELETE_BOARD_SUCCESS,
+        payload: boardId
+    };
+};
 
 // Create Board
 const requestCreateBoard = () => {
@@ -105,7 +112,7 @@ export const deleteBoard = (boardId) => async dispatch => {
         myFirebase.database().ref('/boards/' + boardId).remove();
         // remove from '/board/'
         myFirebase.database().ref('/board/' + boardId).remove().then(() => {
-            dispatch(loadUserBoards());
+            dispatch(deleteBoardSuccess(boardId));
         });
     });
 }
