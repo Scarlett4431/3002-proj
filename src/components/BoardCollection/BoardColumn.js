@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function DeleteButton({ index, onDelete }) {
     return (
       <button
         onClick={(e) => {
+          e.preventDefault();
           e.stopPropagation();
           onDelete(index);
         }}
@@ -16,15 +17,22 @@ function DeleteButton({ index, onDelete }) {
   }
 
   export default function BoardColumn({ boardId, boardTitle, onHover, onLeave, onDelete }) {
+
+    const navigate = useNavigate();
+    function divOnClick() {
+      navigate(`/board/${boardId}`);
+    }
+
     return (
       <div
         className="p-10 border rounded shadow bg-green-500 hover:bg-green-600 relative mx-auto flex items-center justify-center"
         onMouseEnter={() => onHover(boardTitle)}
         onMouseLeave={onLeave}
+        onClick={divOnClick}
       >
-        <Link to={`/board/${boardId}`} className="text-white block text-center" style={{ maxWidth: "150px", whiteSpace: "normal", overflowWrap: "break-word" }}>
+        <p className="text-white block text-center" style={{ maxWidth: "150px", whiteSpace: "normal", overflowWrap: "break-word" }}>
           {boardTitle}
-        </Link>
+        </p>
         <DeleteButton index={boardId} onDelete={onDelete} />
       </div>
     );

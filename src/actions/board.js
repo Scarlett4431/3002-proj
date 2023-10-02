@@ -196,7 +196,6 @@ export const loadBoard = (uid) => dispatch => {
     myFirebase.database().ref('/board/' + uid).once('value').then(function (snapshot) {
         const board = {
             boardId: snapshot.val().boardId,
-            title: snapshot.val().title,
             lists: snapshot.val().lists,
         }
         dispatch(receiveBoard(board));
