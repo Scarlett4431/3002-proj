@@ -1,9 +1,9 @@
 import NavbarMenu from "./components/MenuBar/NavbarMenu";
 import BoardCollection from "./components/BoardCollection/BoardCollection";
-import Board from "./components/Board/Board";
+import ProtectedBoard from "./components/Board/Board";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { Provider } from "react-redux";
 import configureStore from "./configureStore";
@@ -25,19 +25,4 @@ export default function App() {
       </BrowserRouter>
     </Provider>
   );
-}
-
-function ProtectedBoard() {
-  const isAuthenticated = store.getState().auth.isAuthenticated;
-  const isLoading = store.getState().auth.isLoading;
-
-  if (isLoading) {
-    return <div>Loading...</div>; 
-  }
-
-  if (!isAuthenticated) {
-    return <Navigate to="/signin" />;
-  }
-
-  return <Board />;
 }
