@@ -101,6 +101,8 @@ export default function SignIn(){
             Sign In
           </Button>
           <Grid container>
+          <div style={{ margin: "10px" }} />
+          <div style={{ marginTop: '10px', color: 'red', textAlign: 'center' }}>{auth.errorMessage}</div>
             {/* Forget Password function, save for future development */}
             {/* <Grid item xs>
                             <Link href="#" variant="body2">
