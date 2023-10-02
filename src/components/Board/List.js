@@ -5,7 +5,7 @@ import PromptModal from "../PromptModal";
 import { useDispatch, useSelector } from "react-redux";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { XCircleIcon } from "@heroicons/react/24/solid";
-import { deleteList, updateBoard, addCard } from "../../actions";
+import { deleteList, updateBoard, addCard, addCardToBoard, deleteListFromBoard } from "../../actions";
 
 function List({ cards, listID, title, index, searchString }) {
   const board = useSelector((state) => state.board);
@@ -35,11 +35,13 @@ function List({ cards, listID, title, index, searchString }) {
     if (operationType === "add") {
       if (inputValue) {
         dispatch(addCard(listID, inputValue));
-        dispatch(updateBoard(board));
+        dispatch(addCardToBoard(board, listID, inputValue));
+        // dispatch(updateBoard(board));
       }
     } else if (operationType === "delete") {
       dispatch(deleteList(columnToDelete));
-      dispatch(updateBoard(board));
+      dispatch(deleteListFromBoard(board, columnToDelete));
+      // dispatch(updateBoard(board));
     }
     setIsModalOpen(false);
     setOperationType(null);

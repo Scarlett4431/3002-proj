@@ -11,6 +11,7 @@ import {
   sort,
   updateBoard,
   addList,
+  addListToBoard
 } from "../../actions/board";
 import { useParams } from "react-router-dom";
 
@@ -33,7 +34,8 @@ function Board() {
   const confirmAddLists = (inputValue) => {
     if (inputValue) {
       dispatch(addList(inputValue));
-      dispatch(updateBoard(board));
+      dispatch(addListToBoard(board, inputValue));
+      // dispatch(updateBoard(board));
     }
     setIsModalOpen(false);
   };

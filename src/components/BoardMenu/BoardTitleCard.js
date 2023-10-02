@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "flowbite-react";
 import { HiAdjustments } from "react-icons/hi";
 import PromptModal from "../PromptModal";
-import { changeBoardTitle, updateBoard } from "../../actions";
+import { changeBoardTitle, changeBoardTitleToBoard, updateBoard } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 function BoardTitleCard({ title }) {
   const board = useSelector((state) => state.board);
@@ -21,7 +21,8 @@ function BoardTitleCard({ title }) {
   const confirmAction = (inputValue) => {
     if (inputValue.length > 0 && inputValue.length < 30) {
       dispatch(changeBoardTitle(inputValue));
-      dispatch(updateBoard(board));
+      dispatch(changeBoardTitleToBoard(board, inputValue));
+      // dispatch(updateBoard(board));
     }
     setIsModalOpen(false);
   };
