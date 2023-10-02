@@ -35,12 +35,13 @@ const requestCreateBoard = () => {
         type: CREATE_BOARD_REQUEST
     };
 };
-const receiveCreateBoard = (uid) => {
+const receiveCreateBoard = (data) => {
     return {
         type: CREATE_BOARD_SUCCESS,
-        payload: { uid }
+        payload: data
     };
 };
+
 const createBoardError = () => {
     return {
         type: CREATE_BOARD_FAIL
@@ -84,7 +85,8 @@ export const createBoard = (title) => async dispatch => {
             lists: { 0: { id: '0', title: 'Todo' } },
         });
         console.log("receiveCreateBoard");
-        dispatch(receiveCreateBoard(key));
+        dispatch(receiveCreateBoard({ uid: key, title: title }));
+
     }
 };
 

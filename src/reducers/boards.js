@@ -28,7 +28,7 @@ import {
         return {
           ...state,
           loading: false,
-          boards: [...state.boards, { boardId: action.payload.uid, title: "" }]
+          boards: [...state.boards, { boardId: action.payload.uid, title: action.payload.title }]
         };
   
       case GET_BOARDS_SUCCESS:

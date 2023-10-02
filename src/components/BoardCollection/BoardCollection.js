@@ -58,7 +58,7 @@ export default function BoardCollection() {
       <div className="p-10 bg-gray-200 min-h-75vh">
         <BoardCollectionHeader />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {columns.boards.length === 0 ? "empty" : columns.boards.map(({boardId, title}) => (
+          {columns.boards.length === 0 ? "No boards available" : columns.boards.map(({boardId, title}) => (
             <BoardColumn
               boardId={boardId}
               boardTitle={title}
