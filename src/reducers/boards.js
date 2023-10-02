@@ -6,14 +6,16 @@ import {
     GET_BOARDS_SUCCESS,
     GET_BOARDS_FAIL,
     GET_BOARD_NAME_SUCCESS,
-    DELETE_BOARD_SUCCESS
+    DELETE_BOARD_SUCCESS,
+    SET_SELECTED_BOARD_TITLE
   } from "../actions/boards";
   
   const initialState = {
     loading: false,
     boards: [],
     error: null,
-    currentBoard: null
+    currentBoard: null,
+    selectedBoardTitle: ''
   };
   
   function boardsReducer(state = initialState, action) {
@@ -63,6 +65,12 @@ import {
             boardId: action.payload.boardId,
             title: action.payload.name
           }
+        };
+      
+      case SET_SELECTED_BOARD_TITLE:
+        return {
+          ...state,
+          selectedBoardTitle: action.payload
         };
   
       default:

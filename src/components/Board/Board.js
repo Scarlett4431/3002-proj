@@ -14,12 +14,19 @@ import {
 } from "../../actions/board";
 import { useParams } from "react-router-dom";
 
+
 function Board() {
   const board = useSelector((state) => state.board);
   const dispatch = useDispatch();
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchString, setSearchString] = useState("");
+  
+  const selectedTitle = useSelector(state => state.boards.selectedBoardTitle);
+
+  console.log("Selected Title:", selectedTitle); //this is the board title
+
+
 
   useEffect(() => {
     dispatch(loadBoard(id));

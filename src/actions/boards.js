@@ -11,6 +11,8 @@ export const GET_BOARDS_FAIL = "GET_BOARDS_FAIL";
 export const GET_BOARD_NAME_SUCCESS = "GET_BOARD_NAME_SUCCESS";
 export const DELETE_BOARD_SUCCESS = "DELETE_BOARD_SUCCESS";
 
+export const SET_SELECTED_BOARD_TITLE = 'SET_SELECTED_BOARD_TITLE';
+
 // Get Boards
 const requestBoards = () => {
     return {
@@ -190,4 +192,11 @@ export const listenBoardName = (boardId) => async dispatch => {
             dispatch(receiveBoardName(snapshot.val().title, boardId));
     });
 };
+
+export function setSelectedBoardTitle(title) {
+    return {
+      type: SET_SELECTED_BOARD_TITLE,
+      payload: title
+    };
+}
 
