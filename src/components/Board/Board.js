@@ -68,7 +68,7 @@ function Board() {
   return (
     <div>
       <BoardBar
-        title={board.title}
+        title={selectedTitle}
         boardID = {id}
         searchString= {searchString}
         setSearchString = {setSearchString}
