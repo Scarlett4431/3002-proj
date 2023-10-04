@@ -50,6 +50,7 @@ export const changeBoardTitle = (title) => {
 
 export const addListToBoard = (board, title, id) => dispatch => {
     const user = myFirebase.auth().currentUser;
+    console.log("list id: ", id);
     if (!user) {
         dispatch(updateBoardError());
     } else {
@@ -71,7 +72,7 @@ export const addListToBoard = (board, title, id) => dispatch => {
 };
 export const addList = (board, title) => {
     const id = uuid();
-    addListToBoard(board, title, id);
+    // addListToBoard(board, title, id);
     return {
         type: ADD_LIST,
         payload: { title, id },
@@ -105,6 +106,7 @@ export const deleteList = (board, listID) => {
 
 export const addCardToBoard = (board, listID, text, id) => dispatch => {
     const user = myFirebase.auth().currentUser;
+    console.log("card id: ", id);
     if (!user) {
         dispatch(updateBoardError());
     } else {
@@ -127,7 +129,7 @@ export const addCardToBoard = (board, listID, text, id) => dispatch => {
 export const addCard = (board, listID, text) => {
     const id = uuid();
     console.log("UUID: " + id);
-    addCardToBoard(board, listID, text, id);
+    // addCardToBoard(board, listID, text, id);
     return {
         type: ADD_CARD,
         payload: { text, listID, id },

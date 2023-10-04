@@ -37,6 +37,7 @@ function Board() {
   const confirmAddLists = (inputValue) => {
     if (inputValue) {
       dispatch(addList(board, inputValue));
+      dispatch(addListToBoard(board, inputValue, id));
       // dispatch(updateBoard(board));
     }
     setIsModalOpen(false);
