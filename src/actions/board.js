@@ -1,5 +1,4 @@
 import { myFirebase } from "../firebase/firebase";
-import uuid from "react-uuid";
 
 export const GET_BOARD_REQUEST = "GET_BOARD_REQUEST";
 export const GET_BOARD_SUCCESS = "GET_BOARD_SUCCESS";
@@ -70,9 +69,7 @@ export const addListToBoard = (board, title, id) => dispatch => {
             });
     }
 };
-export const addList = (board, title) => {
-    const id = uuid();
-    // addListToBoard(board, title, id);
+export const addList = (title, id) => {
     return {
         type: ADD_LIST,
         payload: { title, id },
@@ -126,10 +123,7 @@ export const addCardToBoard = (board, listID, text, id) => dispatch => {
             });
     }
 };
-export const addCard = (board, listID, text) => {
-    const id = uuid();
-    console.log("UUID: " + id);
-    // addCardToBoard(board, listID, text, id);
+export const addCard = (listID, text, id) => {
     return {
         type: ADD_CARD,
         payload: { text, listID, id },
@@ -272,57 +266,39 @@ export const updateBoard = (board) => dispatch => {
 
 export const loadBoard = (uid) => dispatch => {
     console.log("requestBoard");
-    // dispatch(requestBoard());
-    // const board = {
-    //     boardId: "-NdjpaVH4vldXr8jyEmP",
-    //     title: "123",
-    //     lists: [
-    //       {
-    //         id: "list1",
-    //         title: "Todo",
-    //       },
-    //       {
-    //         id: "list2",
-    //         title: "woqu",
-    //       },
-    //       {
-    //         id: "list3",
-    //         title: "test",
-    //       },
-    //       {
-    //         cards: [
-    //           {
-    //             id: "card1",
-    //             text: "123",
-    //             completed: false
-    //           },
-    //           {
-    //             id: "card2",
-    //             text: "456",
-    //             completed: false
-    //           },
-    //           {
-    //             id: "card3",
-    //             text: "789",
-    //             completed: false
-    //           },
-    //         ],
-    //         id: "list4",
-    //         title: "Todo",
-    //       },
-    //     ],
-    //   };
-    // dispatch(receiveBoard(board));
 
     myFirebase.database().ref('/board/' + uid).once('value').then(function (snapshot) {
+        const formatedLists = [];
+        if(snapshot.val().lists !== undefined){
+            for (const [boardId, board] of Object.entries(snapshot.val().lists)) {
+                const formatedCards = [];
+                if(board.cards !== undefined){
+                    for (const [cardId, card] of Object.entries(board.cards)){
+                        const curCard = {
+                            id: cardId,
+                            title: card.title,
+                            completed: card.completed,
+                        };
+                        formatedCards.push(curCard);
+                    };
+                }
+                const curBoard = {
+                    id: boardId,
+                    title: board.title,
+                    cards: formatedCards,
+                };
+                formatedCards.push(curBoard);
+            };
+        }
         const board = {
             boardId: snapshot.val().boardId,
             title: snapshot.val().title,
-            lists: snapshot.val().lists,
+            lists: formatedLists,
         }
         dispatch(receiveBoard(board));
         console.log(board);
     }).catch((err) => {
+        console.log(err);
         dispatch(receiveBoardError(uid));
     });
 };

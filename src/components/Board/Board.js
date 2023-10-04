@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { DragDropContext } from "react-beautiful-dnd";
-import List from "./List";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import uuid from 'react-uuid';
+
+import List from "./List";
 import BoardBar from "../BoardMenu/BoardBar";
 import PromptModal from "../PromptModal";
+
+import { DragDropContext } from "react-beautiful-dnd";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import {
   loadBoard,
@@ -12,7 +16,7 @@ import {
   addList,
   addListToBoard
 } from "../../actions/board";
-import { useParams } from "react-router-dom";
+
 
 function Board() {
   const board = useSelector((state) => state.board);
@@ -36,7 +40,8 @@ function Board() {
 
   const confirmAddLists = (inputValue) => {
     if (inputValue) {
-      dispatch(addList(board, inputValue));
+      const id = uuid();
+      dispatch(addList(inputValue, id));
       dispatch(addListToBoard(board, inputValue, id));
       // dispatch(updateBoard(board));
     }

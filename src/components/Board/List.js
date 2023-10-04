@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { Droppable } from "react-beautiful-dnd";
+import { useDispatch, useSelector } from "react-redux";
+import uuid from 'react-uuid';
+
 import Card from "./Card";
 import PromptModal from "../PromptModal";
-import { useDispatch, useSelector } from "react-redux";
+
+import { Droppable } from "react-beautiful-dnd";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import {
@@ -12,12 +15,14 @@ import {
 } from "../../actions";
 
 function List({ cards, listID, title, index, searchString }) {
+
   const board = useSelector((state) => state.board);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [promptMessage, setPromptMessage] = useState("");
   const [columnToDelete, setColumnToDelete] = useState(null);
   const [operationType, setOperationType] = useState(null); // 'add' or 'delete'
   const dispatch = useDispatch();
+
   const addColumn = () => {
     setOperationType("add");
     setPromptMessage("Enter card title:");
@@ -38,8 +43,9 @@ function List({ cards, listID, title, index, searchString }) {
   const confirmAction = (inputValue) => {
     if (operationType === "add") {
       if (inputValue) {
-        dispatch(addCard(board, listID, inputValue));
-        dispatch(addCardToBoard(board, listID, inputValue));
+        const id = uuid();
+        dispatch(addCard(listID, inputValue, id));
+        dispatch(addCardToBoard(board, listID, inputValue, id));
         // dispatch(updateBoard(board));
       }
     } else if (operationType === "delete") {
