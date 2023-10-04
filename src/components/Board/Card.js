@@ -2,7 +2,14 @@ import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
-import { deleteCard, updateBoard, updateCard, updateCardToBoard, deleteCardFromBoard } from "../../actions";
+import { AiOutlineDelete } from "react-icons/ai";
+import { BsCheckCircle, BsCircle } from "react-icons/bs";
+import {
+  deleteCard,
+  updateCard,
+  updateCardToBoard,
+  deleteCardFromBoard,
+} from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 
 function Card({ cardID, text, listID, index, completed }) {
@@ -30,21 +37,20 @@ function Card({ cardID, text, listID, index, completed }) {
             {...provided.dragHandleProps}
           >
             <div className="flex justify-between items-center p-5">
+              <button
+                onClick={handleDeleteCard}
+                className="text-gray-600 hover:text-gray-950"
+              >
+                <AiOutlineDelete className="h-5 w-5" />
+              </button>
               <p className={completed ? "line-through" : ""}>{text}</p>
               <div className="flex items-end justify-end">
-                {!completed && (
-                  <button
-                    className="hover:text-grey-900"
-                    onClick={handleCompleteCard}
-                  >
-                    <CheckCircleIcon className="h-8 w-8" />
-                  </button>
-                )}
                 <button
-                  onClick={handleDeleteCard}
-                  className="text-red-500 hover:text-red-600"
+                  className="hover:text-grey-900"
+                  onClick={handleCompleteCard}
                 >
-                  <XCircleIcon className="h-8 w-8" />
+                  {completed && <BsCheckCircle className="h-5 w-5" />}
+                  {!completed && <BsCircle className="h-5 w-5" />}
                 </button>
               </div>
             </div>

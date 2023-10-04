@@ -2,7 +2,6 @@
 
 import { Navbar } from "flowbite-react";
 import UserDropdown from "./UserDropdown";
-import SearchBox from "./SearchBox";
 import { HiHome } from "react-icons/hi";
 
 import { NavLink } from "react-router-dom";
@@ -22,7 +21,6 @@ export default function NavBar(){
         </span>
       </Navbar.Collapse>
       <div className="flex md:order-2">
-        {/* <SearchBox /> */}
          <UserDropdown />
         <Navbar.Toggle />
       </div>

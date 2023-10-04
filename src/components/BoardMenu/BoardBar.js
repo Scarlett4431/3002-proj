@@ -16,9 +16,9 @@ export default function BoardBar({ title, boardID, searchString, setSearchString
       <div className="flex items-center space-x-5 flex-1 justify-end w-full">
         <form
           className="flex items-center space-x-5 bg-white p-2 
-                    shadow-md flex-1 md:flex-initial"
+                    shadow-md flex-1 md:flex-initial rounded-xl"
         >
-          <MagnifyingGlassIcon className="h-6 w-6 text-gray-400" />
+          <MagnifyingGlassIcon className="ml-2 h-6 w-6 text-gray-400" />
           <input
             type="text"
             placeholder="Search"

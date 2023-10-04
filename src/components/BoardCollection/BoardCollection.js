@@ -14,7 +14,7 @@ export default function BoardCollection() {
   } else if (auth.isAuthenticated) {
     return (
       <div className="p-10 bg-gray-200 min-h-75vh">
-        <h2 className="text-2xl mb-4 text-center">YOUR BOARDS</h2>
+        <h2 className="text-2xl mb-4 text-center">MY BOARDS</h2>
         <BoardPool />
       </div>
     );

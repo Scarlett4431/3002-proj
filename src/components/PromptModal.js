@@ -2,7 +2,7 @@ import { Button, Modal } from "flowbite-react";
 import { HiOutlineExclamationCircle, HiOutlineClipboardList } from "react-icons/hi";
 import { useState } from "react";
 
-export default function PromptModal({ placeholder, open, message, onConfirm, onCancel, requiresInput }) {
+export default function PromptModal({ placeholder, open, message, onConfirm, onCancel, requiresInput}) {
   const [inputValue, setInputValue] = useState('');
 
   return (
@@ -26,6 +26,7 @@ export default function PromptModal({ placeholder, open, message, onConfirm, onC
                  value={inputValue}
                  onChange={(e) => setInputValue(e.target.value)}
                  placeholder={placeholder}
+                 autoFocus
               />
             }
             <div className="flex justify-center gap-4 mt-4">

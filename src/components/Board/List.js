@@ -89,16 +89,16 @@ function List({ cards, listID, title, index, searchString }) {
             {provided.placeholder}
             <div className="flex items-end justify-end">
               <button
-                className="text-green-500 hover:text-green-600 mt-3"
-                onClick={addColumn}
-              >
-                <PlusCircleIcon className="h-10 w-10" />
-              </button>
-              <button
                 onClick={() => handleDeleteClick(listID)}
                 className="text-red-500 hover:text-red-600"
               >
                 <XCircleIcon className="h-10 w-810" />
+              </button>
+              <button
+                className="text-green-500 hover:text-green-600 mt-3"
+                onClick={addColumn}
+              >
+                <PlusCircleIcon className="h-10 w-10" />
               </button>
               <PromptModal
                 open={isModalOpen}
