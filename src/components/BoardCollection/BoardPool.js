@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-
+import { Button } from "flowbite-react";
 import { Audio } from 'react-loader-spinner';
 import PromptModal from "../PromptModal";
 
@@ -14,6 +14,7 @@ export default function BoardPool() {
 
   const dispatch = useDispatch();
   const columns = useSelector((state) => state.boards); 
+  const auth = useSelector((state) => state.auth);
 
   const [columnToDelete, setColumnToDelete] = useState(null);
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -47,13 +48,15 @@ export default function BoardPool() {
   };
   
   useEffect(() => {
-    console.log("Boards calls loadUserBoards");
-    dispatch(loadUserBoards());
-  }, [dispatch]);
-
+    if (auth.isAuthenticated) {
+        console.log("Boards calls loadUserBoards");
+        dispatch(loadUserBoards());
+    }
+  }, [auth.isAuthenticated]);
+//grid grid-cols-1 gap-4 md:grid-cols-3
   return (
-    <div class="d-flex justify-content-center">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+    <div class="justify-content-center px-10">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
         {columns.boards.length === 0 ? 
           <Audio style={{ flex: 1 }}/> 
         : columns.boards.map(({boardId, title}) => (
@@ -66,13 +69,13 @@ export default function BoardPool() {
           />
         ))}
       </div>
-      <button
+      <Button
         onClick={addColumn}
-        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 block mx-auto"
+        className="mt-8 font-bold px-4 py-2 block mx-auto"
+        gradientDuoTone="purpleToPink"
         >
         CREATE NEW BOARD
-      </button>
-
+      </Button>
       <PromptModal
         open={isModalOpen}
         message={promptMessage}

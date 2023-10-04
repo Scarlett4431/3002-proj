@@ -9,6 +9,9 @@ export const GET_BOARDS_SUCCESS = "GET_BOARDS_SUCCESS";
 export const GET_BOARDS_FAIL = "GET_BOARDS_FAIL";
 
 export const GET_BOARD_NAME_SUCCESS = "GET_BOARD_NAME_SUCCESS";
+export const DELETE_BOARD_SUCCESS = "DELETE_BOARD_SUCCESS";
+
+export const SET_SELECTED_BOARD_TITLE = 'SET_SELECTED_BOARD_TITLE';
 
 // Get Boards
 const requestBoards = () => {
@@ -28,6 +31,12 @@ const receiveBoardsError = () => {
     };
 };
 
+const deleteBoardSuccess = (boardId) => {
+    return {
+        type: DELETE_BOARD_SUCCESS,
+        payload: boardId
+    };
+};
 
 // Create Board
 const requestCreateBoard = () => {
@@ -35,12 +44,13 @@ const requestCreateBoard = () => {
         type: CREATE_BOARD_REQUEST
     };
 };
-const receiveCreateBoard = (uid) => {
+const receiveCreateBoard = (data) => {
     return {
         type: CREATE_BOARD_SUCCESS,
-        payload: { uid }
+        payload: data
     };
 };
+
 const createBoardError = () => {
     return {
         type: CREATE_BOARD_FAIL
@@ -84,7 +94,8 @@ export const createBoard = (title) => async dispatch => {
             lists: { 0: { id: '0', title: 'Todo' } },
         });
         console.log("receiveCreateBoard");
-        dispatch(receiveCreateBoard(key));
+        dispatch(receiveCreateBoard({ uid: key, title: title }));
+
     }
 };
 
@@ -103,7 +114,7 @@ export const deleteBoard = (boardId) => async dispatch => {
         myFirebase.database().ref('/boards/' + boardId).remove();
         // remove from '/board/'
         myFirebase.database().ref('/board/' + boardId).remove().then(() => {
-            dispatch(loadUserBoards());
+            dispatch(deleteBoardSuccess(boardId));
         });
     });
 }
@@ -182,3 +193,9 @@ export const listenBoardName = (boardId) => async dispatch => {
     });
 };
 
+export function setSelectedBoardTitle(title) {
+    return {
+      type: SET_SELECTED_BOARD_TITLE,
+      payload: title
+    };
+}
