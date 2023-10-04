@@ -5,7 +5,7 @@ import InviteCard from "./InviteCard";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 export default function BoardBar({ title, boardID, searchString, setSearchString }) {
   return (
-    <div className="flex flex-col md:flex-row items-center p-5">
+    <div className="flex flex-col md:flex-row items-center pb-5">
       <BoardTitleCard title={title} />
       <InviteCard boardID={boardID} />
       <div className="flex items-center space-x-5 flex-1 justify-end w-full">

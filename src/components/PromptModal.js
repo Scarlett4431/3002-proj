@@ -31,7 +31,7 @@ export default function PromptModal({ placeholder, open, message, onConfirm, onC
             }
             <div className="flex justify-center gap-4 mt-4">
               <Button
-                color="success"
+                className="bg-indigo-600 hover:bg-indigo-800"
                 onClick={() => {
                   onConfirm(inputValue);
                   setInputValue('');

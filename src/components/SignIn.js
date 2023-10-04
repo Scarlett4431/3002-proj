@@ -1,4 +1,3 @@
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
@@ -7,7 +6,6 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
 import { HiLockClosed } from "react-icons/hi";
 
 import { NavLink, useNavigate } from "react-router-dom";
@@ -55,7 +53,6 @@ export default function SignIn() {
   const signIn = (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-
       <div class="w-full justify-center max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
       <HiLockClosed className="h-10 w-10 flex" />
       <h3 class="text-2xl font-medium text-gray-900 dark:text-white my-3">
@@ -100,7 +97,7 @@ export default function SignIn() {
             }
             label="Remember me"
           />
-          <Button type="submit" class="my-3 w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <Button type="submit" class="my-3 w-full text-white bg-indigo-600 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Sign In
           </Button>
           <Grid container justify="flex-end">

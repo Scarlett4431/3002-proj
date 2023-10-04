@@ -12,7 +12,7 @@ import { registerUser } from "../actions/";
 
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, Navigate, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function SignUp(){
 
@@ -91,7 +91,7 @@ export default function SignUp(){
           {/* Display error message, saved for future */}
           <div style={{ margin: "10px" }} />
           <div style={{ marginTop: '10px', marginBottom: '5px',color: 'red', textAlign: 'center' }}>{auth.errorMessage}</div>
-          <Button type="submit" class="my-3 w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <Button type="submit" class="my-3 w-full text-white bg-indigo-600 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Sign Up
           </Button>
           <Grid container justify="flex-end">

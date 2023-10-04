@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "flowbite-react";
 import { HiAdjustments } from "react-icons/hi";
 import PromptModal from "../PromptModal";
-import { changeBoardTitle, changeBoardTitleToBoard, updateBoard } from "../../actions";
+import { changeBoardTitle, changeBoardTitleToBoard } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 function BoardTitleCard({ title }) {
   const board = useSelector((state) => state.board);
@@ -29,7 +29,7 @@ function BoardTitleCard({ title }) {
 
   return (
     <div>
-      <Button size="xl" gradientDuoTone="greenToBlue" onClick={editBoard}>
+      <Button size="xl" gradientDuoTone="purpleToPink" onClick={editBoard}>
         <HiAdjustments className="mr-3 h-4 w-4" />
         <p>{title}</p>
       </Button>
