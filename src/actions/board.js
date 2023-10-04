@@ -48,15 +48,15 @@ export const changeBoardTitle = (title) => {
     };
 };
 
-export const addListToBoard = (board, title) => dispatch => {
+export const addListToBoard = (board, title, id) => dispatch => {
     const user = myFirebase.auth().currentUser;
     if (!user) {
         dispatch(updateBoardError());
     } else {
         // dispatch(requestUpdateBoard());
-        let id = myFirebase.database()
-            .ref('/board/' + board.boardId + '/lists/')
-            .push().key;
+        // let id = myFirebase.database()
+        //     .ref('/board/' + board.boardId + '/lists/')
+        //     .push().key;
         myFirebase.database()
             .ref('/board/' + board.boardId + '/lists/' + id)
             .set({"title": title}).then(() => {
@@ -103,15 +103,15 @@ export const deleteList = (board, listID) => {
     };
 };
 
-export const addCardToBoard = (board, listID, text) => dispatch => {
+export const addCardToBoard = (board, listID, text, id) => dispatch => {
     const user = myFirebase.auth().currentUser;
     if (!user) {
         dispatch(updateBoardError());
     } else {
         // dispatch(requestUpdateBoard());
-        let id = myFirebase.database()
-            .ref('/board/' + board.boardId + '/lists/'  + listID + '/cards/')
-            .push().key;
+        // let id = myFirebase.database()
+        //     .ref('/board/' + board.boardId + '/lists/'  + listID + '/cards/')
+        //     .push().key;
         myFirebase.database()
             .ref('/board/' + board.boardId + '/lists/'  + listID + '/cards/' + id)
             .set({"title": text, "completed": false}).then(() => {
