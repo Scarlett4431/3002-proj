@@ -53,12 +53,16 @@ export const addListToBoard = (board, title) => dispatch => {
         dispatch(updateBoardError());
     } else {
         // dispatch(requestUpdateBoard());
-        myFirebase.database()
+        let id = myFirebase.database()
             .ref('/board/' + board.boardId + '/lists/')
-            .push({"title": title}).then(() => {
-                console.log(board.boardId, title)
+            .push().key;
+        myFirebase.database()
+            .ref('/board/' + board.boardId + '/lists/' + id)
+            .set({"title": title}).then(() => {
                 console.log("Add list successfully")
                 dispatch(receiveUpdatedBoard());
+                console.log("real id of newly created list: ", id);
+                return id;
             }).catch((err) => {
                 dispatch(updateBoardError());
             });
@@ -101,12 +105,16 @@ export const addCardToBoard = (board, listID, text) => dispatch => {
         dispatch(updateBoardError());
     } else {
         // dispatch(requestUpdateBoard());
-        myFirebase.database()
+        let id = myFirebase.database()
             .ref('/board/' + board.boardId + '/lists/'  + listID + '/cards/')
-            .push({"title": text, "completed": false}).then(() => {
-                console.log(board.boardId, listID)
+            .push().key;
+        myFirebase.database()
+            .ref('/board/' + board.boardId + '/lists/'  + listID + '/cards/' + id)
+            .set({"title": text, "completed": false}).then(() => {
                 console.log("Add card successfully")
                 dispatch(receiveUpdatedBoard());
+                console.log("real id of newly created card: ", id);
+                return id;
             }).catch((err) => {
                 dispatch(updateBoardError());
             });
