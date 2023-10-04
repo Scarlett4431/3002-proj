@@ -11,10 +11,10 @@ import {
   CHANGE_BOARD_TITLE,
   UPDATE_CARD
 } from "../actions/";
-import uuid from "react-uuid";
+
 
 const initialState = {
-  boardId: uuid(),
+  boardId: "",
   title: "",
   lists: [],
 };
@@ -49,7 +49,7 @@ function board(state = initialState, action) {
       const newList = {
         title: action.payload.title,
         cards: [],
-        id: uuid(),
+        id: action.payload.id,
       };
       if (state.lists) {
         state.lists = [...state.lists, newList];
@@ -74,7 +74,7 @@ function board(state = initialState, action) {
       const newCard = {
         text: action.payload.text,
         completed: false,
-        id: uuid(),
+        id: action.payload.id,
       };
       state.lists = state.lists.map((list) => {
         if (list.id === action.payload.listID) {

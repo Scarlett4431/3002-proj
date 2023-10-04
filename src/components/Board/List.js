@@ -8,8 +8,6 @@ import { XCircleIcon } from "@heroicons/react/24/solid";
 import {
   deleteList,
   addCard,
-  addCardToBoard,
-  deleteListFromBoard,
 } from "../../actions";
 
 function List({ cards, listID, title, index, searchString }) {
@@ -39,13 +37,11 @@ function List({ cards, listID, title, index, searchString }) {
   const confirmAction = (inputValue) => {
     if (operationType === "add") {
       if (inputValue) {
-        dispatch(addCard(listID, inputValue));
-        dispatch(addCardToBoard(board, listID, inputValue));
+        dispatch(addCard(board, listID, inputValue));
         // dispatch(updateBoard(board));
       }
     } else if (operationType === "delete") {
-      dispatch(deleteList(columnToDelete));
-      dispatch(deleteListFromBoard(board, columnToDelete));
+      dispatch(deleteList(board, columnToDelete));
       // dispatch(updateBoard(board));
     }
     setIsModalOpen(false);

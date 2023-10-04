@@ -1,4 +1,5 @@
 import { myFirebase } from "../firebase/firebase";
+import uuid from "react-uuid";
 
 export const GET_BOARD_REQUEST = "GET_BOARD_REQUEST";
 export const GET_BOARD_SUCCESS = "GET_BOARD_SUCCESS";
@@ -68,7 +69,9 @@ export const addListToBoard = (board, title) => dispatch => {
             });
     }
 };
-export const addList = (title) => {
+export const addList = (board, title) => {
+    const id = uuid();
+    addListToBoard(board, title, )
     return {
         type: ADD_LIST,
         payload: { title },
@@ -92,7 +95,8 @@ export const deleteListFromBoard = (board, listID) => dispatch => {
             });
     }
 };
-export const deleteList = (listID) => {
+export const deleteList = (board, listID) => {
+    deleteListFromBoard(board, listID);
     return {
         type: DELETE_LIST,
         payload: { listID }
@@ -120,10 +124,12 @@ export const addCardToBoard = (board, listID, text) => dispatch => {
             });
     }
 };
-export const addCard = (listID, text) => {
+export const addCard = (board, listID, text) => {
+    const cardID = uuid();
+    addCardToBoard(board, listID, text, cardID);
     return {
         type: ADD_CARD,
-        payload: { text, listID },
+        payload: { text, listID, cardID },
     };
 };
 
