@@ -2,12 +2,13 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { HiOutlineLockClosed } from "react-icons/hi";
+import { HiLockClosed } from "react-icons/hi";
 
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,9 +16,7 @@ import React, { useState } from "react";
 
 import { loginUser } from "../actions";
 
-
-export default function SignIn(){
-  
+export default function SignIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
@@ -55,38 +54,42 @@ export default function SignIn(){
 
   const signIn = (
     <Container component="main" maxWidth="xs">
-      <div>
-        <Avatar>
-          <HiOutlineLockClosed />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
+      <CssBaseline />
+
+      <div class="w-full justify-center max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+      <HiLockClosed className="h-10 w-10 flex" />
+      <h3 class="text-2xl font-medium text-gray-900 dark:text-white my-3">
+          Sign In
+        </h3>
         <form onSubmit={handleSignIn} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={onChange}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={onChange}
-          />
+          <Grid container spacing={4}>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                onChange={onChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={onChange}
+              />
+            </Grid>
+          </Grid>
           <FormControlLabel
             control={
               <Checkbox
@@ -97,12 +100,15 @@ export default function SignIn(){
             }
             label="Remember me"
           />
-          <Button type="submit" fullWidths variant="contained" color="primary">
+          <Button type="submit" class="my-3 w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Sign In
           </Button>
-          <Grid container>
-          <div style={{ margin: "10px" }} />
-          <div style={{ marginTop: '10px', color: 'red', textAlign: 'center' }}>{auth.errorMessage}</div>
+          <Grid container justify="flex-end">
+            <div
+              style={{ marginTop: "10px", color: "red", textAlign: "center" }}
+            >
+              {auth.errorMessage}
+            </div>
             {/* Forget Password function, save for future development */}
             {/* <Grid item xs>
                             <Link href="#" variant="body2">
@@ -110,7 +116,7 @@ export default function SignIn(){
                             </Link>
                         </Grid> */}
             <Grid item>
-              <Link variant="body2" to="/signup" component={NavLink}>
+              <Link  to="/signup" component={NavLink}>
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

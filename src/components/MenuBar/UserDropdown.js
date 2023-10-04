@@ -29,6 +29,7 @@ export default function UserDropdown() {
               alt="User settings"
               img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
               rounded
+              class="w-10 h-10"
             />
           }
         >

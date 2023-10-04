@@ -1,7 +1,5 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
-import { XCircleIcon } from "@heroicons/react/24/solid";
-import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BsCheckCircle, BsCircle } from "react-icons/bs";
 import {

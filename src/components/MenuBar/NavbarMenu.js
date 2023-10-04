@@ -9,10 +9,10 @@ import { NavLink } from "react-router-dom";
 export default function NavBar(){
 
   return (
-    <Navbar fluid rounded>
+    <Navbar fluid rounded class="bg-gray-900/10 h-10"> 
       <NavLink to="/">
         <Navbar.Brand>
-          <HiHome className="h-6 w-6" />
+          <HiHome className="h-8 w-8" />
         </Navbar.Brand>
       </NavLink>
       <Navbar.Collapse>

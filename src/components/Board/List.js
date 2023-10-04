@@ -5,7 +5,12 @@ import PromptModal from "../PromptModal";
 import { useDispatch, useSelector } from "react-redux";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { XCircleIcon } from "@heroicons/react/24/solid";
-import { deleteList, updateBoard, addCard, addCardToBoard, deleteListFromBoard } from "../../actions";
+import {
+  deleteList,
+  addCard,
+  addCardToBoard,
+  deleteListFromBoard,
+} from "../../actions";
 
 function List({ cards, listID, title, index, searchString }) {
   const board = useSelector((state) => state.board);
@@ -69,10 +74,13 @@ function List({ cards, listID, title, index, searchString }) {
             </h2>
             {cards != null
               ? cards.map((item, index) => {
-                if (searchString &&
-                  !item.text
-                    .toLowerCase()
-                    .includes(searchString.toLowerCase())) return null;
+                  if (
+                    searchString &&
+                    !item.text
+                      .toLowerCase()
+                      .includes(searchString.toLowerCase())
+                  )
+                    return null;
                   return (
                     <Card
                       key={index}
@@ -81,7 +89,7 @@ function List({ cards, listID, title, index, searchString }) {
                       listID={listID}
                       index={index}
                       completed={item.completed}
-                      searchString = {searchString}
+                      searchString={searchString}
                     />
                   );
                 })

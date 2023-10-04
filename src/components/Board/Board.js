@@ -6,7 +6,6 @@ import BoardBar from "../BoardMenu/BoardBar";
 import PromptModal from "../PromptModal";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import {
-  listenBoard,
   loadBoard,
   sort,
   updateBoard,
@@ -89,8 +88,8 @@ function Board() {
                   </div>
                 ))
               : null}
-            <div className={"p-2 rounded-2xl shadow-sm"}>
-              <h2 className="text-blue-700 flex justify-between font-bold text-xl p-2s">
+            <div className={"p-2 rounded-2xl shadow-sm bg-gray-100 bg-opacity-30"}>
+              <h2 className="text-blue-700 flex justify-between font-bold text-xl p-2">
                 Add a List
               </h2>
               <div className="flex items-end justify-end">
