@@ -46,6 +46,7 @@ function board(state = initialState, action) {
       return state;
     case ADD_LIST:
       console.log("Add list");
+      console.log(action.payload);
       const newList = {
         title: action.payload.title,
         cards: [],

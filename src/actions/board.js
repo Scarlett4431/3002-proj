@@ -71,10 +71,10 @@ export const addListToBoard = (board, title, id) => dispatch => {
 };
 export const addList = (board, title) => {
     const id = uuid();
-    addListToBoard(board, title, )
+    addListToBoard(board, title, id);
     return {
         type: ADD_LIST,
-        payload: { title },
+        payload: { title, id },
     };
 };
 
@@ -125,11 +125,12 @@ export const addCardToBoard = (board, listID, text, id) => dispatch => {
     }
 };
 export const addCard = (board, listID, text) => {
-    const cardID = uuid();
-    addCardToBoard(board, listID, text, cardID);
+    const id = uuid();
+    console.log("UUID: " + id);
+    addCardToBoard(board, listID, text, id);
     return {
         type: ADD_CARD,
-        payload: { text, listID, cardID },
+        payload: { text, listID, id },
     };
 };
 
