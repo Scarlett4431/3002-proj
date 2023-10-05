@@ -6,6 +6,7 @@ import { changeBoardTitle, changeBoardTitleToBoard } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 function BoardTitleCard({ title }) {
   const board = useSelector((state) => state.board);
+  const [newTitle, setTitle] = useState(title);
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [promptMessage, setPromptMessage] = useState("");
@@ -20,9 +21,9 @@ function BoardTitleCard({ title }) {
 
   const confirmAction = (inputValue) => {
     if (inputValue.length > 0 && inputValue.length < 30) {
+      setTitle(inputValue);
       dispatch(changeBoardTitle(inputValue));
       dispatch(changeBoardTitleToBoard(board, inputValue));
-      // dispatch(updateBoard(board));
     }
     setIsModalOpen(false);
   };
@@ -31,7 +32,7 @@ function BoardTitleCard({ title }) {
     <div>
       <Button size="xl" gradientDuoTone="purpleToPink" onClick={editBoard}>
         <HiAdjustments className="mr-3 h-4 w-4" />
-        <p>{title}</p>
+        <p>{newTitle}</p>
       </Button>
       <PromptModal
         open={isModalOpen}
