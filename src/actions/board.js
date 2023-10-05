@@ -267,6 +267,7 @@ export const updateBoard = (board) => dispatch => {
 export const loadBoard = (uid) => dispatch => {
     console.log("requestBoard");
     const board = {};
+    dispatch(requestBoard());
 
     myFirebase.database().ref('/board/' + uid).once('value').then(function (snapshot) {
         console.log(snapshot.val());
@@ -302,7 +303,6 @@ export const loadBoard = (uid) => dispatch => {
         console.log("dispatch");
         dispatch(receiveBoard(board));
     }).catch((err) => {
-        console.log(err);
         dispatch(receiveBoardError(uid));
     });
 };
