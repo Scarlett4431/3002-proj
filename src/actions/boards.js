@@ -91,6 +91,7 @@ export const createBoard = (title) => async dispatch => {
         myFirebase.database().ref('/userBoards/' + uid).child(key).set(true);
         myFirebase.database().ref('/board/' + key).set({
             boardId: key,
+            title: title,
             lists: { 0: { id: '0', title: 'Todo' } },
         });
         console.log("receiveCreateBoard");

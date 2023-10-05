@@ -266,39 +266,16 @@ export const updateBoard = (board) => dispatch => {
 
 export const loadBoard = (uid) => dispatch => {
     console.log("requestBoard");
+    dispatch(requestBoard());
 
     myFirebase.database().ref('/board/' + uid).once('value').then(function (snapshot) {
-        const formatedLists = [];
-        if(snapshot.val().lists !== undefined){
-            for (const [boardId, board] of Object.entries(snapshot.val().lists)) {
-                const formatedCards = [];
-                if(board.cards !== undefined){
-                    for (const [cardId, card] of Object.entries(board.cards)){
-                        const curCard = {
-                            id: cardId,
-                            title: card.title,
-                            completed: card.completed,
-                        };
-                        formatedCards.push(curCard);
-                    };
-                }
-                const curBoard = {
-                    id: boardId,
-                    title: board.title,
-                    cards: formatedCards,
-                };
-                formatedCards.push(curBoard);
-            };
-        }
         const board = {
             boardId: snapshot.val().boardId,
             title: snapshot.val().title,
-            lists: formatedLists,
+            lists: snapshot.val().lists,
         }
         dispatch(receiveBoard(board));
-        console.log(board);
     }).catch((err) => {
-        console.log(err);
         dispatch(receiveBoardError(uid));
     });
 };
