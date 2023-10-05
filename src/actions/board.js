@@ -282,7 +282,7 @@ export const loadBoard = (uid) => dispatch => {
                     for (const [cardId, card] of Object.entries(board.cards)){
                         const curCard = {
                             id: cardId,
-                            text: card.title,
+                            text: card.text,
                             completed: card.completed,
                         };
                         formatedCards.push(curCard);
@@ -296,12 +296,9 @@ export const loadBoard = (uid) => dispatch => {
                 formatedLists.push(curBoard);
             };
         }
-        console.log(formatedLists);
         board.boardId = snapshot.val().boardId;
         board.title = snapshot.val().title;
         board.lists = formatedLists;
-        console.log(board);
-        console.log(snapshot.val());
     }).then(()=>{
         console.log("dispatch");
         dispatch(receiveBoard(board));
