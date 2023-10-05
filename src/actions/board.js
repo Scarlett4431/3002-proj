@@ -266,11 +266,14 @@ export const updateBoard = (board) => dispatch => {
 
 export const loadBoard = (uid) => dispatch => {
     console.log("requestBoard");
-    const board = {};
     dispatch(requestBoard());
+
+    const board = {};
 
     myFirebase.database().ref('/board/' + uid).once('value').then(function (snapshot) {
         console.log(snapshot.val());
+
+        // transform firbase storage format to local format
         const formatedLists = [];
         if(snapshot.val().lists !== undefined){
             for (const [boardId, board] of Object.entries(snapshot.val().lists)) {
