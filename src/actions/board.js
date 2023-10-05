@@ -266,8 +266,10 @@ export const updateBoard = (board) => dispatch => {
 
 export const loadBoard = (uid) => dispatch => {
     console.log("requestBoard");
+    const board = {};
 
     myFirebase.database().ref('/board/' + uid).once('value').then(function (snapshot) {
+        console.log(snapshot.val());
         const formatedLists = [];
         if(snapshot.val().lists !== undefined){
             for (const [boardId, board] of Object.entries(snapshot.val().lists)) {
@@ -276,7 +278,7 @@ export const loadBoard = (uid) => dispatch => {
                     for (const [cardId, card] of Object.entries(board.cards)){
                         const curCard = {
                             id: cardId,
-                            title: card.title,
+                            text: card.title,
                             completed: card.completed,
                         };
                         formatedCards.push(curCard);
@@ -287,16 +289,18 @@ export const loadBoard = (uid) => dispatch => {
                     title: board.title,
                     cards: formatedCards,
                 };
-                formatedCards.push(curBoard);
+                formatedLists.push(curBoard);
             };
         }
-        const board = {
-            boardId: snapshot.val().boardId,
-            title: snapshot.val().title,
-            lists: formatedLists,
-        }
-        dispatch(receiveBoard(board));
+        console.log(formatedLists);
+        board.boardId = snapshot.val().boardId;
+        board.title = snapshot.val().title;
+        board.lists = formatedLists;
         console.log(board);
+        console.log(snapshot.val());
+    }).then(()=>{
+        console.log("dispatch");
+        dispatch(receiveBoard(board));
     }).catch((err) => {
         console.log(err);
         dispatch(receiveBoardError(uid));
