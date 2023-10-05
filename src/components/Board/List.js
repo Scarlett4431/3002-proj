@@ -10,6 +10,7 @@ import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import {
   deleteList,
+  deleteListFromBoard,
   addCard,
   addCardToBoard,
 } from "../../actions";
@@ -50,6 +51,7 @@ function List({ cards, listID, title, index, searchString }) {
       }
     } else if (operationType === "delete") {
       dispatch(deleteList(board, columnToDelete));
+      dispatch(deleteListFromBoard(board, columnToDelete));
       // dispatch(updateBoard(board));
     }
     setIsModalOpen(false);

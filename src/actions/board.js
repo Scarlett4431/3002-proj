@@ -94,7 +94,6 @@ export const deleteListFromBoard = (board, listID) => dispatch => {
     }
 };
 export const deleteList = (board, listID) => {
-    deleteListFromBoard(board, listID);
     return {
         type: DELETE_LIST,
         payload: { listID }
