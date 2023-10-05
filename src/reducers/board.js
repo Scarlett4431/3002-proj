@@ -97,7 +97,7 @@ function board(state = initialState, action) {
           const cardsList = [...list.cards];
           list.cards.forEach(function (card, index) {
             if (card.id === cardID_3) {
-              card.completed = true;
+              card.completed = !action.payload.completed;
               cardsList.push(cardsList.splice(index, 1)[0]);
               return;
             }

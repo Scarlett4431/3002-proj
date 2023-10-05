@@ -25,10 +25,6 @@ function Board() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchString, setSearchString] = useState("");
 
-  const selectedTitle = useSelector(state => state.boards.selectedBoardTitle);
-
-  console.log("Selected Title:", selectedTitle); //this is the board title
-
   useEffect(() => {
     dispatch(loadBoard(id));
   }, []);
@@ -72,7 +68,7 @@ function Board() {
   return (
     <div>
       <BoardBar
-        title={selectedTitle}
+
         boardID = {id}
         searchString= {searchString}
         setSearchString = {setSearchString}

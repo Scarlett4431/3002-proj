@@ -3,10 +3,10 @@ import React from "react";
 import BoardTitleCard from "./BoardTitleCard";
 import InviteCard from "./InviteCard";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-export default function BoardBar({ title, boardID, searchString, setSearchString }) {
+export default function BoardBar({ boardID, searchString, setSearchString }) {
   return (
     <div className="flex flex-col md:flex-row items-center pb-5">
-      <BoardTitleCard title={title} />
+      <BoardTitleCard />
       <InviteCard boardID={boardID} />
       <div className="flex items-center space-x-5 flex-1 justify-end w-full">
         <form
