@@ -122,7 +122,7 @@ export const addCardToBoard = (board, listID, text, id) => dispatch => {
         //     .push().key;
         myFirebase.database()
             .ref('/board/' + board.boardId + '/lists/'  + listID + '/cards/' + id)
-            .set({"text": text, "completed": false}).then(() => {
+            .set({"text": text, "completed": false, "update_time": new Date().getTime()}).then(() => {
                 console.log("Add card successfully")
                 dispatch(receiveUpdatedBoard());
                 console.log("real id of newly created card: ", id);
@@ -139,7 +139,7 @@ export const addCard = (listID, text, id) => {
     };
 };
 
-export const updateCardToBoard = (board, cardID, listID) => dispatch => {
+export const updateCardToBoard = (board, cardID, listID, completed) => dispatch => {
     const user = myFirebase.auth().currentUser;
     if (!user) {
         dispatch(updateBoardError());
@@ -149,11 +149,42 @@ export const updateCardToBoard = (board, cardID, listID) => dispatch => {
             .ref('/board/' + board.boardId + '/lists/'  + listID + '/cards/' + cardID)
             .get()
             .then(function (snap) {
-                snap.ref.update({ "completed": !snap.completed });
+                snap.ref.update({ "completed": !snap.completed, "update_time": new Date().getTime() });
             })
             .then(() => {
                 // console.log(board.boardId, listID, cardID)
                 console.log("Change card state successfully")
+                dispatch(receiveUpdatedBoard());
+            }).catch((err) => {
+                dispatch(updateBoardError());
+            });
+    }
+};
+export const moveCard = (cardID, listID, new_listID) => {
+    return {
+        type: UPDATE_CARD,
+        payload: { cardID, listID, new_listID },
+    };
+};
+export const moveCardToBoard = (board, cardID, listID, new_listID) => dispatch => {
+    const user = myFirebase.auth().currentUser;
+    if (!user) {
+        dispatch(updateBoardError());
+    } else {
+        // dispatch(requestUpdateBoard());
+        var oldRef = myFirebase.database()
+            .ref('/board/' + board.boardId + '/lists/'  + listID + '/cards/' + cardID);
+        var newRef = myFirebase.database()
+            .ref('/board/' + board.boardId + '/lists/'  + new_listID + '/cards/' + cardID);
+        oldRef.once('value').then(snap => {
+                newRef.set(snap.val());
+            })
+            .then(() => {
+                oldRef.set(null);
+            })
+            .then(() => {
+                // console.log(board.boardId, listID, cardID)
+                console.log("move card successfully")
                 dispatch(receiveUpdatedBoard());
             }).catch((err) => {
                 dispatch(updateBoardError());
@@ -330,3 +361,19 @@ export const listenBoard = (uid) => dispatch => {
         }
     });
 };
+
+function moveFbRecord(oldRef, newRef) {    
+    return Promise((resolve, reject) => {
+         oldRef.once('value').then(snap => {
+              return newRef.set(snap.val());
+         }).then(() => {
+              return oldRef.set(null);
+         }).then(() => {
+              console.log('move done!');
+              resolve();
+         }).catch(err => {
+              console.log(err.message);
+              reject();
+         });
+    })
+}

@@ -3,8 +3,10 @@ import { Draggable } from "react-beautiful-dnd";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BsCheckCircle, BsCircle } from "react-icons/bs";
 import {
+  moveCard,
   deleteCard,
   updateCard,
+  moveCardToBoard,
   updateCardToBoard,
   deleteCardFromBoard,
 } from "../../actions";
@@ -14,6 +16,8 @@ function Card({ cardID, text, listID, index, completed }) {
   const board = useSelector((state) => state.board);
   console.log(completed);
   const dispatch = useDispatch();
+  // update new listID 
+  let new_listID = 0;
   const handleDeleteCard = () => {
     dispatch(deleteCard(cardID, listID));
     dispatch(deleteCardFromBoard(board, cardID, listID));
@@ -22,7 +26,10 @@ function Card({ cardID, text, listID, index, completed }) {
   const handleCompleteCard = () => {
     dispatch(updateCard(cardID, listID, completed));
     dispatch(updateCardToBoard(board, cardID, listID, completed));
-    // dispatch(updateBoard(board));
+  };
+  const handleMoveCard = () => {
+    dispatch(moveCard(cardID, listID, completed, new_listID));
+    dispatch(moveCardToBoard(board, cardID, listID, completed, new_listID));
   };
   return (
     <Draggable key={cardID} draggableId={cardID} index={index}>
