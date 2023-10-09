@@ -92,7 +92,7 @@ export const createBoard = (title) => async dispatch => {
         myFirebase.database().ref('/board/' + key).set({
             boardId: key,
             title: title,
-            lists: { 0: { id: '0', title: 'Todo' } },
+            // lists: { 0: { id: '0', title: 'Todo' } },
         });
         console.log("receiveCreateBoard");
         dispatch(receiveCreateBoard({ uid: key, title: title }));

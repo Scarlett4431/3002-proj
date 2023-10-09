@@ -34,6 +34,16 @@ export const changeBoardTitleToBoard = (board, title) => dispatch => {
             .set(title).then(() => {
                 console.log(board.boardId, title)
                 console.log("Change board title successfully")
+                // dispatch(receiveUpdatedBoard());
+            }).catch((err) => {
+                dispatch(updateBoardError());
+            });
+        myFirebase.database()
+            .ref('/board/' + board.boardId)
+            .child("title")
+            .set(title).then(() => {
+                console.log(board.boardId, title)
+                console.log("Change board title successfully")
                 dispatch(receiveUpdatedBoard());
             }).catch((err) => {
                 dispatch(updateBoardError());
@@ -129,7 +139,7 @@ export const addCard = (listID, text, id) => {
     };
 };
 
-export const updateCardToBoard = (board, cardID, listID, completed) => dispatch => {
+export const updateCardToBoard = (board, cardID, listID) => dispatch => {
     const user = myFirebase.auth().currentUser;
     if (!user) {
         dispatch(updateBoardError());
@@ -137,9 +147,12 @@ export const updateCardToBoard = (board, cardID, listID, completed) => dispatch 
         // dispatch(requestUpdateBoard());
         myFirebase.database()
             .ref('/board/' + board.boardId + '/lists/'  + listID + '/cards/' + cardID)
-            .child("completed")
-            .set(completed).then(() => {
-                console.log(board.boardId, listID, cardID, completed)
+            .get()
+            .then(function (snap) {
+                snap.ref.update({ "completed": !snap.completed });
+            })
+            .then(() => {
+                // console.log(board.boardId, listID, cardID)
                 console.log("Change card state successfully")
                 dispatch(receiveUpdatedBoard());
             }).catch((err) => {

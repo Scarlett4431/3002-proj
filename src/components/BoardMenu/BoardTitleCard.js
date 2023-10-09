@@ -22,7 +22,7 @@ function BoardTitleCard() {
 
   const confirmAction = (inputValue) => {
     if (inputValue.length > 0 && inputValue.length < 30) {
-      dispatch(changeBoardTitle(inputValue));
+      dispatch(changeBoardTitle(inputValue)); 
       dispatch(changeBoardTitleToBoard(board, inputValue));
     }
     setIsModalOpen(false);
