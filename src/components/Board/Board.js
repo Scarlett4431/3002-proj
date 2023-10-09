@@ -12,7 +12,8 @@ import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import {
   loadBoard,
   sort,
-  updateBoard,
+  moveCard,
+  moveCardToBoard,
   addList,
   addListToBoard
 } from "../../actions/board";
@@ -52,6 +53,8 @@ function Board() {
     if (!destination) {
       return;
     }
+    dispatch(moveCard(draggableId, source.droppableId, destination.droppableId));
+    dispatch(moveCardToBoard(board, draggableId, source.droppableId, destination.droppableId));
     dispatch(
       sort(
         source.droppableId,
@@ -62,7 +65,6 @@ function Board() {
         type
       )
     );
-    dispatch(updateBoard(board));
   };
 
   return (

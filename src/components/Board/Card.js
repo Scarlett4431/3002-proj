@@ -27,10 +27,6 @@ function Card({ cardID, text, listID, index, completed }) {
     dispatch(updateCard(cardID, listID, completed));
     dispatch(updateCardToBoard(board, cardID, listID, completed));
   };
-  const handleMoveCard = () => {
-    dispatch(moveCard(cardID, listID, completed, new_listID));
-    dispatch(moveCardToBoard(board, cardID, listID, completed, new_listID));
-  };
   return (
     <Draggable key={cardID} draggableId={cardID} index={index}>
       {(provided, snapshot) => {
