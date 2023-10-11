@@ -5,6 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
+import PromptModal from "./PromptModal";
 
 import { HiLockClosed } from "react-icons/hi";
 
@@ -19,6 +20,9 @@ export default function SignUp(){
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
+  const [showModal, setShowModal] = useState(false);
+
+  
 
   const [state, setState] = useState({
     displayName: "",
@@ -38,7 +42,12 @@ export default function SignUp(){
   const handleSignUp = (e) => {
     e.preventDefault();
     dispatch(registerUser(state.email, state.password, state.displayName, navigate, "/signin"));
+    setShowModal(true);
   };
+
+  const closeModal = () =>{
+    setShowModal(false);
+  }
 
   const signUp = (
     <Container component="main" maxWidth="xs">
@@ -101,6 +110,16 @@ export default function SignUp(){
             </Grid>
           </Grid>
         </form>
+        {showModal && (
+        <PromptModal
+          open={showModal}
+          message="Sign up successful!"
+          onConfirm={closeModal}
+          onCancel={closeModal}
+          requiresInput={false}
+          showCancel={false}
+        />
+      )}
       </div>
     </Container>
   );

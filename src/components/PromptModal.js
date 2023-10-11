@@ -2,7 +2,7 @@ import { Button, Modal } from "flowbite-react";
 import { HiOutlineExclamationCircle, HiOutlineClipboardList } from "react-icons/hi";
 import { useState } from "react";
 
-export default function PromptModal({ placeholder, open, message, onConfirm, onCancel, requiresInput}) {
+export default function PromptModal({ placeholder, open, message, onConfirm, onCancel, requiresInput,showCancel}) {
   const [inputValue, setInputValue] = useState('');
 
   return (
@@ -39,15 +39,17 @@ export default function PromptModal({ placeholder, open, message, onConfirm, onC
               >
                 Confirm
               </Button>
-              <Button
-                color="gray"
-                onClick={() => {
-                  onCancel();
-                  setInputValue('');
-                }}
-              >
-                Cancel
-              </Button>
+              {showCancel && (
+                <Button
+                  color="gray"
+                  onClick={() => {
+                    onCancel();
+                    setInputValue('');
+                  }}
+                >
+                  Cancel
+                </Button>
+              )}
             </div>
           </div>
         </Modal.Body>

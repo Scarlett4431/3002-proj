@@ -104,6 +104,7 @@ export default function BoardPool() {
             setOperationType(null);
           }}
           requiresInput={operationType === "add"}
+          showCancel={true}
         />
       </div>
     );
