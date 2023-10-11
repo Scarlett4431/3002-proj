@@ -21,6 +21,7 @@ function BoardTitleCard() {
   };
 
   const confirmAction = (inputValue) => {
+    inputValue = inputValue.trim();
     if (inputValue.length > 0 && inputValue.length < 30) {
       dispatch(changeBoardTitle(inputValue)); 
       dispatch(changeBoardTitleToBoard(board, inputValue));

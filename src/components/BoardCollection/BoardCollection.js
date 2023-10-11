@@ -3,13 +3,12 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import BoardPool from './BoardPool';
-
 export default function BoardCollection() {
   const auth = useSelector((state) => state.auth);
   
   if (auth.isLoading) {
     console.log("Loading BoardCollection...");
-    return <div />;
+    return <div/>;
   } else if (auth.isAuthenticated) {
     return (
       <div class="container bg-white bg-opacity-40 mx-auto w-3/5 rounded-3xl py-10">

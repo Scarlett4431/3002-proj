@@ -20,7 +20,7 @@ function InviteCard({boardID}) {
 
   const confirmAction = (inputValue) => {
     setIsModalOpen(false);
-    //todo
+    inputValue = inputValue.trim();
     if (inputValue.length > 0 && inputValue.length < 50) {
       dispatch(addUserToBoard(inputValue, boardID));
   }

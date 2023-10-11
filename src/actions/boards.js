@@ -160,9 +160,10 @@ export const loadUserBoards = () => async dispatch => {
                 console.log(boards);
                 dispatch(receiveBoards(boards));
                 return;
+            });
         });
     });
-    });
+    console.log("2nd receive boards");  
     dispatch(receiveBoards(boards));
 };
 

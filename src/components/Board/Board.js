@@ -35,6 +35,7 @@ function Board() {
   };
 
   const confirmAddLists = (inputValue) => {
+    inputValue = inputValue.trim();
     if (inputValue) {
       const id = uuid();
       dispatch(addList(inputValue, id));
