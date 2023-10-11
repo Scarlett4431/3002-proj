@@ -48,59 +48,65 @@ export default function BoardPool() {
   };
 
   useEffect(() => {
-    if (auth.isAuthenticated) {
-      console.log("Boards calls loadUserBoards");
-      dispatch(loadUserBoards());
-    }
-  }, [auth.isAuthenticated]);
+    console.log("Boards calls loadUserBoards");
+    dispatch(loadUserBoards());
+  }, []);
 
-  return (
-    <div class="content-center flex-col flex justify-center  px-10">
-      {columns.loading && (
+  const enclosedDivClass = "content-center flex-col flex justify-center  px-10";
+
+  if(columns.loading){
+    return (<div class={enclosedDivClass}>
         <div className="mx-auto block justify-center content-center">
           <Audio className="mx-auto justify-center text-indigo-950" />
           <h2 className="text-xl mb-7 text-center text-indigo-950 font-bold">
             Loading...
           </h2>
         </div>
-      )}
-      {!columns.loading && columns.boards.length === 0 && (
-        <div className="mx-auto block justify-center content-center">
-          <HiOutlineClipboardList className="mx-auto justify-center text-indigo-950 h-32 w-32" />
-          <h2 className="text-xl mb-7 text-center text-indigo-950 font-bold">
-            Empty Board
-          </h2>
-        </div>
-      )}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
-        {columns.boards.length !== 0 &&
-          columns.boards.map(({ boardId, title }) => (
-            <BoardColumn
-              boardId={boardId}
-              boardTitle={title}
-              onHover={setHoveredIndex}
-              onLeave={() => setHoveredIndex(null)}
-              onDelete={handleDeleteClick}
-            />
-          ))}
       </div>
-      <Button
-        onClick={addColumn}
-        className="mt-8 font-bold px-4 py-2 block mx-auto"
-        gradientDuoTone="purpleToPink"
-      >
-        CREATE NEW BOARD
-      </Button>
-      <PromptModal
-        open={isModalOpen}
-        message={promptMessage}
-        onConfirm={(inputValue) => confirmAction(inputValue)}
-        onCancel={() => {
-          setIsModalOpen(false);
-          setOperationType(null);
-        }}
-        requiresInput={operationType === "add"}
-      />
-    </div>
-  );
+    );
+  }
+  else{
+    return (
+      <div class={enclosedDivClass}>
+        {columns.boards.length === 0 && (
+          <div className="mx-auto block justify-center content-center">
+            <HiOutlineClipboardList className="mx-auto justify-center text-indigo-950 h-32 w-32" />
+            <h2 className="text-xl mb-7 text-center text-indigo-950 font-bold">
+              Empty Board
+            </h2>
+          </div>
+        )}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
+          {columns.boards.length !== 0 &&
+            columns.boards.map(({ boardId, title }) => (
+              <BoardColumn
+                boardId={boardId}
+                boardTitle={title}
+                onHover={setHoveredIndex}
+                onLeave={() => setHoveredIndex(null)}
+                onDelete={handleDeleteClick}
+              />
+            ))}
+        </div>
+        <Button
+          onClick={addColumn}
+          className="mt-8 font-bold px-4 py-2 block mx-auto"
+          gradientDuoTone="purpleToPink"
+        >
+          CREATE NEW BOARD
+        </Button>
+        <PromptModal
+          open={isModalOpen}
+          message={promptMessage}
+          onConfirm={(inputValue) => confirmAction(inputValue)}
+          onCancel={() => {
+            setIsModalOpen(false);
+            setOperationType(null);
+          }}
+          requiresInput={operationType === "add"}
+        />
+      </div>
+    );
+  }
+  
 }

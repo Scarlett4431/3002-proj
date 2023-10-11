@@ -136,35 +136,42 @@ export const exitBoard = (boardId) => async dispatch => {
 }
 
 export const loadUserBoards = () => async dispatch => {
+
     console.log("loadUserBoards");
     dispatch(requestBoards());
     const user = myFirebase.auth().currentUser;
 
-    console.log(user);
-    console.log(myFirebase.auth());
     // Get list of boardIds from /userBoards/
     // Then get boards titles from /boards/ using the boardIds
-    let boards = [];
-    myFirebase.database().ref('/userBoards/' + user.uid).once('value', function (snapshot) {
-        snapshot.forEach(function (data) {
-            myFirebase.database().ref('/boards/' + data.key).once('value', function (snap) {
-                if (snap.exists()) {
-                    boards.push({
-                        boardId: data.key,
-                        title: snap.val().title,
-                    });
-                    console.log(data.key);
-                }
-            }).then(() => {
-                console.log("receiveBoards");
-                console.log(boards);
-                dispatch(receiveBoards(boards));
-                return;
+    myFirebase.database().ref('/userBoards/' + user.uid).once('value')
+    .then((snapshot) => {
+        return new Promise( resolve => {
+            let boards = [], i = 0;
+            snapshot.forEach((data) =>{
+                myFirebase.database().ref('/boards/' + data.key).once('value')
+                .then((snap) => {
+                    console.log(snap);
+                    if (snap.exists()) {
+                        boards.push({
+                            boardId: data.key,
+                            title: snap.val().title,
+                        });
+                        console.log(data.key);
+                    }
+                    ++i;
+                    if(i == snapshot.numChildren()) { resolve(boards); }
+                });
             });
         });
+    }).then((boards) =>{
+        console.log("receiveBoards");
+        console.log(boards);
+        dispatch(receiveBoards(boards));
+    }).catch((e) => {
+        console.log(e);
+        dispatch(receiveBoardsError());
     });
-    console.log("2nd receive boards");  
-    dispatch(receiveBoards(boards));
+    
 };
 
 export const addUserToBoard = (email, boardId) => async dispatch => {
