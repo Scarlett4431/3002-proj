@@ -11,7 +11,6 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import {
   loadBoard,
-  sort,
   moveCard,
   moveCardToBoard,
   addList,
@@ -36,6 +35,7 @@ function Board() {
   };
 
   const confirmAddLists = (inputValue) => {
+    inputValue = inputValue.trim();
     if (inputValue) {
       const id = uuid();
       dispatch(addList(inputValue, id));
@@ -53,10 +53,9 @@ function Board() {
     if (!destination) {
       return;
     }
-    dispatch(moveCard(draggableId, source.droppableId, destination.droppableId));
     dispatch(moveCardToBoard(board, draggableId, source.droppableId, destination.droppableId));
     dispatch(
-      sort(
+      moveCard(
         source.droppableId,
         destination.droppableId,
         source.index,
@@ -70,7 +69,6 @@ function Board() {
   return (
     <div>
       <BoardBar
-
         boardID = {id}
         searchString= {searchString}
         setSearchString = {setSearchString}

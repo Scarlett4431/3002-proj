@@ -149,7 +149,7 @@ export const updateCardToBoard = (board, cardID, listID, completed) => dispatch 
             .ref('/board/' + board.boardId + '/lists/'  + listID + '/cards/' + cardID)
             .get()
             .then(function (snap) {
-                snap.ref.update({ "completed": !snap.completed, "update_time": new Date().getTime() });
+                snap.ref.update({ "completed": !snap.toJSON().completed, "update_time": new Date().getTime() });
             })
             .then(() => {
                 // console.log(board.boardId, listID, cardID)
@@ -159,12 +159,6 @@ export const updateCardToBoard = (board, cardID, listID, completed) => dispatch 
                 dispatch(updateBoardError());
             });
     }
-};
-export const moveCard = (cardID, listID, new_listID) => {
-    return {
-        type: UPDATE_CARD,
-        payload: { cardID, listID, new_listID },
-    };
 };
 export const moveCardToBoard = (board, cardID, listID, new_listID) => dispatch => {
     const user = myFirebase.auth().currentUser;
@@ -176,11 +170,16 @@ export const moveCardToBoard = (board, cardID, listID, new_listID) => dispatch =
             .ref('/board/' + board.boardId + '/lists/'  + listID + '/cards/' + cardID);
         var newRef = myFirebase.database()
             .ref('/board/' + board.boardId + '/lists/'  + new_listID + '/cards/' + cardID);
+        console.log(oldRef);
+        console.log(newRef);
         oldRef.once('value').then(snap => {
                 newRef.set(snap.val());
             })
             .then(() => {
-                oldRef.set(null);
+                if ('/board/' + board.boardId + '/lists/'  + listID + '/cards/' + cardID !== '/board/' + board.boardId + '/lists/'  + new_listID + '/cards/' + cardID) {
+                    oldRef.set(null);
+                }
+                console.log("old, new", '/board/' + board.boardId + '/lists/'  + listID + '/cards/' + cardID !== '/board/' + board.boardId + '/lists/'  + new_listID + '/cards/' + cardID);
             })
             .then(() => {
                 // console.log(board.boardId, listID, cardID)
@@ -261,7 +260,7 @@ export const updateBoardError = () => {
 };
 
 
-export const sort = (
+export const moveCard = (
     droppableIdStart,
     droppableIdEnd,
     droppableIndexStart,

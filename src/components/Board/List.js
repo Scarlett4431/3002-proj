@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import uuid from 'react-uuid';
+import uuid from "react-uuid";
 
 import Card from "./Card";
 import PromptModal from "../PromptModal";
@@ -16,7 +16,6 @@ import {
 } from "../../actions";
 
 function List({ cards, listID, title, index, searchString }) {
-
   const board = useSelector((state) => state.board);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [promptMessage, setPromptMessage] = useState("");
@@ -43,6 +42,7 @@ function List({ cards, listID, title, index, searchString }) {
 
   const confirmAction = (inputValue) => {
     if (operationType === "add") {
+      inputValue = inputValue.trim();
       if (inputValue) {
         const id = uuid();
         dispatch(addCard(listID, inputValue, id));
@@ -78,28 +78,30 @@ function List({ cards, listID, title, index, searchString }) {
             <h2 className="flex justify-between font-bold text-xl p-2">
               {title}
             </h2>
-            {cards != null
-              ? cards.map((item, index) => {
-                  if (
-                    searchString &&
-                    !item.text
-                      .toLowerCase()
-                      .includes(searchString.toLowerCase())
-                  )
-                    return null;
-                  return (
-                    <Card
-                      key={index}
-                      cardID={item.id}
-                      text={item.text}
-                      listID={listID}
-                      index={index}
-                      completed={item.completed}
-                      searchString={searchString}
-                    />
-                  );
-                })
-              : null}
+            <div className="space-y-1.5">
+              {cards != null
+                ? cards.map((item, index) => {
+                    if (
+                      searchString &&
+                      !item.text
+                        .toLowerCase()
+                        .includes(searchString.toLowerCase())
+                    )
+                      return null;
+                    return (
+                      <Card
+                        key={index}
+                        cardID={item.id}
+                        text={item.text}
+                        listID={listID}
+                        index={index}
+                        completed={item.completed}
+                        searchString={searchString}
+                      />
+                    );
+                  })
+                : null}
+            </div>
             {provided.placeholder}
             <div className="flex items-end justify-end">
               <button

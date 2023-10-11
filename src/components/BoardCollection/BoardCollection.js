@@ -3,9 +3,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { Card } from 'flowbite-react';
 import BoardPool from './BoardPool';
-
 
 
 export default function BoardCollection() {
@@ -13,7 +11,7 @@ export default function BoardCollection() {
   
   if (auth.isLoading) {
     console.log("Loading BoardCollection...");
-    return <div />;
+    return <div/>;
   } else if (auth.isAuthenticated) {
     return (
       <div class="container bg-white bg-opacity-40 mx-auto w-3/5 rounded-3xl py-10">

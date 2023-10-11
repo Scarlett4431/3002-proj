@@ -19,7 +19,8 @@ const initialState = {
     registerError: false,
     isAuthenticated: false,
     error: false,
-    errorMessage: '',
+    loginErrorMessage: '',
+    registerErrorMessage: '',
     user: {}
 };
 
@@ -30,7 +31,7 @@ function auth(state = initialState, action) {
                 ...state,
                 isLoading: true,
                 loginError: false,
-                errorMessage: '',
+                loginErrorMessage: '',
             };
         case LOGIN_SUCCESS:
             return {
@@ -38,11 +39,12 @@ function auth(state = initialState, action) {
                 isLoading: false,
                 isAuthenticated: true,
                 user: action.user,
-                errorMessage: '',
+                loginErrorMessage: '',
             };
         case LOGIN_FAILURE:
             return {
                 ...state,
+                loginErrorMessage: action.message,
                 isLoading: false,
                 isAuthenticated: false,
                 loginError: true
@@ -63,7 +65,7 @@ function auth(state = initialState, action) {
         case REGISTER_FAILURE:
             return {
                 ...state,
-                errorMessage: action.message,
+                registerErrorMessage: action.message,
                 isLoading: false,
                 isAuthenticated: false,
             };
