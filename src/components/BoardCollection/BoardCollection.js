@@ -1,9 +1,12 @@
 "use client";
 
+import React, { useContext, useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { Card } from 'flowbite-react';
 import BoardPool from './BoardPool';
+
+
 
 export default function BoardCollection() {
   const auth = useSelector((state) => state.auth);
