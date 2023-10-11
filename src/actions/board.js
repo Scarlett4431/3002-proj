@@ -149,7 +149,7 @@ export const updateCardToBoard = (board, cardID, listID, completed) => dispatch 
             .ref('/board/' + board.boardId + '/lists/'  + listID + '/cards/' + cardID)
             .get()
             .then(function (snap) {
-                snap.ref.update({ "completed": !snap.completed, "update_time": new Date().getTime() });
+                snap.ref.update({ "completed": !snap.toJSON().completed, "update_time": new Date().getTime() });
             })
             .then(() => {
                 // console.log(board.boardId, listID, cardID)

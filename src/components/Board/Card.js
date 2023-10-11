@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 function Card({ cardID, text, listID, index, completed }) {
   const board = useSelector((state) => state.board);
-  console.log(completed);
   const dispatch = useDispatch();
   const handleDeleteCard = () => {
     dispatch(deleteCard(cardID, listID));
