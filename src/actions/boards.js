@@ -92,7 +92,7 @@ export const createBoard = (title) => async dispatch => {
         myFirebase.database().ref('/board/' + key).set({
             boardId: key,
             title: title,
-            lists: { 0: { id: '0', title: 'Todo' } },
+            // lists: { 0: { id: '0', title: 'Todo' } },
         });
         console.log("receiveCreateBoard");
         dispatch(receiveCreateBoard({ uid: key, title: title }));
@@ -159,9 +159,11 @@ export const loadUserBoards = () => async dispatch => {
                 console.log("receiveBoards");
                 console.log(boards);
                 dispatch(receiveBoards(boards));
+                return;
         });
     });
     });
+    dispatch(receiveBoards(boards));
 };
 
 export const addUserToBoard = (email, boardId) => async dispatch => {
