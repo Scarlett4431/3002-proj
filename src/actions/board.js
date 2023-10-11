@@ -160,12 +160,6 @@ export const updateCardToBoard = (board, cardID, listID, completed) => dispatch 
             });
     }
 };
-export const moveCard = (cardID, listID, new_listID) => {
-    return {
-        type: MOVE_CARD,
-        payload: { cardID, listID, new_listID },
-    };
-};
 export const moveCardToBoard = (board, cardID, listID, new_listID) => dispatch => {
     const user = myFirebase.auth().currentUser;
     if (!user) {
@@ -266,7 +260,7 @@ export const updateBoardError = () => {
 };
 
 
-export const sort = (
+export const moveCard = (
     droppableIdStart,
     droppableIdEnd,
     droppableIndexStart,

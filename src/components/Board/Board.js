@@ -11,7 +11,6 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import {
   loadBoard,
-  sort,
   moveCard,
   moveCardToBoard,
   addList,
@@ -53,10 +52,9 @@ function Board() {
     if (!destination) {
       return;
     }
-    dispatch(moveCard(draggableId, source.droppableId, destination.droppableId));
     dispatch(moveCardToBoard(board, draggableId, source.droppableId, destination.droppableId));
     dispatch(
-      sort(
+      moveCard(
         source.droppableId,
         destination.droppableId,
         source.index,
