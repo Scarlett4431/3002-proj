@@ -104,7 +104,7 @@ export default function SignIn() {
             <div
               style={{ marginTop: "10px", color: "red", textAlign: "center" }}
             >
-              {auth.errorMessage}
+              {auth.loginErrorMessage}
             </div>
             {/* Forget Password function, save for future development */}
             {/* <Grid item xs>

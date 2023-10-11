@@ -9,7 +9,8 @@ import {
   DELETE_CARD,
   DELETE_LIST,
   CHANGE_BOARD_TITLE,
-  UPDATE_CARD
+  UPDATE_CARD,
+  MOVE_CARD,
 } from "../actions/";
 
 
@@ -171,7 +172,7 @@ function board(state = initialState, action) {
       }
 
       return newState;
-
+      
     default:
       return state;
   }

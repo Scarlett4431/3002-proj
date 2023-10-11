@@ -16,8 +16,6 @@ function Card({ cardID, text, listID, index, completed }) {
   const board = useSelector((state) => state.board);
   console.log(completed);
   const dispatch = useDispatch();
-  // update new listID 
-  let new_listID = 0;
   const handleDeleteCard = () => {
     dispatch(deleteCard(cardID, listID));
     dispatch(deleteCardFromBoard(board, cardID, listID));

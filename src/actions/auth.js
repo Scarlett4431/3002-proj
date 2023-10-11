@@ -28,9 +28,10 @@ const receiveLogin = user => {
     };
 };
 
-const loginError = () => {
+const loginError = (message) => {
     return {
-        type: LOGIN_FAILURE
+        type: LOGIN_FAILURE,
+        message
     };
 };
 
@@ -113,7 +114,7 @@ export const loginUser = (email, password, callback, dir) => async dispatch => {
         .catch(error => {
             //Do something with the error if you want!
             console.log("LoginFail");
-            dispatch(loginError());
+            dispatch(loginError(error.code));
         });
 };
 
