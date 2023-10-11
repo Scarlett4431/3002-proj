@@ -44,7 +44,7 @@ function Card({ cardID, text, listID, index, completed }) {
               >
                 <AiOutlineDelete className="h-5 w-5" />
               </button>
-              <p className={completed ? "line-through" : ""}>{text}</p>
+              <p className={ (completed ? "line-through" : "")}>{text}</p>
               <div className="flex items-end justify-end">
                 <button
                   className="hover:text-grey-900"

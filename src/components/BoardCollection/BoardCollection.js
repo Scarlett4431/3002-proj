@@ -2,7 +2,6 @@
 
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { Card } from 'flowbite-react';
 import BoardPool from './BoardPool';
 
 export default function BoardCollection() {

@@ -70,7 +70,6 @@ function Board() {
   return (
     <div>
       <BoardBar
-
         boardID = {id}
         searchString= {searchString}
         setSearchString = {setSearchString}
