@@ -30,15 +30,13 @@ function compareCard(cardA, cardB){
   }
 }
 
-// sort all card in all columns using compareCard function in descending order
-function sortCardList(board){
-  board.lists.forEach((column) =>{
-      if(column.cards !== undefined){
-          column.cards.sort(compareCard);
-      }
-  })
-  console.log(board);
-  return board;
+// sort all card in the given list
+function sortCardList(cards){
+  console.log("sort");
+    if(cards !== undefined){
+        cards.sort(compareCard);
+    }
+  return cards;
 }
 
 function board(state = initialState, action) {
@@ -59,7 +57,10 @@ function board(state = initialState, action) {
       };
     case GET_BOARD_SUCCESS:
       console.log("GET_BOARD_SUCCESS");
-      sortCardList(action.payload.board);
+      // sort all columns in board
+      action.payload.board.lists.forEach((column => {
+        sortCardList(column.cards);
+      }));
       return action.payload.board;
     case GET_BOARD_FAIL:
       console.log("GET_BOARD_FAIL");
@@ -103,7 +104,9 @@ function board(state = initialState, action) {
       state.lists = state.lists.map((list) => {
         if (list.id === action.payload.listID) {
           if (list.cards) {
-            return { ...list, cards: [...list.cards, newCard] };
+            const updatedList = { ...list, cards: [...list.cards, newCard] };
+            sortCardList(updatedList.cards)
+            return updatedList;
           } else {
             return { ...list, cards: [newCard] };
           }
@@ -121,10 +124,10 @@ function board(state = initialState, action) {
           list.cards.forEach(function (card, index) {
             if (card.id === cardID_3) {
               card.completed = !action.payload.completed;
-              cardsList.push(cardsList.splice(index, 1)[0]);
               return;
             }
           });
+          sortCardList(cardsList);
           return { ...list, cards: cardsList };
         } else {
           return list;
@@ -175,6 +178,9 @@ function board(state = initialState, action) {
         );
         const card = list.cards.splice(droppableIndexStart, 1);
         list.cards.splice(droppableIndexEnd, 0, ...card);
+
+        // sort the list
+        sortCardList(list.cards);
       }
 
       //other list
@@ -190,11 +196,10 @@ function board(state = initialState, action) {
           otherList.cards = [...card];
         } else {
           otherList.cards.splice(droppableIndexEnd, 0, ...card);
+          // sort the list
+          sortCardList(otherList.cards);
         }
       }
-
-      // sort the newState
-      sortCardList(newState);
 
       return newState;
       
