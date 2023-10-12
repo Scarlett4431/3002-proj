@@ -310,9 +310,8 @@ export const loadBoard = (uid) => dispatch => {
     console.log("requestBoard");
     dispatch(requestBoard());
 
-    const board = {};
-
     myFirebase.database().ref('/board/' + uid).once('value').then(function (snapshot) {
+        let board = {};
         console.log(snapshot.val());
 
         // transform firbase storage format to local format
@@ -341,8 +340,11 @@ export const loadBoard = (uid) => dispatch => {
         board.boardId = snapshot.val().boardId;
         board.title = snapshot.val().title;
         board.lists = formatedLists;
-    }).then(()=>{
+
+        return board;
+    }).then((board)=>{
         console.log("dispatch");
+        console.log(board);
         dispatch(receiveBoard(board));
     }).catch((err) => {
         dispatch(receiveBoardError(uid));
