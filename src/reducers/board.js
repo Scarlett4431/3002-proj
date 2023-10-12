@@ -10,7 +10,6 @@ import {
   DELETE_LIST,
   CHANGE_BOARD_TITLE,
   UPDATE_CARD,
-  MOVE_CARD,
 } from "../actions/";
 
 
@@ -19,6 +18,26 @@ const initialState = {
   title: "",
   lists: [],
 };
+
+// compare 2 card items
+// return 1 if CardA is complete and CardB is not complete
+function compareCard(cardA, cardB){
+  if(cardA.completed){
+      return cardB.completed ? 0 : 1;
+  }
+  else{
+      return cardB.completed ? -1 : 0;
+  }
+}
+
+// sort all card in the given list
+function sortCardList(cards){
+  console.log("sort");
+    if(cards !== undefined){
+        cards.sort(compareCard);
+    }
+  return cards;
+}
 
 function board(state = initialState, action) {
   switch (action.type) {
@@ -38,6 +57,10 @@ function board(state = initialState, action) {
       };
     case GET_BOARD_SUCCESS:
       console.log("GET_BOARD_SUCCESS");
+      // sort all columns in board
+      action.payload.board.lists.forEach((column => {
+        sortCardList(column.cards);
+      }));
       return action.payload.board;
     case GET_BOARD_FAIL:
       console.log("GET_BOARD_FAIL");
@@ -81,7 +104,9 @@ function board(state = initialState, action) {
       state.lists = state.lists.map((list) => {
         if (list.id === action.payload.listID) {
           if (list.cards) {
-            return { ...list, cards: [...list.cards, newCard] };
+            const updatedList = { ...list, cards: [...list.cards, newCard] };
+            sortCardList(updatedList.cards)
+            return updatedList;
           } else {
             return { ...list, cards: [newCard] };
           }
@@ -99,10 +124,10 @@ function board(state = initialState, action) {
           list.cards.forEach(function (card, index) {
             if (card.id === cardID_3) {
               card.completed = !action.payload.completed;
-              cardsList.push(cardsList.splice(index, 1)[0]);
               return;
             }
           });
+          sortCardList(cardsList);
           return { ...list, cards: cardsList };
         } else {
           return list;
@@ -153,6 +178,9 @@ function board(state = initialState, action) {
         );
         const card = list.cards.splice(droppableIndexStart, 1);
         list.cards.splice(droppableIndexEnd, 0, ...card);
+
+        // sort the list
+        sortCardList(list.cards);
       }
 
       //other list
@@ -168,6 +196,8 @@ function board(state = initialState, action) {
           otherList.cards = [...card];
         } else {
           otherList.cards.splice(droppableIndexEnd, 0, ...card);
+          // sort the list
+          sortCardList(otherList.cards);
         }
       }
 
