@@ -162,6 +162,7 @@ export const loadUserBoards = () => async dispatch => {
                     if(i == snapshot.numChildren()) { resolve(boards); }
                 });
             });
+            if(snapshot.toJSON() === null) { resolve(boards); }
         });
     }).then((boards) =>{
         console.log("receiveBoards");
