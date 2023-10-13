@@ -15,6 +15,9 @@ export const LOGOUT_FAILURE = "LOGOUT_FAILURE";
 export const VERIFY_REQUEST = "VERIFY_REQUEST";
 export const VERIFY_SUCCESS = "VERIFY_SUCCESS";
 
+export const FINISH_TUTORIAL_SUCCESS = "FINISH_TUTORIAL_SUCCESS";
+export const FINISH_TUTORIAL_FAILURE = "FINISH_TUTORIAL_FAILURE";
+
 const requestLogin = () => {
     return {
         type: LOGIN_REQUEST
@@ -85,6 +88,19 @@ const verifySuccess = () => {
     };
 };
 
+const finishTutorialFailure = () => {
+    return {
+        type: FINISH_TUTORIAL_FAILURE
+    };
+};
+
+const finishTutorialSuccess = () => {
+    return {
+        type: FINISH_TUTORIAL_SUCCESS
+    };
+};
+
+
 export const loginUser = (email, password, callback, dir) => async dispatch => {
 
     // // code to check frontend logic
@@ -146,7 +162,8 @@ export const registerUser = (email, password, displayName, callback, dir) => asy
                 const name = userCredential.user.displayName;
                 myFirebase.database().ref('/users/' + userId).set({
                     email: email,
-                    name: name
+                    name: name,
+                    newcomer: true,
                 });
                 myFirebase.database().ref('/emailToUid/').child(email).set({
                     userId
@@ -159,6 +176,21 @@ export const registerUser = (email, password, displayName, callback, dir) => asy
             // Do something with the error if you want!
             dispatch(registerError(error.message));
         });
+};
+
+export const finishTutorial = () => async dispatch => {
+    dispatch(requestRegister());
+    const user = myFirebase.auth().currentUser;
+    if (!user) {
+        dispatch(finishTutorialFailure());
+    } else {
+        const userId = user.uid;
+        myFirebase.database().ref('/users/' + userId).set({
+            newcomer: false
+        });
+        console.log("tutorial finished for newcomer");
+        dispatch(finishTutorialSuccess());
+    }
 };
 
 export const logoutUser = () => async dispatch => {
