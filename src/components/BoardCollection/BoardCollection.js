@@ -14,14 +14,6 @@ export default function BoardCollection() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Fetch newcomer status when the component mounts
-
-    dispatch(fetchNewcomerStatus());
-
-    console.log("authentication");
-    console.log("Newcomer Status:", auth.newcomerStatus);
-    console.log("authentication end");
-
     // Check newcomer status and set showTour accordingly
     if (auth.newcomerStatus) {
       setShowTour(true);
@@ -30,7 +22,7 @@ export default function BoardCollection() {
 
   const handleTourComplete = () => {
     // Dispatch action to finish tutorial and update newcomer flag
-    //dispatch(finishTutorial()); #bug here when dispatching finishTutorial() boardpool fails to load again
+    dispatch(finishTutorial());
     setShowTour(false);
   };
 
