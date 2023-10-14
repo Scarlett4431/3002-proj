@@ -16,7 +16,6 @@ export const VERIFY_REQUEST = "VERIFY_REQUEST";
 export const VERIFY_SUCCESS = "VERIFY_SUCCESS";
 
 export const FINISH_TUTORIAL_SUCCESS = "FINISH_TUTORIAL_SUCCESS";
-export const FINISH_TUTORIAL_FAILURE = "FINISH_TUTORIAL_FAILURE";
 
 
 const requestLogin = () => {
@@ -25,17 +24,21 @@ const requestLogin = () => {
     };
 };
 
-const receiveLogin = user => {
+const receiveLogin = (user) => {
     return {
         type: LOGIN_SUCCESS,
-        user
+        payload: {
+            user : user
+        }
     };
 };
 
 const loginError = (message) => {
     return {
         type: LOGIN_FAILURE,
-        message
+        payload: {
+            message : message
+        }
     };
 };
 
@@ -48,14 +51,18 @@ const requestRegister = () => {
 const receiveRegister = user => {
     return {
         type: REGISTER_SUCCESS,
-        user
+        payload: {
+            user : user
+        }
     }
 }
 
 const registerError = (message) => {
     return {
         type: REGISTER_FAILURE,
-        message
+        payload: {
+            message : message
+        }
     };
 };
 
@@ -89,15 +96,12 @@ const verifySuccess = () => {
     };
 };
 
-const finishTutorialFailure = () => {
+const finishTutorialSuccess = (newcomerStatus) => {
     return {
-        type: FINISH_TUTORIAL_FAILURE
-    };
-};
-
-const finishTutorialSuccess = () => {
-    return {
-        type: FINISH_TUTORIAL_SUCCESS
+        type: FINISH_TUTORIAL_SUCCESS,
+        payload: {
+            newcomerStatus: newcomerStatus
+        }
     };
 };
 
@@ -179,19 +183,12 @@ export const registerUser = (email, password, displayName, callback, dir) => asy
         });
 };
 
-export const finishTutorial = () => async dispatch => {
-    dispatch(requestRegister());
-    const user = myFirebase.auth().currentUser;
-    if (!user) {
-        dispatch(finishTutorialFailure());
-    } else {
-        const userId = user.uid;
-        myFirebase.database().ref('/users/' + userId).set({
-            newcomer: false
-        });
-        console.log("tutorial finished for newcomer");
-        dispatch(finishTutorialSuccess());
-    }
+export const finishTutorial = (userId) => async dispatch => {
+    myFirebase.database().ref('/users/' + userId).set({
+        newcomer: false
+    });
+    console.log("tutorial finished for newcomer");
+    dispatch(finishTutorialSuccess());
 };
 
 export const logoutUser = () => async dispatch => {

@@ -10,6 +10,7 @@ import {
     LOGOUT_FAILURE,
     VERIFY_REQUEST,
     VERIFY_SUCCESS,
+    FINISH_TUTORIAL_SUCCESS,
   } from "../actions/";
 
 const initialState = {
@@ -39,13 +40,13 @@ function auth(state = initialState, action) {
                 ...state,
                 isLoading: false,
                 isAuthenticated: true,
-                user: action.user,
+                user: action.payload.user,
                 loginErrorMessage: '',
             };
         case LOGIN_FAILURE:
             return {
                 ...state,
-                loginErrorMessage: action.message,
+                loginErrorMessage: action.payload.message,
                 isLoading: false,
                 isAuthenticated: false,
                 loginError: true
@@ -61,12 +62,12 @@ function auth(state = initialState, action) {
                 ...state,
                 isLoading: false,
                 isAuthenticated: true,
-                user: action.user
+                user: action.payload.user
             };
         case REGISTER_FAILURE:
             return {
                 ...state,
-                registerErrorMessage: action.message,
+                registerErrorMessage: action.payload.message,
                 isLoading: false,
                 isAuthenticated: false,
             };
@@ -101,6 +102,11 @@ function auth(state = initialState, action) {
                 isLoading: false,
                 isAuthenticated: true
             };
+        case FINISH_TUTORIAL_SUCCESS:
+            return {
+                ...state,
+                newcomerStatus: action.payload.newcomerStatus
+            }
         default:
             return state;
     }

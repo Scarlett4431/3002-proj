@@ -22,7 +22,7 @@ export default function BoardCollection() {
 
   const handleTourComplete = () => {
     // Dispatch action to finish tutorial and update newcomer flag
-    dispatch(finishTutorial());
+    dispatch(finishTutorial(auth.user.uid));
     setShowTour(false);
   };
 
