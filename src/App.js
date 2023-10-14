@@ -21,7 +21,6 @@ export default function App() {
           bg-gradient-to-br from-pink-400 to-[#0055D1] 
           rounded-md filter blur-3xl opacity-50 -z-50"
       />
-        <GuidedTour /> {/* Include the GuidedTour component */}
         <NavbarMenu/>
         <Routes>
           <Route exact path="/" element={<BoardCollection />} />

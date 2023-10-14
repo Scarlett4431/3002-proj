@@ -10,6 +10,9 @@ import {
     LOGOUT_FAILURE,
     VERIFY_REQUEST,
     VERIFY_SUCCESS,
+    FETCH_NEWCOMER_STATUS_SUCCESS,
+    FETCH_NEWCOMER_STATUS_REQUEST,
+    FETCH_NEWCOMER_STATUS_FAILURE,
   } from "../actions/";
 
 const initialState = {
@@ -21,7 +24,10 @@ const initialState = {
     error: false,
     loginErrorMessage: '',
     registerErrorMessage: '',
-    user: {}
+    user: {},
+    newcomerStatus: null,
+    newcomerStatusLoading: false,
+    newcomerStatusError: null
 };
 
 function auth(state = initialState, action) {
@@ -100,6 +106,26 @@ function auth(state = initialState, action) {
                 isLoading: false,
                 isAuthenticated: true
             };
+        case FETCH_NEWCOMER_STATUS_REQUEST:
+            return{
+                ...state,
+                newcomerStatusLoading: true,
+                newcomerStatusError: null,
+            }
+        case FETCH_NEWCOMER_STATUS_SUCCESS:
+            return {
+                ...state,
+                newcomerStatus: action.newcomerStatus,
+                newcomerStatusLoading: false,
+                newcomerStatusError: null,
+            };
+        case FETCH_NEWCOMER_STATUS_FAILURE:
+            return{
+                ...state,
+                newcomerStatus: null, // Reset newcomerStatus on failure
+                newcomerStatusLoading: false,
+                newcomerStatusError: action.error,
+            }
         default:
             return state;
     }

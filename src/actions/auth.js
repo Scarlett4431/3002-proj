@@ -18,6 +18,11 @@ export const VERIFY_SUCCESS = "VERIFY_SUCCESS";
 export const FINISH_TUTORIAL_SUCCESS = "FINISH_TUTORIAL_SUCCESS";
 export const FINISH_TUTORIAL_FAILURE = "FINISH_TUTORIAL_FAILURE";
 
+export const FETCH_NEWCOMER_STATUS_REQUEST = "FETCH_NEWCOMER_STATUS_REQUEST";
+export const FETCH_NEWCOMER_STATUS_SUCCESS = "FETCH_NEWCOMER_STATUS_SUCCESS";
+export const FETCH_NEWCOMER_STATUS_FAILURE = "FETCH_NEWCOMER_STATUS_FAILURE";
+
+
 const requestLogin = () => {
     return {
         type: LOGIN_REQUEST
@@ -247,3 +252,55 @@ export const verifyAuth = () => async dispatch => {
         }
     });
 };
+
+export const fetchNewcomerStatusRequest = () => {
+    return {
+      type: FETCH_NEWCOMER_STATUS_REQUEST,
+    };
+};
+  
+export const fetchNewcomerStatusSuccess = (newcomerStatus) => {
+    return {
+      type: FETCH_NEWCOMER_STATUS_SUCCESS,
+      newcomerStatus,
+    };
+};
+  
+export const fetchNewcomerStatusFailure = (error) => {
+    return {
+      type: FETCH_NEWCOMER_STATUS_FAILURE,
+      error,
+    };
+};
+
+export const fetchNewcomerStatus = () => async (dispatch) => {
+    dispatch(fetchNewcomerStatusRequest());
+  
+    try {
+      const user = myFirebase.auth().currentUser;
+  
+      if (user) {
+        // Fetch newcomer status from the user's node in Firebase
+        const userId = user.uid;
+        const newcomerStatusRef = myFirebase.database().ref(`/users/${userId}/newcomer`);
+  
+        newcomerStatusRef.on("value", (snapshot) => {
+          const newcomerStatus = snapshot.val();
+          
+          // Dispatch success action with the retrieved newcomer status
+          dispatch(fetchNewcomerStatusSuccess(newcomerStatus));
+        });
+      } else {
+        // Handle the case where there is no authenticated user
+        dispatch(fetchNewcomerStatusFailure("No authenticated user"));
+      }
+    } catch (error) {
+      // Dispatch failure action in case of an error
+      dispatch(fetchNewcomerStatusFailure(error.message));
+    }
+  };
+  
+
+
+
+  

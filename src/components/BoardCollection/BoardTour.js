@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Shepherd from "shepherd.js";
 import "shepherd.js/dist/css/shepherd.css";
 
-const GuidedTour = () => {
+const GuidedTour = ({ onComplete }) => {
     const gifPaths = [
         process.env.PUBLIC_URL + '/assets/giphy1.gif',
         process.env.PUBLIC_URL + '/assets/giphy2.gif',
@@ -46,7 +46,11 @@ const GuidedTour = () => {
                     action: tour.next
                 }
             ],
-            [
+            [   {
+                text: "Previous",
+                action: tour.back,
+                classes: "shepherd-button-secondary"
+                },
                 {
                     text: "End",
                     action: tour.next
@@ -67,12 +71,19 @@ const GuidedTour = () => {
             });
         });
 
+        tour.on('complete', () => {
+            // Call the onComplete callback function when the tour is completed
+            if (onComplete && typeof onComplete === 'function') {
+              onComplete();
+            }
+        });
+
         tour.start();
 
         return () => {
             tour.complete();
         };
-    }, []); // Empty dependency array ensures the effect runs once after the initial render
+    }, [onComplete]); // Pass the onComplete function as a dependency to the useEffect
 
     return null;
 };
