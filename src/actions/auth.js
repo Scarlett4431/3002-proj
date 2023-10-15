@@ -24,11 +24,13 @@ const requestLogin = () => {
     };
 };
 
+// const receiveLogin = (user, newcomerStatus) => {
 const receiveLogin = (user) => {
     return {
         type: LOGIN_SUCCESS,
         payload: {
-            user : user
+            user : user,
+            // newcomerStatus: newcomerStatus,
         }
     };
 };
@@ -126,15 +128,19 @@ export const loginUser = (email, password, callback, dir) => async dispatch => {
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then(user => {
-            console.log("LoginSuccess");
-            console.log(myFirebase.auth().currentUser);
-            dispatch(receiveLogin(user.user));
-            console.log("Prepare Redirect");
-            callback(dir);
+            myFirebase.database().ref('/users/' + user.user.uid + '/newcomer/').on('value', (snapshot) => {
+                const newcomerStatus = snapshot.val();
+                console.log("LoginSuccess");
+                console.log(user.user.uid, "newcomer:", newcomerStatus);
+                dispatch(receiveLogin(user.user));
+                console.log("Prepare Redirect");
+                callback(dir);
+            })
         })
         .catch(error => {
             //Do something with the error if you want!
             console.log("LoginFail");
+            console.log(error);
             dispatch(loginError(error.code));
         });
 };
