@@ -188,7 +188,7 @@ export const finishTutorial = (userId) => async dispatch => {
         newcomer: false
     });
     console.log("tutorial finished for newcomer");
-    dispatch(finishTutorialSuccess());
+    dispatch(finishTutorialSuccess(false));
 };
 
 export const logoutUser = () => async dispatch => {

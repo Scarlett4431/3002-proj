@@ -23,7 +23,7 @@ const initialState = {
     loginErrorMessage: '',
     registerErrorMessage: '',
     user: {},
-    newcomerStatus: true,
+    newcomerStatus: false,
 };
 
 function auth(state = initialState, action) {
@@ -94,7 +94,6 @@ function auth(state = initialState, action) {
             return {
                 ...state,
                 isLoading: true,
-                verifyingError: false
             };
         case VERIFY_SUCCESS:
             return {
