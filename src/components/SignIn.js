@@ -35,9 +35,6 @@ export default function SignIn() {
 
   async function handleSignIn(e) {
     e.preventDefault();
-    // for debugging, need to delete after test
-    console.log("Email: ", state.email);
-    console.log("Password: ", state.password);
     dispatch(loginUser(state.email, state.password, navigate, "/"));
     console.log("Wait happily");
   }

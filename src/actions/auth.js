@@ -24,13 +24,12 @@ const requestLogin = () => {
     };
 };
 
-// const receiveLogin = (user, newcomerStatus) => {
-const receiveLogin = (user) => {
+ const receiveLogin = (user, newcomerStatus) => {
     return {
         type: LOGIN_SUCCESS,
         payload: {
             user : user,
-            // newcomerStatus: newcomerStatus,
+            newcomerStatus : newcomerStatus
         }
     };
 };
@@ -110,17 +109,6 @@ const finishTutorialSuccess = (newcomerStatus) => {
 
 export const loginUser = (email, password, callback, dir) => async dispatch => {
 
-    // // code to check frontend logic
-    // console.log("LoginUser")
-    // dispatch(requestLogin());
-    // console.log('requestLogin');
-    // dispatch(receiveLogin({
-    //     name: 'Ringo',
-    //     email: 'rdl@nb.com',
-    // }));
-    // console.log('receiveLogin');
-    // callback();
-
     // code with firebase backend
 
     dispatch(requestLogin());
@@ -132,7 +120,7 @@ export const loginUser = (email, password, callback, dir) => async dispatch => {
                 const newcomerStatus = snapshot.val();
                 console.log("LoginSuccess");
                 console.log(user.user.uid, "newcomer:", newcomerStatus);
-                dispatch(receiveLogin(user.user));
+                dispatch(receiveLogin(user.user, newcomerStatus));
                 console.log("Prepare Redirect");
                 callback(dir);
             })
@@ -146,18 +134,6 @@ export const loginUser = (email, password, callback, dir) => async dispatch => {
 };
 
 export const registerUser = (email, password, displayName, callback, dir) => async dispatch => {
-
-    // // code to check frontend logic
-    // console.log(displayName, email, password);
-    // console.log("Register User")
-    // dispatch(requestRegister());
-    // console.log('requestRegister');
-    // dispatch(receiveRegister({
-    //     name: 'Ringo',
-    //     email: 'rdl@nb.com',
-    // }));
-    // console.log('receiveRegister');
-    // callback();
 
     // code with firebase backend
 
@@ -198,14 +174,11 @@ export const finishTutorial = (userId) => async dispatch => {
 };
 
 export const logoutUser = () => async dispatch => {
+    
+    // code with firebase backend
 
-    // code to check frontend logic
     dispatch(requestLogout());
     console.log('requestLogout');
-    // dispatch(receiveLogout());
-    // console.log('receiveLogout');
-
-    // code with firebase backend
     
     myFirebase
         .auth()
@@ -225,16 +198,6 @@ export const verifyAuth = () => async dispatch => {
     // currently always assume saved account info auth fail
 
     console.log("verifyAuth");
-    // dispatch(loginError());
-    // dispatch(verifyRequest());
-    // console.log('verifyRequest');
-    // dispatch(receiveLogin({
-        //     name: 'Ringo',
-        //     email: 'rdl@nb.com',
-        // }));
-        // console.log('receiveLogin');
-        // dispatch(verifySuccess());
-        // console.log('verifySuccess');
 
     // code with firebase backend
     dispatch(verifyRequest());

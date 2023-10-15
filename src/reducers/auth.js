@@ -42,6 +42,7 @@ function auth(state = initialState, action) {
                 isAuthenticated: true,
                 user: action.payload.user,
                 loginErrorMessage: '',
+                newcomerStatus : action.payload.newcomerStatus,
             };
         case LOGIN_FAILURE:
             return {
