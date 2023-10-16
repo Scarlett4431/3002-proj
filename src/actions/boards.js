@@ -65,7 +65,7 @@ const receiveBoardName = (name, boardId) => {
     };
 };
 
-export const createBoard = (title) => async dispatch => {
+export const createBoard = (title, userId) => async dispatch => {
     console.log("createBoard");
     dispatch(requestCreateBoard());
     const user = myFirebase.auth().currentUser;
@@ -95,7 +95,7 @@ export const createBoard = (title) => async dispatch => {
             // lists: { 0: { id: '0', title: 'Todo' } },
         });
         console.log("receiveCreateBoard");
-        dispatch(receiveCreateBoard({ uid: key, title: title }));
+        dispatch(receiveCreateBoard({ uid: key, title: title, owner: userId }));
 
     }
 };

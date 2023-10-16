@@ -31,7 +31,7 @@ function boardsReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        boards: [...state.boards, { boardId: action.payload.uid, title: action.payload.title }]
+        boards: [...state.boards, { boardId: action.payload.uid, title: action.payload.title, owner: action.payload.owner}]
       };
 
     case GET_BOARDS_SUCCESS:
