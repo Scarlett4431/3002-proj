@@ -1,10 +1,25 @@
 import { Button, Modal } from "flowbite-react";
-import { HiOutlineExclamationCircle, HiOutlineClipboardList } from "react-icons/hi";
+import { HiOutlineExclamationCircle, HiOutlineBookOpen, HiOutlineMailOpen, HiOutlineClipboardList, HiOutlineUserAdd } from "react-icons/hi";
 import { useState } from "react";
 
-export default function PromptModal({ placeholder, open, message, onConfirm, onCancel, requiresInput,showCancel}) {
+export default function PromptModal({ placeholder, open, message, onConfirm, onCancel, requiresInput,showCancel, type}) {
   const [inputValue, setInputValue] = useState('');
-
+  let icon;
+  if (type === "signup"){
+    icon = <HiOutlineUserAdd className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />;
+  }
+  else if (type === "invite"){
+    icon = <HiOutlineMailOpen className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />;
+  }
+  else if (type === "boardname"){
+    icon = <HiOutlineBookOpen className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />;
+  }
+  else if (requiresInput){
+    icon = <HiOutlineClipboardList className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />;
+  }
+  else {
+    icon = <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />;
+  }
   return (
     <>
       <Modal
@@ -16,7 +31,7 @@ export default function PromptModal({ placeholder, open, message, onConfirm, onC
         <Modal.Header />
         <Modal.Body>
           <div className="text-center">
-            {requiresInput? <HiOutlineClipboardList className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" /> : <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />}
+            {icon}
             <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
               {message}
             </h3>

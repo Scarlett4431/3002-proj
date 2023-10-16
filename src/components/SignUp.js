@@ -118,6 +118,7 @@ export default function SignUp(){
           onCancel={closeModal}
           requiresInput={false}
           showCancel={false}
+          type = "signup"
         />
       )}
       </div>

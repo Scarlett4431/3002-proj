@@ -34,7 +34,7 @@ function InviteCard({boardID}) {
       </Button>
       <PromptModal
         open={isModalOpen}
-        type={"Invite"}
+        type="invite"
         placeholder={"Example@gmail.com"}
         message={promptMessage}
         onConfirm={confirmAction}

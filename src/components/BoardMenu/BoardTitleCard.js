@@ -40,6 +40,7 @@ function BoardTitleCard() {
         message={promptMessage}
         onConfirm={confirmAction}
         onCancel={cancel}
+        type="boardname"
         requiresInput
       />
     </div>
