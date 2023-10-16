@@ -154,9 +154,10 @@ export const loadUserBoards = () => async dispatch => {
                     if (snap.exists()) {
                         boards.push({
                             boardId: data.key,
+                            owner: snap.val().owner.uid,
                             title: snap.val().title,
                         });
-                        console.log(data.key);
+                        console.log(data.key, snap.val().owner.uid, snap.val().title);
                     }
                     ++i;
                     if(i == snapshot.numChildren()) { resolve(boards); }
