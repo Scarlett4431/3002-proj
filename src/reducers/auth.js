@@ -62,7 +62,7 @@ function auth(state = initialState, action) {
             return {
                 ...state,
                 isLoading: false,
-                isAuthenticated: true,
+                isAuthenticated: false,
                 user: action.payload.user
             };
         case REGISTER_FAILURE:
