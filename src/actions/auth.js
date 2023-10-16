@@ -133,7 +133,7 @@ export const loginUser = (email, password, callback, dir) => async dispatch => {
         });
 };
 
-export const registerUser = (email, password, displayName, callback, dir) => async dispatch => {
+export const registerUser = (email, password, displayName) => async dispatch => {
 
     // code with firebase backend
 
@@ -155,8 +155,7 @@ export const registerUser = (email, password, displayName, callback, dir) => asy
                 myFirebase.database().ref('/emailToUid/').child(email).set({
                     userId
                 })
-                dispatch(receiveRegister());
-                callback(dir);
+                dispatch(receiveRegister({email : email}));
             });
         })
         .catch(error => {

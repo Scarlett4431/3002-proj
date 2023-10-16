@@ -19,7 +19,6 @@ const initialState = {
     logoutError: false,
     registerError: false,
     isAuthenticated: false,
-    error: false,
     loginErrorMessage: '',
     registerErrorMessage: '',
     user: {},
@@ -63,6 +62,8 @@ function auth(state = initialState, action) {
                 ...state,
                 isLoading: false,
                 isAuthenticated: false,
+                registerError : false,
+                registerErrorMessage : '',
                 user: action.payload.user
             };
         case REGISTER_FAILURE:

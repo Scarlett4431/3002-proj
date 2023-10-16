@@ -20,15 +20,18 @@ export default function SignUp(){
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
-  const [showModal, setShowModal] = useState(false);
-
-  
 
   const [state, setState] = useState({
     displayName: "",
     email: "",
     password: "",
   });
+
+  const [registerState, setRegisterState] = useState(false);
+
+  const redirectToSignin = () => {
+    navigate("/signin");
+  }
 
   // get the content of the textbox
   const onChange = (e) => {
@@ -41,13 +44,9 @@ export default function SignUp(){
   // save for future page redirections
   const handleSignUp = (e) => {
     e.preventDefault();
-    dispatch(registerUser(state.email, state.password, state.displayName, navigate, "/signin"));
-    setShowModal(true);
+    setRegisterState(true);
+    dispatch(registerUser(state.email, state.password, state.displayName));
   };
-
-  const closeModal = () =>{
-    setShowModal(false);
-  }
 
   const signUp = (
     <Container component="main" maxWidth="xs">
@@ -110,17 +109,15 @@ export default function SignUp(){
             </Grid>
           </Grid>
         </form>
-        {showModal && (
         <PromptModal
-          open={showModal}
+          open={(registerState === true && auth.isLoading === false && auth.registerErrorMessage === "")}
           message="Sign up successful!"
-          onConfirm={closeModal}
-          onCancel={closeModal}
+          onConfirm={redirectToSignin}
+          onCancel={redirectToSignin}
           requiresInput={false}
           showCancel={false}
           type = "signup"
         />
-      )}
       </div>
     </Container>
   );

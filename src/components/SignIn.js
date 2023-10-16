@@ -20,7 +20,7 @@ export default function SignIn() {
   const auth = useSelector((state) => state.auth);
 
   const [state, setState] = useState({
-    email: "",
+    email: (auth.user === undefined) ? "" : auth.user.email,
     password: "",
     doRememberMe: false,
   });
@@ -67,6 +67,7 @@ export default function SignIn() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                defaultValue={(auth.user === undefined) ? "" : auth.user.email}
                 onChange={onChange}
               />
             </Grid>
