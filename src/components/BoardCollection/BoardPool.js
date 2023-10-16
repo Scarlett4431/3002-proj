@@ -51,7 +51,7 @@ export default function BoardPool() {
     if (operationType === "add") {
       inputValue = inputValue.trim();
       if (inputValue) {
-        dispatch(createBoard(inputValue));
+        dispatch(createBoard(inputValue, userId));
       }
     } else if (operationType === "delete") {
       dispatch(deleteBoard(columnToDelete));
