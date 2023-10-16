@@ -6,14 +6,14 @@ import { HiOutlineClipboardList } from "react-icons/hi";
 import { Audio } from  'react-loader-spinner'
 import { useDispatch, useSelector } from "react-redux";
 
-import { createBoard, deleteBoard, loadUserBoards } from "../../actions/boards";
+import { createBoard, deleteBoard, exitBoard, loadUserBoards } from "../../actions/boards";
 
 import BoardColumn from "./BoardColumn";
 
 export default function BoardPool() {
   const dispatch = useDispatch();
   const columns = useSelector((state) => state.boards);
-  const auth = useSelector((state) => state.auth);
+  const userId = useSelector((state) => state.auth.user.uid);
 
   const [columnToDelete, setColumnToDelete] = useState(null);
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -27,11 +27,24 @@ export default function BoardPool() {
     setIsModalOpen(true);
   };
 
-  const handleDeleteClick = (index) => {
-    setOperationType("delete");
-    setColumnToDelete(index);
-    setPromptMessage("Are you sure you want to delete this board?");
-    setIsModalOpen(true);
+  const handleDeleteClick = (boardId) => {
+    // get the board with the same index
+    const currentBoard = columns.boards.find((board) => board.boardId === boardId);
+    console.log(currentBoard);
+    // user is the owner of board, delete board in firebase completely
+    if(userId === currentBoard.owner){
+      setOperationType("delete");
+      setColumnToDelete(boardId);
+      setPromptMessage("Are you sure you want to delete this board(Owner)?");
+      setIsModalOpen(true);
+    }
+    // user is not owner of board, remove user from board member list
+    else{
+      setOperationType("exit");
+      setColumnToDelete(boardId);
+      setPromptMessage("Are you sure you want to exit this board(Member)?");
+      setIsModalOpen(true);
+    }
   };
 
   const confirmAction = (inputValue) => {
@@ -42,6 +55,9 @@ export default function BoardPool() {
       }
     } else if (operationType === "delete") {
       dispatch(deleteBoard(columnToDelete));
+    }
+    else if (operationType === "exit") {
+      dispatch(exitBoard(columnToDelete));
     }
     setIsModalOpen(false);
     setOperationType(null);

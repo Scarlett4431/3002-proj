@@ -130,8 +130,7 @@ export const exitBoard = (boardId) => async dispatch => {
             myFirebase.database().ref('/userBoards/' + user.uid).child(boardId).remove();
         }
     }).then(() => {
-        console.log("loadUserBoards");
-        dispatch(loadUserBoards());
+        dispatch(deleteBoardSuccess(boardId));
     });
 }
 
