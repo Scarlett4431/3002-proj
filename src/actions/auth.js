@@ -1,4 +1,5 @@
 import { myFirebase } from "../firebase/firebase";
+import { sendEmailVerification } from "@firebase/auth";
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -106,7 +107,6 @@ const finishTutorialSuccess = (newcomerStatus) => {
     };
 };
 
-
 export const loginUser = (email, password, callback, dir) => async dispatch => {
 
     // code with firebase backend
@@ -116,14 +116,26 @@ export const loginUser = (email, password, callback, dir) => async dispatch => {
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then(user => {
-            myFirebase.database().ref('/users/' + user.user.uid + '/newcomer/').on('value', (snapshot) => {
-                const newcomerStatus = snapshot.val();
-                console.log("LoginSuccess");
-                console.log(user.user.uid, "newcomer:", newcomerStatus);
-                dispatch(receiveLogin(user.user, newcomerStatus));
-                console.log("Prepare Redirect");
-                callback(dir);
-            })
+            // currentUser is only for verification
+            const currentUser = myFirebase.auth().currentUser;
+            if (currentUser){
+                currentUser.reload();
+            }
+            if (currentUser.emailVerified) {
+                console.log('Email is verified');
+                myFirebase.database().ref('/users/' + user.user.uid + '/newcomer/').on('value', (snapshot) => {
+                    const newcomerStatus = snapshot.val();
+                    console.log("LoginSuccess");
+                    console.log(user.user.uid, "newcomer:", newcomerStatus);
+                    dispatch(receiveLogin(user.user, newcomerStatus));
+                    console.log("Prepare Redirect");
+                    callback(dir);
+                })
+            }
+            else {
+                console.log('Email is not verified');
+                dispatch(loginError('Email is not verified'));
+            }
         })
         .catch(error => {
             //Do something with the error if you want!
@@ -155,7 +167,8 @@ export const registerUser = (email, password, displayName) => async dispatch => 
                 myFirebase.database().ref('/emailToUid/').child(email).set({
                     userId
                 })
-                dispatch(receiveRegister({email : email}));
+                sendEmailVerification(userCredential.user);
+                dispatch(receiveRegister());
                 logoutUser();
             });
         })

@@ -111,7 +111,7 @@ export default function SignUp(){
         </form>
         <PromptModal
           open={(registerState === true && auth.isLoading === false && auth.registerErrorMessage === "")}
-          message="Sign up successful!"
+          message="Check your inbox and verify the email address!"
           onConfirm={redirectToSignin}
           onCancel={redirectToSignin}
           requiresInput={false}
