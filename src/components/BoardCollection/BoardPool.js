@@ -19,11 +19,13 @@ export default function BoardPool() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [promptMessage, setPromptMessage] = useState("");
+  const [confirmMessage, setConfirmMessage] = useState("");
   const [operationType, setOperationType] = useState(null); // 'add' or 'delete'
 
   const addColumn = () => {
     setOperationType("add");
     setPromptMessage("Enter board title:");
+    setConfirmMessage(null);
     setIsModalOpen(true);
   };
 
@@ -35,7 +37,8 @@ export default function BoardPool() {
     if(userId === currentBoard.owner){
       setOperationType("delete");
       setColumnToDelete(boardId);
-      setPromptMessage("Are you sure you want to delete this board(Owner)?");
+      setPromptMessage("Are you deleting this board for all members?");
+      setConfirmMessage("Delete completely")
       setIsModalOpen(true);
     }
     // user is not owner of board, remove user from board member list
@@ -43,6 +46,7 @@ export default function BoardPool() {
       setOperationType("exit");
       setColumnToDelete(boardId);
       setPromptMessage("Are you sure you want to exit this board(Member)?");
+      setConfirmMessage(null);
       setIsModalOpen(true);
     }
   };
@@ -104,13 +108,13 @@ export default function BoardPool() {
               />
             ))}
         </div>
-        <Button
+        <button
           onClick={addColumn}
-          className="mt-8 font-bold px-4 py-2 block mx-auto"
-          gradientDuoTone="purpleToPink"
+          className="mt-8 block mx-auto bg-gradient-to-r  from-pink-400 to-blue-400 hover:from-pink-0 hover:to-blue-500 font-bold py-3 px-5 rounded-lg"
         >
           CREATE NEW BOARD
-        </Button>
+        </button>
+        
         <PromptModal
           open={isModalOpen}
           message={promptMessage}
@@ -119,6 +123,7 @@ export default function BoardPool() {
             setIsModalOpen(false);
             setOperationType(null);
           }}
+          confirmMessage = {confirmMessage}
           requiresInput={operationType === "add"}
           showCancel={true}
         />
