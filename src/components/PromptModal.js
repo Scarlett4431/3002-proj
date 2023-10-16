@@ -37,7 +37,7 @@ export default function PromptModal({
     icon = (
       <HiOutlineClipboardList className="mx-auto mb-4 h-14 w-14 text-gray-400" />
     );
-  } else if (confirmMessage!== undefined || confirmMessage!== null) {
+  } else if (confirmMessage) {
     icon = (
       <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-red-500 " />
     );

@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Button } from "flowbite-react";
 import PromptModal from "../PromptModal";
 import { HiOutlineClipboardList } from "react-icons/hi";
 import { Audio } from  'react-loader-spinner'
@@ -45,7 +44,7 @@ export default function BoardPool() {
     else{
       setOperationType("exit");
       setColumnToDelete(boardId);
-      setPromptMessage("Are you sure you want to exit this board(Member)?");
+      setPromptMessage("Are you removing this board from your account?");
       setConfirmMessage(null);
       setIsModalOpen(true);
     }
@@ -77,7 +76,7 @@ export default function BoardPool() {
   if(columns.loading){
     return (<div class={enclosedDivClass}>
         <div className="mx-auto block justify-center content-center">
-          <Audio className="mx-auto justify-center text-indigo-950" />
+          <Audio className="mx-auto justify-center text-indigo-95"  color = '#6366f1'/>
           <h2 className="text-xl mb-7 text-center text-indigo-950 font-bold">
             Loading...
           </h2>
