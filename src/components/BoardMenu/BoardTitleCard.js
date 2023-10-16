@@ -33,7 +33,7 @@ function BoardTitleCard() {
     <div>
       <Button size="xl" gradientDuoTone="purpleToPink" onClick={editBoard}>
         <HiAdjustments className="mr-3 h-4 w-4" />
-        <p>{board.title}</p>
+        <p className="font-semibold">{board.title}</p>
       </Button>
       <PromptModal
         open={isModalOpen}

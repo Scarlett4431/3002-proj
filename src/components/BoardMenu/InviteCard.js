@@ -30,7 +30,7 @@ function InviteCard({boardID}) {
     <div>
       <Button size="xl" gradientDuoTone="purpleToPink" onClick={inviteFriend}>
         <HiUserCircle className="mr-3 h-4 w-4" />
-        <p>Invite</p>
+        <p className="font-semibold">Invite</p>
       </Button>
       <PromptModal
         open={isModalOpen}

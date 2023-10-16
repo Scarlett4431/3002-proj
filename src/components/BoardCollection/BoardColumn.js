@@ -25,7 +25,7 @@ export default function BoardColumn({
       onMouseLeave={onLeave}
       onClick={divOnClick}
     >
-      <h2 className="text-white justify-between text-lg p-2 block text-center">
+      <h2 className="text-white justify-between text-lg p-2 block text-center font-semibold">
         {boardTitle}
       </h2>
       <button
