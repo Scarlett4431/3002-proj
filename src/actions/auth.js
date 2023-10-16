@@ -156,6 +156,7 @@ export const registerUser = (email, password, displayName) => async dispatch => 
                     userId
                 })
                 dispatch(receiveRegister({email : email}));
+                logoutUser();
             });
         })
         .catch(error => {
