@@ -176,7 +176,7 @@ export const loadUserBoards = () => async dispatch => {
 };
 
 export const addUserToBoard = (email, boardId) => async dispatch => {
-    const emailWithoutDot = email.replace(".", ",");
+    const emailWithoutDot = email.replaceAll(".", ",");
     // get userId from email
     var userToAdd;
     myFirebase.database().ref('/emailToUid/' + emailWithoutDot).child('userId').once('value', function (snapshot) {
