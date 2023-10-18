@@ -17,7 +17,7 @@ export default function NavBar(){
       </NavLink>
       <Navbar.Collapse>
         <span class="self-center p-3 whitespace-nowrap text-3xl font-semibold dark:text-white text-indigo-950">
-          CCC Cooperative Cardboard
+          Smart Household Collaboration
         </span>
       </Navbar.Collapse>
       <div className="flex md:order-2 pr-4">
