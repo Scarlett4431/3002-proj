@@ -19,16 +19,18 @@ const GuidedTour = ({ onComplete }) => {
                     show: function() {
                         const stepIndex = tour.steps.indexOf(this);
                         const shepherdTextElement = this.el.querySelector('.shepherd-text');
+                        shepherdTextElement.style.width = '400px';
+                        shepherdTextElement.style.height = 'auto';
+                        shepherdTextElement.style.fontSize = '18px';
                         
                         // Create and prepend the new GIF to the shepherd text
                         const gifImage = document.createElement('img');
                         gifImage.src = gifPaths[stepIndex];
                         gifImage.style.width = '100%';
-                        gifImage.style.height = 'auto'; // Maintains the aspect ratio
+                        gifImage.style.height = 'auto'; 
                         shepherdTextElement.insertBefore(gifImage, shepherdTextElement.firstChild);
 
-                        const shepherdContentElement = this.el.querySelector('.shepherd-content');
-                        shepherdContentElement.style.backgroundColor = 'rgba(128, 128, 255, 0.1)';
+
 
                         const buttons = this.el.querySelectorAll('.shepherd-button');
                         buttons.forEach((button, idx) => {
@@ -39,6 +41,7 @@ const GuidedTour = ({ onComplete }) => {
                 }
             }
         });
+
 
         const stepButtons = [
             [
@@ -92,10 +95,6 @@ const GuidedTour = ({ onComplete }) => {
             tour.addStep({
                 id: `step${index + 1}`,
                 text: stepTexts[index],
-                attachTo: {
-                    element: ".element-selector",
-                    on: "bottom"
-                },
                 buttons: stepButtons[index]
             });
         });
