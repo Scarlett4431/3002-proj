@@ -5,7 +5,7 @@ import { useDispatch,useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import BoardPool from './BoardPool';
 import GuidedTour from './BoardTour';
-import { finishTutorial,fetchNewcomerStatus } from '../../actions/auth';
+import { finishTutorial } from '../../actions/auth';
 
 
 export default function BoardCollection() {
@@ -14,7 +14,7 @@ export default function BoardCollection() {
 
   const handleTourComplete = () => {
     // Dispatch action to finish tutorial and update newcomer flag
-    //dispatch(finishTutorial(auth.user.uid));
+    dispatch(finishTutorial(auth.user.uid));
   };
 
   
