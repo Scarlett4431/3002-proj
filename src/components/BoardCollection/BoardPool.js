@@ -109,7 +109,7 @@ export default function BoardPool() {
         </div>
         <button
           onClick={addColumn}
-          className="mt-8 block mx-auto bg-gradient-to-r  from-pink-400 to-blue-400 hover:from-pink-0 hover:to-blue-500 font-bold py-3 px-5 rounded-lg"
+          className="mt-8 block mx-auto text-white bg-gradient-to-r  from-pink-400 to-blue-400 hover:from-pink-0 hover:to-blue-500 font-bold py-3 px-5 rounded-lg"
         >
           CREATE NEW BOARD
         </button>
