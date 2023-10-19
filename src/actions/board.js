@@ -132,10 +132,10 @@ export const addCardToBoard = (board, listID, text, id, createTime, createUser) 
             .set({
                 "text": text,
                 "completed": false,
-                "create_time": createTime,
-                "create_by": createUser,
-                "complete_time": null,
-                "complete_by": null,
+                "createTime": createTime,
+                "createUser": createUser,
+                "completeTime": null,
+                "completeUser": null,
                 "content": text
             }).then(() => {
                 console.log("Add card successfully")
@@ -169,8 +169,8 @@ export const updateCardToBoard = (board, cardID, listID, completed, completeTime
             .then(function (snap) {
                 snap.ref.update({ 
                     "completed": !completed,
-                    "complete_time": completeTime,
-                    "complete_by": completeUser,
+                    "completeTime": completeTime,
+                    "completeUser": completeUser,
                 });
             })
             .then(() => {
@@ -342,6 +342,7 @@ export const loadBoard = (uid) => dispatch => {
                             id: cardId,
                             text: card.text,
                             createTime: card.createTime,
+                            createUser: card.createUser,
                             completed: card.completed,
                             completeTime: card.completeTime,
                             completeUser: card.completeUser,
@@ -360,7 +361,15 @@ export const loadBoard = (uid) => dispatch => {
         board.boardId = snapshot.val().boardId;
         board.title = snapshot.val().title;
         board.lists = formatedLists;
-
+        const members = [];
+        myFirebase.database().ref('/boards/' + board.boardId + '/members/').once('value', function (snapshot) {
+            if (snapshot.exists()) {
+                snapshot.forEach(function (data) {
+                    members.push(data.val().uid);
+                })
+            };
+        });
+        board.members = members;
         return board;
     }).then((board)=>{
         console.log("dispatch");
