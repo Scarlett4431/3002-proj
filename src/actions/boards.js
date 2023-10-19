@@ -189,7 +189,9 @@ export const addUserToBoard = (email, boardId) => async dispatch => {
             myFirebase.database().ref('/userBoards/' + userToAdd).child(boardId).set(true);
             // also add userid to members array
             myFirebase.database().ref('/boards/' + boardId + '/members/').push({
-                uid: userToAdd
+                uid: userToAdd,
+                view: true,
+                edit: false,
             })
         }
     });
