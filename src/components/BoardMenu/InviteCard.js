@@ -27,7 +27,7 @@ function InviteCard({boardID}) {
 
   return (
     <div>
-      <button className="bg-gradient-to-r flex from-pink-500 to-blue-500 hover:from-pink-600 hover:to-blue-600 font-bold py-4 px-6 rounded-lg" onClick={inviteFriend}>
+      <button className="bg-gradient-to-r text-white flex from-pink-500 to-blue-500 hover:from-pink-600 hover:to-blue-600 font-bold py-4 px-6 rounded-lg" onClick={inviteFriend}>
         <HiUserCircle className="mr-3 h-4 w-4" />
         <p className="font-semibold">Invite</p>
       </button>
