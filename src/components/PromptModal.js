@@ -1,4 +1,4 @@
-import { Modal, Button } from "flowbite-react";
+import { Modal } from "flowbite-react";
 import {
   HiOutlineExclamationCircle,
   HiOutlineBookOpen,

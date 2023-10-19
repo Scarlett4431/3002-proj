@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import BoardTitleCard from "./BoardTitleCard";
+import MemberList from "./MemberList";
 import InviteCard from "./InviteCard";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 export default function BoardBar({ boardID, searchString, setSearchString }) {
@@ -11,6 +12,7 @@ export default function BoardBar({ boardID, searchString, setSearchString }) {
         <InviteCard boardID={boardID}/>
       </div>
       <div className="flex items-center space-x-5 flex-1 justify-end w-full pr-4">
+        <MemberList className="m-2"/>
         <form
           className="flex items-center space-x-5 bg-white p-2 
                     shadow-md flex-1 md:flex-initial rounded-xl"

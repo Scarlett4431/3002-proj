@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BsCheckCircle, BsCircle } from "react-icons/bs";
@@ -13,6 +14,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 function Card({ cardID, text, listID, index, completed }) {
+  const [over, setOver] = useState(false);
   const board = useSelector((state) => state.board);
   const dispatch = useDispatch();
   const handleDeleteCard = () => {
@@ -31,6 +33,8 @@ function Card({ cardID, text, listID, index, completed }) {
           <div
             ref={provided.innerRef}
             className="bg-white rounded-md space-y-2 drop-shadow-md"
+            onMouseEnter={() => setOver(true)}
+            onMouseLeave={() => setOver(false)}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
           >
@@ -41,7 +45,7 @@ function Card({ cardID, text, listID, index, completed }) {
               >
                 <AiOutlineDelete className="h-5 w-5" />
               </button>
-              <p className={ (completed ? "line-through" : "")}>{text}</p>
+              <p className={completed ? "line-through" : ""}>{text}</p>
               <div className="flex items-end justify-end">
                 <button
                   className="hover:text-grey-900"
@@ -52,6 +56,9 @@ function Card({ cardID, text, listID, index, completed }) {
                 </button>
               </div>
             </div>
+            {over && <div className="border-dashed border-2 border-indigo-600">
+              Hello
+              </div>}
           </div>
         );
       }}
