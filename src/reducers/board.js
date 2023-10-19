@@ -96,10 +96,11 @@ function board(state = initialState, action) {
       return { ...state, lists: state.lists };
     case ADD_CARD:
       console.log("ADD_CARD");
+      const tempDate = new Date(action.payload.createTime);
       const newCard = {
         text: action.payload.text,
         completed: false,
-        createTime : action.payload.createTime,
+        createTime : tempDate.toLocaleString(),
         createUser : action.payload.createUser,
         completeTime : undefined,
         completeUser : undefined,
@@ -128,8 +129,9 @@ function board(state = initialState, action) {
           const cardsList = [...list.cards];
           list.cards.forEach(function (card, index) {
             if (card.id === cardID_3) {
+              const tempDate = new Date(action.payload.completeTime);
               card.completed = !action.payload.completed;
-              card.completeTime = action.payload.completeTime;
+              card.completeTime = tempDate.toLocaleString();
               card.completeUser = action.payload.completeUser;
               return;
             }
