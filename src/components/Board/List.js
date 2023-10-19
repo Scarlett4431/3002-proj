@@ -17,6 +17,8 @@ import {
 
 function List({ cards, listID, title, index, searchString }) {
   const board = useSelector((state) => state.board);
+  const userName = useSelector((state) => state.auth.user.displayName);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [promptMessage, setPromptMessage] = useState("");
   const [columnToDelete, setColumnToDelete] = useState(null);
@@ -44,9 +46,10 @@ function List({ cards, listID, title, index, searchString }) {
     if (operationType === "add") {
       inputValue = inputValue.trim();
       if (inputValue) {
+        const createTime = new Date().getTime();
         const id = uuid();
-        dispatch(addCard(listID, inputValue, id));
-        dispatch(addCardToBoard(board, listID, inputValue, id));
+        dispatch(addCard(listID, inputValue, id, createTime, userName));
+        dispatch(addCardToBoard(board, listID, inputValue, id, createTime, userName));
         // dispatch(updateBoard(board));
       }
     } else if (operationType === "delete") {
@@ -96,6 +99,10 @@ function List({ cards, listID, title, index, searchString }) {
                         listID={listID}
                         index={index}
                         completed={item.completed}
+                        createTime={item.createTime}
+                        createUser={item.createUser}
+                        completeTime={item.completeTime}
+                        completeUser={item.completeUser}
                         searchString={searchString}
                       />
                     );

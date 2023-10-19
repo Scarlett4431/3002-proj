@@ -13,19 +13,26 @@ import {
 } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 
-function Card({ cardID, text, listID, index, completed }) {
+function Card({ cardID, text, listID, index, completed, createTime, createUser, completeTime, completeUser }) {
   const [over, setOver] = useState(false);
   const board = useSelector((state) => state.board);
+  const userName = useSelector((state)  => state.auth.user.displayName);
+
   const dispatch = useDispatch();
+
   const handleDeleteCard = () => {
     dispatch(deleteCard(cardID, listID));
     dispatch(deleteCardFromBoard(board, cardID, listID));
     // dispatch(updateBoard(board));
   };
+
   const handleCompleteCard = () => {
-    dispatch(updateCard(cardID, listID, completed));
-    dispatch(updateCardToBoard(board, cardID, listID, completed));
+    const completeTime = completed ? undefined : new Date().getTime() ;
+    const completeUser = completed ? undefined : userName;
+    dispatch(updateCard(cardID, listID, completed, completeTime, completeUser));
+    dispatch(updateCardToBoard(board, cardID, listID, completed, completeTime, completeUser));
   };
+
   return (
     <Draggable key={cardID} draggableId={cardID} index={index}>
       {(provided, snapshot) => {
@@ -57,7 +64,10 @@ function Card({ cardID, text, listID, index, completed }) {
               </div>
             </div>
             {over && <div className="border-dashed border-2 border-indigo-600">
-              Hello
+              <p>Create Time: {createTime}</p>
+              <p>Create User: {createUser}</p>
+              {completed && <p>Complete Time: {completeTime}</p>}
+              {completed && <p>Complete User: {completeUser}</p>}
               </div>}
           </div>
         );

@@ -110,7 +110,14 @@ export const deleteList = (board, listID) => {
     };
 };
 
-export const addCardToBoard = (board, listID, text, id) => dispatch => {
+export const addCard = (listID, text, id, createTime, createUser) => {
+    return {
+        type: ADD_CARD,
+        payload: { text, listID, id, createTime, createUser },
+    };
+};
+
+export const addCardToBoard = (board, listID, text, id, createTime, createUser) => dispatch => {
     const user = myFirebase.auth().currentUser;
     console.log("card id: ", id);
     if (!user) {
@@ -122,7 +129,15 @@ export const addCardToBoard = (board, listID, text, id) => dispatch => {
         //     .push().key;
         myFirebase.database()
             .ref('/board/' + board.boardId + '/lists/'  + listID + '/cards/' + id)
-            .set({"text": text, "completed": false, "create_time": new Date().getTime(), "complete_time": new Date().getTime(), "complete_by": user, "content": text}).then(() => {
+            .set({
+                "text": text,
+                "completed": false,
+                "create_time": createTime,
+                "create_by": createUser,
+                "complete_time": null,
+                "complete_by": null,
+                "content": text
+            }).then(() => {
                 console.log("Add card successfully")
                 dispatch(receiveUpdatedBoard());
                 console.log("real id of newly created card: ", id);
@@ -132,15 +147,18 @@ export const addCardToBoard = (board, listID, text, id) => dispatch => {
             });
     }
 };
-export const addCard = (listID, text, id) => {
+
+export const updateCard = (cardID, listID, completed, completeTime, completeUser) => {
     return {
-        type: ADD_CARD,
-        payload: { text, listID, id },
+        type: UPDATE_CARD,
+        payload: { cardID, listID, completed, completeTime, completeUser },
     };
 };
 
-export const completeCardToBoard = (board, cardID, listID, completed) => dispatch => {
+
+export const updateCardToBoard = (board, cardID, listID, completed, completeTime, completeUser) => dispatch => {
     const user = myFirebase.auth().currentUser;
+    console.log("card id: ", cardID);
     if (!user) {
         dispatch(updateBoardError());
     } else {
@@ -149,7 +167,11 @@ export const completeCardToBoard = (board, cardID, listID, completed) => dispatc
             .ref('/board/' + board.boardId + '/lists/'  + listID + '/cards/' + cardID)
             .get()
             .then(function (snap) {
-                snap.ref.update({ "completed": !snap.toJSON().completed, "complete_time": new Date().getTime(), "complete_by": user });
+                snap.ref.update({ 
+                    "completed": !completed,
+                    "complete_time": completeTime,
+                    "complete_by": completeUser,
+                });
             })
             .then(() => {
                 // console.log(board.boardId, listID, cardID)
@@ -160,6 +182,7 @@ export const completeCardToBoard = (board, cardID, listID, completed) => dispatc
             });
     }
 };
+
 export const moveCardToBoard = (board, cardID, listID, new_listID) => dispatch => {
     const user = myFirebase.auth().currentUser;
     if (!user) {
@@ -189,12 +212,6 @@ export const moveCardToBoard = (board, cardID, listID, new_listID) => dispatch =
                 dispatch(updateBoardError());
             });
     }
-};
-export const updateCard = (cardID, listID, completed) => {
-    return {
-        type: UPDATE_CARD,
-        payload: { cardID, listID, completed },
-    };
 };
 
 export const deleteCardFromBoard = (board, cardID, listID) => dispatch => {
@@ -324,7 +341,10 @@ export const loadBoard = (uid) => dispatch => {
                         const curCard = {
                             id: cardId,
                             text: card.text,
+                            createTime: card.createTime,
                             completed: card.completed,
+                            completeTime: card.completeTime,
+                            completeUser: card.completeUser,
                         };
                         formatedCards.push(curCard);
                     };
@@ -363,18 +383,18 @@ export const listenBoard = (uid) => dispatch => {
     });
 };
 
-function moveFbRecord(oldRef, newRef) {    
-    return Promise((resolve, reject) => {
-         oldRef.once('value').then(snap => {
-              return newRef.set(snap.val());
-         }).then(() => {
-              return oldRef.set(null);
-         }).then(() => {
-              console.log('move done!');
-              resolve();
-         }).catch(err => {
-              console.log(err.message);
-              reject();
-         });
-    })
-}
+// function moveFbRecord(oldRef, newRef) {    
+//     return Promise((resolve, reject) => {
+//          oldRef.once('value').then(snap => {
+//               return newRef.set(snap.val());
+//          }).then(() => {
+//               return oldRef.set(null);
+//          }).then(() => {
+//               console.log('move done!');
+//               resolve();
+//          }).catch(err => {
+//               console.log(err.message);
+//               reject();
+//          });
+//     })
+// }

@@ -99,8 +99,13 @@ function board(state = initialState, action) {
       const newCard = {
         text: action.payload.text,
         completed: false,
+        createTime : action.payload.createTime,
+        createUser : action.payload.createUser,
+        completeTime : undefined,
+        completeUser : undefined,
         id: action.payload.id,
       };
+      console.log(newCard);
       state.lists = state.lists.map((list) => {
         if (list.id === action.payload.listID) {
           if (list.cards) {
@@ -124,6 +129,8 @@ function board(state = initialState, action) {
           list.cards.forEach(function (card, index) {
             if (card.id === cardID_3) {
               card.completed = !action.payload.completed;
+              card.completeTime = action.payload.completeTime;
+              card.completeUser = action.payload.completeUser;
               return;
             }
           });
