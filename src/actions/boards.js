@@ -82,7 +82,9 @@ export const createBoard = (title, userId) => async dispatch => {
                 }
             }).key;
         myFirebase.database().ref('boards/' + key + '/members').push({
-            uid: uid
+            uid: uid,
+            view: true,
+            edit: true,
         });
         // add board owner logic
         myFirebase.database().ref('boards/' + key + '/owner').set({

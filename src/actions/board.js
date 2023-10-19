@@ -122,7 +122,7 @@ export const addCardToBoard = (board, listID, text, id) => dispatch => {
         //     .push().key;
         myFirebase.database()
             .ref('/board/' + board.boardId + '/lists/'  + listID + '/cards/' + id)
-            .set({"text": text, "completed": false, "update_time": new Date().getTime()}).then(() => {
+            .set({"text": text, "completed": false, "create_time": new Date().getTime(), "complete_time": new Date().getTime(), "complete_by": user, "content": text}).then(() => {
                 console.log("Add card successfully")
                 dispatch(receiveUpdatedBoard());
                 console.log("real id of newly created card: ", id);
@@ -139,7 +139,7 @@ export const addCard = (listID, text, id) => {
     };
 };
 
-export const updateCardToBoard = (board, cardID, listID, completed) => dispatch => {
+export const completeCardToBoard = (board, cardID, listID, completed) => dispatch => {
     const user = myFirebase.auth().currentUser;
     if (!user) {
         dispatch(updateBoardError());
@@ -149,7 +149,7 @@ export const updateCardToBoard = (board, cardID, listID, completed) => dispatch 
             .ref('/board/' + board.boardId + '/lists/'  + listID + '/cards/' + cardID)
             .get()
             .then(function (snap) {
-                snap.ref.update({ "completed": !snap.toJSON().completed, "update_time": new Date().getTime() });
+                snap.ref.update({ "completed": !snap.toJSON().completed, "complete_time": new Date().getTime(), "complete_by": user });
             })
             .then(() => {
                 // console.log(board.boardId, listID, cardID)
