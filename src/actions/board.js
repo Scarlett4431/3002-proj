@@ -365,11 +365,11 @@ export const loadBoard = (uid) => dispatch => {
         myFirebase.database().ref('/boards/' + board.boardId + '/members/').once('value', function (snapshot) {
             if (snapshot.exists()) {
                 snapshot.forEach(function (data) {
-                    members.push(data.val().uid);
+                    members.push(data.val().name);
+                    board.members = members;
                 })
             };
         });
-        board.members = members;
         return board;
     }).then((board)=>{
         console.log("dispatch");

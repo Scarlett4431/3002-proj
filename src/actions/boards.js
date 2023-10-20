@@ -83,6 +83,7 @@ export const createBoard = (title, userId) => async dispatch => {
             }).key;
         myFirebase.database().ref('boards/' + key + '/members').push({
             uid: uid,
+            name: user.displayName,
             view: true,
             edit: true,
         });
