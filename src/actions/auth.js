@@ -148,7 +148,7 @@ export const loginUser = (email, password, callback, dir) => async dispatch => {
 export const registerUser = (email, password, displayName) => async dispatch => {
 
     // code with firebase backend
-
+    console.log("register name is:", displayName);
     dispatch(requestRegister());
     myFirebase.auth()
         .createUserWithEmailAndPassword(email, password)
@@ -179,7 +179,7 @@ export const registerUser = (email, password, displayName) => async dispatch => 
 };
 
 export const finishTutorial = (userId) => async dispatch => {
-    myFirebase.database().ref('/users/' + userId).set({
+    myFirebase.database().ref('/users/' + userId).update({
         newcomer: false
     });
     console.log("tutorial finished for newcomer");

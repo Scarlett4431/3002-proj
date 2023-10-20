@@ -11,6 +11,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import {
   loadBoard,
+  loadBoardMembers,
   moveCard,
   moveCardToBoard,
   addList,
@@ -28,7 +29,6 @@ function Board() {
   useEffect(() => {
     dispatch(loadBoard(id));
   }, []);
-
 
   const cancel = () => {
     setIsModalOpen(false);

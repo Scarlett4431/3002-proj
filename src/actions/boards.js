@@ -81,9 +81,8 @@ export const createBoard = (title, userId) => async dispatch => {
                     dispatch(createBoardError());
                 }
             }).key;
-        myFirebase.database().ref('boards/' + key + '/members').push({
+        myFirebase.database().ref('boards/' + key + '/members/' + uid).set({
             uid: uid,
-            name: user.displayName,
             view: true,
             edit: true,
         });
