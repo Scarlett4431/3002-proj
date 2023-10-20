@@ -42,10 +42,9 @@ function MemberList() {
               </h3>
               <p>Owner: {owner}</p>
               {
+                // member list does not contain owner
                 memberList.forEach((member) =>{
-                  if(member !== owner){
-                    return (<p>{member}</p>);
-                  }
+                  return (<p>Member: {member}</p>);
                 })
               }
             </div>

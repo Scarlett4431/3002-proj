@@ -360,11 +360,20 @@ export const loadBoard = (boardId) => dispatch => {
             };
         }
         board.boardId = snapshot.val().boardId;
-        board.owner = snapshot.val().owner;
         board.title = snapshot.val().title;
         board.lists = formatedLists;
 
         return board;
+    }).then((board)=>{
+        // get uid of owner
+        return new Promise( resolve => {
+            myFirebase.database().ref('boards/' + boardId + '/owner/').once('value')
+            .then((snapshot)=>{
+                console.log(snapshot.toJSON());
+                board.owner = snapshot.val().uid;
+                resolve(board);
+            });
+        });
     }).then((board)=>{
         // get member list from firebase
         return new Promise( resolve => {
@@ -379,10 +388,15 @@ export const loadBoard = (boardId) => dispatch => {
                         console.log(member.toJSON());
                         myFirebase.database().ref('/users/' + member.val().uid).once('value')
                         .then((snap) => {
-                            console.log(snap.toJSON());
                             if (snap.exists()) {
-                                nameList.push(snap.val().name);
-                                console.log(snap.toJSON());
+                                // set owner name
+                                if(member.val().uid === board.owner){
+                                    board.owner = snap.val().name;
+                                }
+                                // member list does not contain owner
+                                else{
+                                    nameList.push(snap.val().name);
+                                }
                             }
                             ++i;
                             if(i == snapshot.numChildren()) { resolve(nameList); }
