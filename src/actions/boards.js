@@ -131,6 +131,7 @@ export const exitBoard = (boardId) => async dispatch => {
     myFirebase.database().ref('/boards/' + boardId + '/members/').once('value', function (snapshot) {
         if (snapshot.exists()) {
             myFirebase.database().ref('/userBoards/' + user.uid).child(boardId).remove();
+            myFirebase.database().ref('/boards/' + boardId + "/members/" + user.uid).remove();
         }
     }).then(() => {
         dispatch(deleteBoardSuccess(boardId));
@@ -189,7 +190,7 @@ export const addUserToBoard = (email, boardId) => async dispatch => {
             // if a user is added to a board multiple times
             myFirebase.database().ref('/userBoards/' + userToAdd).child(boardId).set(true);
             // also add userid to members array
-            myFirebase.database().ref('/boards/' + boardId + '/members/').push({
+            myFirebase.database().ref('/boards/' + boardId + '/members/' + userToAdd).set({
                 uid: userToAdd,
                 view: true,
                 edit: false,
