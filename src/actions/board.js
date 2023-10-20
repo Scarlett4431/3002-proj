@@ -3,10 +3,6 @@ import { myFirebase } from "../firebase/firebase";
 export const GET_BOARD_REQUEST = "GET_BOARD_REQUEST";
 export const GET_BOARD_SUCCESS = "GET_BOARD_SUCCESS";
 export const GET_BOARD_FAIL = "GET_BOARD_FAIL";
-export const GET_BOARD_MEMBERS_SUCCESS = "GET_BOARD_MEMBERS_SUCCESS";
-export const GET_BOARD_MEMBERS_FAIL = "GET_BOARD_MEMBERS_FAIL";
-export const GET_MEMBER_NAME_SUCCESS = "GET_MEMBER_NAME_SUCCESS";
-export const GET_MEMBER_NAME_FAIL = "GET_MEMBER_NAME_FAIL";
 
 export const UPDATE_BOARD_REQUEST = "UPDATE_BOARD_REQUEST";
 export const UPDATE_BOARD_SUCCESS = "UPDATE_BOARD_SUCCESS";
@@ -255,37 +251,11 @@ export const receiveBoard = (board) => {
     };
 };
 
-export const receiveBoardError = (uid) => {
+export const receiveBoardError = (boardId) => {
     return {
         type: GET_BOARD_FAIL,
-        payload: { uid },
-    };
-};
-export const receiveBoardMembers = (members) => {
-    return {
-        type: GET_BOARD_MEMBERS_SUCCESS,
-        payload: { members },
-    };
-};
-
-export const receiveBoardMembersError = (uid) => {
-    return {
-        type: GET_BOARD_MEMBERS_FAIL,
-        payload: { uid },
-    };
-};
-export const receiveMemberName = (name) => {
-    return {
-        type: GET_MEMBER_NAME_SUCCESS,
-        payload: { name },
-    };
-};
-
-export const receiveMemberNameError = (uid) => {
-    return {
-        type: GET_MEMBER_NAME_FAIL,
-        payload: { uid },
-    };
+        payload: { boardId },
+    }
 };
 
 export const requestUpdateBoard = () => {
@@ -353,11 +323,12 @@ export const updateBoard = (board) => dispatch => {
     }
 };
 
-export const loadBoard = (uid) => dispatch => {
+export const loadBoard = (boardId) => dispatch => {
     console.log("requestBoard");
     dispatch(requestBoard());
 
-    myFirebase.database().ref('/board/' + uid).once('value').then(function (snapshot) {
+    myFirebase.database().ref('/board/' + boardId).once('value')
+    .then(function (snapshot) {
         let board = {};
         console.log(snapshot.val());
 
@@ -368,7 +339,6 @@ export const loadBoard = (uid) => dispatch => {
                 const formatedCards = [];
                 if(board.cards !== undefined){
                     for (const [cardId, card] of Object.entries(board.cards)){
-                        console.log("haha", card);
                         const curCard = {
                             id: cardId,
                             text: card.text,
@@ -390,48 +360,55 @@ export const loadBoard = (uid) => dispatch => {
             };
         }
         board.boardId = snapshot.val().boardId;
+        board.owner = snapshot.val().owner;
         board.title = snapshot.val().title;
         board.lists = formatedLists;
 
         return board;
     }).then((board)=>{
+        // get member list from firebase
+        return new Promise( resolve => {
+            myFirebase.database().ref('/boards/' + boardId + '/members/').once('value')
+            .then((snapshot)=>{
+                return new Promise( resolve => {
+                    let nameList = [], i = 0;
+                    console.log("members");
+                    console.log(snapshot.toJSON());
+                    snapshot.forEach((member) =>{
+                        console.log("current member");
+                        console.log(member.toJSON());
+                        myFirebase.database().ref('/users/' + member.val().uid).once('value')
+                        .then((snap) => {
+                            console.log(snap.toJSON());
+                            if (snap.exists()) {
+                                nameList.push(snap.val().name);
+                                console.log(snap.toJSON());
+                            }
+                            ++i;
+                            if(i == snapshot.numChildren()) { resolve(nameList); }
+                        });
+                    });
+                    if(snapshot.toJSON() == null) { resolve(nameList); }
+                });
+            }).then((nameList)=>{
+                board.memberList = nameList;
+                console.log("board with members");
+                console.log(board);
+                resolve(board);
+            })
+
+        });
+    }).then((board)=>{
         console.log("dispatch");
         console.log(board);
+        // dispatch(loadBoardMembers(boardId))
         dispatch(receiveBoard(board));
     }).catch((err) => {
-        dispatch(receiveBoardError(uid));
+        console.log(err);
+        dispatch(receiveBoardError(boardId));
     });
 };
 
-export const loadBoardMembers = (boardId, uid) => dispatch => {
-    myFirebase.database().ref('/boards/' + boardId + '/members/').once('value', function (snapshot) {
-        const members = [];
-        snapshot.forEach((snap) => {
-            members.push(snap.val().uid);
-        });
-        return members;
-    }).then((members)=>{
-        console.log("members");
-        console.log(members);
-        dispatch(receiveBoardMembers(members));
-    }).catch((err) => {
-        dispatch(receiveBoardMembersError(uid));
-    });
-}
-
-export const convertUIDtoName = (uid) => dispatch => {
-    var name;
-    myFirebase.database().ref('/users/' + uid).once('value', function (snapshot) {
-        name = snapshot.val().name;
-        return name
-    }).then((name)=>{
-        console.log("name");
-        console.log(name);
-        dispatch(receiveMemberName(name));
-    }).catch((err) => {
-        dispatch(receiveMemberNameError(name));
-    });
-}
 
 export const listenBoard = (uid) => dispatch => {
     myFirebase.database().ref('/board/' + uid).on('value', function (snapshot) {

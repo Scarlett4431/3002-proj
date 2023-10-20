@@ -15,8 +15,10 @@ import {
 
 const initialState = {
   boardId: "",
+  owner: "",
   title: "",
   lists: [],
+  memberList: [],
 };
 
 // compare 2 card items
@@ -64,7 +66,7 @@ function board(state = initialState, action) {
       return action.payload.board;
     case GET_BOARD_FAIL:
       console.log("GET_BOARD_FAIL");
-      return { ...state, lists: [], boardId: action.payload.uid };
+      return { ...state, lists: [], boardId: action.payload.boardId };
     case GET_LISTS:
       console.log("GET_LISTS");
       return state;

@@ -4,11 +4,17 @@ import { Modal } from "flowbite-react";
 import {
     HiUserGroup,
   } from "react-icons/hi";
+
+import { useSelector } from "react-redux";
+
 function MemberList() {
+  const memberList = useSelector((state) => state.board.memberList);
+  const owner = useSelector((state) => state.board.owner);
   const [promptMessage, setPromptMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const showMembers = () => {
-    setPromptMessage("All the members inside the board");
+    setPromptMessage("All members inside the board");
     setIsModalOpen(true);
   };
 
@@ -34,6 +40,14 @@ function MemberList() {
               <h3 className="mb-5 text-lg font-normal text-gray-700">
                 {promptMessage}
               </h3>
+              <p>Owner: {owner}</p>
+              {
+                memberList.forEach((member) =>{
+                  if(member !== owner){
+                    return (<p>{member}</p>);
+                  }
+                })
+              }
             </div>
           </Modal.Body>
         </Modal>

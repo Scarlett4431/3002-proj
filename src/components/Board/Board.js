@@ -11,7 +11,6 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import {
   loadBoard,
-  loadBoardMembers,
   moveCard,
   moveCardToBoard,
   addList,
@@ -22,6 +21,7 @@ import {
 function Board() {
   const board = useSelector((state) => state.board);
   const dispatch = useDispatch();
+  // id is the boardId of the currentboard pass by previous page
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchString, setSearchString] = useState("");
