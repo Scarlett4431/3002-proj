@@ -335,10 +335,10 @@ export const loadBoard = (boardId) => dispatch => {
         // transform firbase storage format to local format
         const formatedLists = [];
         if(snapshot.val().lists !== undefined){
-            for (const [boardId, board] of Object.entries(snapshot.val().lists)) {
+            for (const [listId, list] of Object.entries(snapshot.val().lists)) {
                 const formatedCards = [];
-                if(board.cards !== undefined){
-                    for (const [cardId, card] of Object.entries(board.cards)){
+                if(list.cards !== undefined){
+                    for (const [cardId, card] of Object.entries(list.cards)){
                         const curCard = {
                             id: cardId,
                             text: card.text,
@@ -352,8 +352,8 @@ export const loadBoard = (boardId) => dispatch => {
                     };
                 }
                 const curBoard = {
-                    id: boardId,
-                    title: board.title,
+                    id: listId,
+                    title: list.title,
                     cards: formatedCards,
                 };
                 formatedLists.push(curBoard);
