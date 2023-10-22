@@ -33,6 +33,11 @@ function Card({ cardID, text, listID, index, completed, createTime, createUser, 
     dispatch(updateCardToBoard(board, cardID, listID, completed, completeTime, completeUser));
   };
 
+  const timestampToString = (timestamp) => {
+    const date = new Date(timestamp);
+    return `${date.getFullYear()}/${date.getMonth()}/${date.getDate()}`;
+  }
+
   return (
     <Draggable key={cardID} draggableId={cardID} index={index}>
       {(provided, snapshot) => {
@@ -64,9 +69,9 @@ function Card({ cardID, text, listID, index, completed, createTime, createUser, 
               </div>
             </div>
             {over && <div className="border-dashed border-2 border-indigo-600">
-              <p>Create Time: {createTime}</p>
+              <p>Create Time: {timestampToString(createTime)}</p>
               <p>Create User: {createUser}</p>
-              {completed && <p>Complete Time: {completeTime}</p>}
+              {completed && <p>Complete Time: {timestampToString(completeTime)}</p>}
               {completed && <p>Complete User: {completeUser}</p>}
               </div>}
           </div>
