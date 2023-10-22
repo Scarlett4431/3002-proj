@@ -13,10 +13,20 @@ import {
 } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 
-function Card({ cardID, text, listID, index, completed, createTime, createUser, completeTime, completeUser }) {
+function Card({
+  cardID,
+  text,
+  listID,
+  index,
+  completed,
+  createTime,
+  createUser,
+  completeTime,
+  completeUser,
+}) {
   const [over, setOver] = useState(false);
   const board = useSelector((state) => state.board);
-  const userName = useSelector((state)  => state.auth.user.displayName);
+  const userName = useSelector((state) => state.auth.user.displayName);
 
   const dispatch = useDispatch();
 
@@ -27,10 +37,19 @@ function Card({ cardID, text, listID, index, completed, createTime, createUser, 
   };
 
   const handleCompleteCard = () => {
-    const completeTime = completed ? undefined : new Date().getTime() ;
+    const completeTime = completed ? undefined : new Date().getTime();
     const completeUser = completed ? undefined : userName;
     dispatch(updateCard(cardID, listID, completed, completeTime, completeUser));
-    dispatch(updateCardToBoard(board, cardID, listID, completed, completeTime, completeUser));
+    dispatch(
+      updateCardToBoard(
+        board,
+        cardID,
+        listID,
+        completed,
+        completeTime,
+        completeUser
+      )
+    );
   };
 
   return (
@@ -39,7 +58,7 @@ function Card({ cardID, text, listID, index, completed, createTime, createUser, 
         return (
           <div
             ref={provided.innerRef}
-            className="bg-white rounded-md space-y-2 drop-shadow-md"
+            className="bg-white rounded-md drop-shadow-md"
             onMouseEnter={() => setOver(true)}
             onMouseLeave={() => setOver(false)}
             {...provided.draggableProps}
@@ -63,12 +82,26 @@ function Card({ cardID, text, listID, index, completed, createTime, createUser, 
                 </button>
               </div>
             </div>
-            {over && <div className="border-dashed border-2 border-indigo-600">
-              <p>Create Time: {createTime}</p>
-              <p>Create User: {createUser}</p>
-              {completed && <p>Complete Time: {completeTime}</p>}
-              {completed && <p>Complete User: {completeUser}</p>}
-              </div>}
+            {over && (
+              <div class="grid grid-cols-2 gap-1 border-t-4  border-dashed p-4 pl-7">
+                <p className="text-xs font-thin">Create Date:</p>
+                <p className="text-xs font-normal">{createTime}</p>
+                <p className="text-xs font-thin">Create User:</p>
+                <p className="text-xs font-normal">{createUser}</p>
+                {completed && (
+                  <p className="text-xs font-thin">Complete Date:</p>
+                )}
+                {completed && (
+                  <p className="text-xs font-normal">{completeTime}</p>
+                )}
+                {completed && (
+                  <p className="text-xs font-thin">Complete User:</p>
+                )}
+                {completed && (
+                  <p className="text-xs font-normal">{completeUser}</p>
+                )}
+              </div>
+            )}
           </div>
         );
       }}
