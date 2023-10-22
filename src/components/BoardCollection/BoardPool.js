@@ -76,7 +76,7 @@ export default function BoardPool() {
   if(columns.loading){
     return (<div class={enclosedDivClass}>
         <div className="mx-auto block justify-center content-center">
-          <Audio className="mx-auto justify-center text-indigo-95"  color = '#6366f1'/>
+          <Audio className="mx-auto justify-center text-indigo-95"  color = '#A78BFA'/>
           <h2 className="text-xl mb-7 text-center text-indigo-950 font-bold">
             Loading...
           </h2>
@@ -109,7 +109,7 @@ export default function BoardPool() {
         </div>
         <button
           onClick={addColumn}
-          className="mt-8 block mx-auto text-white bg-gradient-to-r  from-pink-400 to-blue-400 hover:from-pink-0 hover:to-blue-500 font-bold py-3 px-5 rounded-lg"
+          className="mt-8 block mx-auto text-white  bg-violet-400 hover:bg-violet-500 font-bold py-3 px-5 rounded-lg"
         >
           CREATE NEW BOARD
         </button>

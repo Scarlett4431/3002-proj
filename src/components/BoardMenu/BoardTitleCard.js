@@ -30,8 +30,8 @@ function BoardTitleCard() {
 
   return (
     <div>
-      <button className="bg-gradient-to-r flex from-pink-500 text-white to-blue-500 hover:from-pink-600 hover:to-blue-600 font-bold py-4 px-6 rounded-lg" onClick={editBoard}>
-        <HiAdjustments className="mr-3 h-4 w-4" />
+      <button className="bg-gradient-to-r flex  text-white bg-violet-400 hover:bg-violet-500 font-bold py-4 px-6 rounded-lg" onClick={editBoard}>
+        <HiAdjustments className="mr-3 h-5 w-5" />
         <p className="font-semibold">{board.title}</p>
       </button>
       <PromptModal

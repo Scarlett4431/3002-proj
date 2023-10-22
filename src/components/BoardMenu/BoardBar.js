@@ -10,9 +10,9 @@ export default function BoardBar({ boardID, searchString, setSearchString }) {
       <div className="pl-4 space-x-2 flex">
         <BoardTitleCard/>
         <InviteCard boardID={boardID}/>
+        <MemberList/>
       </div>
       <div className="flex items-center space-x-5 flex-1 justify-end w-full pr-4">
-        <MemberList className="m-2"/>
         <form
           className="flex items-center space-x-5 bg-white p-2 
                     shadow-md flex-1 md:flex-initial rounded-xl"

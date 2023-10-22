@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { HiAdjustments } from "react-icons/hi";
 import { Modal } from "flowbite-react";
-import {
-    HiUserGroup,
-  } from "react-icons/hi";
+import { HiUserGroup} from "react-icons/hi";
 
 import { useSelector } from "react-redux";
 
@@ -25,11 +23,11 @@ function MemberList() {
   return (
     <div>
       <button
-        className="bg-gradient-to-r flex from-pink-500 text-white to-blue-500 hover:from-pink-600 hover:to-blue-600 font-bold py-4 px-6 rounded-lg"
+        className="bg-gradient-to-r flex text-white bg-violet-400 hover:bg-violet-500 font-bold py-4 px-6 rounded-lg"
         onClick={showMembers}
       >
-        <HiAdjustments className="mr-3 h-4 w-4" />
-        <p className="font-semibold">Members</p>
+        <HiUserGroup className="mr-3 h-5 w-5" />
+        <p className="font-semibold">Member</p>
       </button>
       <>
         <Modal show={isModalOpen} size="md" popup onClose={cancel}>
@@ -40,11 +38,19 @@ function MemberList() {
               <h3 className="mb-5 text-lg font-normal text-gray-700">
                 {promptMessage}
               </h3>
-              <p>Owner: {owner}</p>
+              <div className="grid grid-cols-2 gap-0 px-12">
+                <p className="font-thin text-lg">Owner: </p>
+                <p className="text-gray-700 text-lg">{owner}</p>
+              </div>
               {
                 // member list does not contain owner
                 memberList.map((member) => {
-                  return (<p>Member: {member}</p>);
+                  return (
+                    <div className="grid grid-cols-2 px-12">
+                      <p className="font-thin text-lg">Member: </p>
+                      <p className="text-gray-700 text-lg">{member}</p>
+                    </div>
+                  );
                 })
               }
             </div>

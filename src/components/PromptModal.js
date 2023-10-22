@@ -1,7 +1,7 @@
 import { Modal } from "flowbite-react";
 import {
   HiOutlineExclamationCircle,
-  HiOutlineBookOpen,
+  HiAdjustments,
   HiOutlineMailOpen,
   HiOutlineClipboardList,
   HiOutlineUserAdd,
@@ -31,7 +31,7 @@ export default function PromptModal({
     );
   } else if (type === "boardname") {
     icon = (
-      <HiOutlineBookOpen className="mx-auto mb-4 h-14 w-14 text-gray-400 " />
+      <HiAdjustments className="mx-auto mb-4 h-14 w-14 text-gray-400 " />
     );
   } else if (requiresInput) {
     icon = (
