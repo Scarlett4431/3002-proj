@@ -43,7 +43,7 @@ function MemberList() {
               <p>Owner: {owner}</p>
               {
                 // member list does not contain owner
-                memberList.forEach((member) =>{
+                memberList.map((member) => {
                   return (<p>Member: {member}</p>);
                 })
               }
