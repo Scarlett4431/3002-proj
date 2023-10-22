@@ -90,14 +90,14 @@ function Card({
             {over && (
               <div class="grid grid-cols-2 gap-1 border-t-4  border-dashed p-4 pl-7">
                 <p className="text-xs font-thin">Create Date:</p>
-                <p className="text-xs font-normal">{createTime}</p>
+                <p className="text-xs font-normal">{timestampToString(createTime)}</p>
                 <p className="text-xs font-thin">Create User:</p>
                 <p className="text-xs font-normal">{createUser}</p>
                 {completed && (
                   <p className="text-xs font-thin">Complete Date:</p>
                 )}
                 {completed && (
-                  <p className="text-xs font-normal">{completeTime}</p>
+                  <p className="text-xs font-normal">{timestampToString(completeTime)}</p>
                 )}
                 {completed && (
                   <p className="text-xs font-thin">Complete User:</p>
