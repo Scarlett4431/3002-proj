@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { HiAdjustments } from "react-icons/hi";
 import { Modal } from "flowbite-react";
 import { HiUserGroup} from "react-icons/hi";
 
@@ -23,7 +22,7 @@ function MemberList() {
   return (
     <div>
       <button
-        className="bg-gradient-to-r flex text-white bg-violet-400 hover:bg-violet-500 font-bold py-4 px-6 rounded-lg"
+        className="flex text-white bg-violet-400 hover:bg-violet-500 font-bold py-4 px-6 rounded-lg"
         onClick={showMembers}
       >
         <HiUserGroup className="mr-3 h-5 w-5" />

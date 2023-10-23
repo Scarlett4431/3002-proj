@@ -27,7 +27,7 @@ function InviteCard({boardID}) {
 
   return (
     <div>
-      <button className="bg-gradient-to-r text-white flex bg-violet-400 hover:bg-violet-500 font-bold py-4 px-6 rounded-lg" onClick={inviteFriend}>
+      <button className="text-white flex bg-violet-400 hover:bg-violet-500 font-bold py-4 px-6 rounded-lg" onClick={inviteFriend}>
         <HiOutlineMailOpen className="mr-3 h-5 w-5" />
         <p className="font-semibold">Invite</p>
       </button>

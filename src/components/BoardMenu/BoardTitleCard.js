@@ -30,7 +30,7 @@ function BoardTitleCard() {
 
   return (
     <div>
-      <button className="bg-gradient-to-r flex  text-white bg-violet-400 hover:bg-violet-500 font-bold py-4 px-6 rounded-lg" onClick={editBoard}>
+      <button className="flex  text-white bg-violet-400 hover:bg-violet-500 font-bold py-4 px-6 rounded-lg" onClick={editBoard}>
         <HiAdjustments className="mr-3 h-5 w-5" />
         <p className="font-semibold">{board.title}</p>
       </button>

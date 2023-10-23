@@ -75,7 +75,7 @@ function Board() {
       />
       <div className="ml-12 mr-12">
         <DragDropContext onDragEnd={onDragEnd}>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mx-auto">
+          <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mx-auto">
             {board.lists != null
               ? board.lists.map((list, index) => (
                   <div key={list.id}>
