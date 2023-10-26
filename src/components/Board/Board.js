@@ -95,7 +95,7 @@ function Board() {
               </h2>
               <div className="flex items-end justify-end">
                 <button
-                  className="text-blue-500 hover:text-blue-600 mt-3"
+                  className="text-blue-500 hover:text-blue-600"
                   onClick={() => setIsModalOpen(true)}
                 >
                   <PlusCircleIcon className="h-10 w-10" />
