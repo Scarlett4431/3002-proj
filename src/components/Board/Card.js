@@ -54,7 +54,9 @@ function Card({
 
   const timestampToString = (timestamp) => {
     const date = new Date(timestamp);
-    return `${date.getFullYear()}/${date.getMonth()}/${date.getDate()}`;
+    console.log(date);
+    console.log(date.getMonth());
+    return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
   }
 
   return (
