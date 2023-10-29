@@ -110,7 +110,6 @@ const finishTutorialSuccess = (newcomerStatus) => {
 export const loginUser = (email, password, callback, dir) => async dispatch => {
 
     // code with firebase backend
-
     dispatch(requestLogin());
     myFirebase
         .auth()
@@ -149,33 +148,39 @@ export const registerUser = (email, password, displayName) => async dispatch => 
 
     // code with firebase backend
     console.log("register name is:", displayName);
-    dispatch(requestRegister());
-    myFirebase.auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then(userCredential => {
-            userCredential.user.updateProfile({
-                displayName: displayName,
-            }).then(() => {
-                const email = userCredential.user.email.replaceAll(".", ","); // cannot save "." in DB
-                const userId = userCredential.user.uid;
-                const name = userCredential.user.displayName;
-                myFirebase.database().ref('/users/' + userId).set({
-                    email: email,
-                    name: name,
-                    newcomer: true,
+    if(displayName == ""){
+        console.log("empty display name");
+        dispatch(registerError("Display Name cannot be empty."));
+    }
+    else{
+        dispatch(requestRegister());
+        myFirebase.auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then(userCredential => {
+                userCredential.user.updateProfile({
+                    displayName: displayName,
+                }).then(() => {
+                    const email = userCredential.user.email.replaceAll(".", ","); // cannot save "." in DB
+                    const userId = userCredential.user.uid;
+                    const name = userCredential.user.displayName;
+                    myFirebase.database().ref('/users/' + userId).set({
+                        email: email,
+                        name: name,
+                        newcomer: true,
+                    });
+                    myFirebase.database().ref('/emailToUid/').child(email).set({
+                        userId
+                    })
+                    sendEmailVerification(userCredential.user);
+                    dispatch(receiveRegister());
+                    logoutUser();
                 });
-                myFirebase.database().ref('/emailToUid/').child(email).set({
-                    userId
-                })
-                sendEmailVerification(userCredential.user);
-                dispatch(receiveRegister());
-                logoutUser();
+            })
+            .catch(error => {
+                // Do something with the error if you want!
+                dispatch(registerError(error.message));
             });
-        })
-        .catch(error => {
-            // Do something with the error if you want!
-            dispatch(registerError(error.message));
-        });
+    }
 };
 
 export const finishTutorial = (userId) => async dispatch => {
